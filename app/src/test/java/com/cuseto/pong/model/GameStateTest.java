@@ -13,4 +13,11 @@ class GameStateTest {
         assertEquals(800, state.arenaWidth());
         assertEquals(600, state.arenaHeight());
     }
+
+    @Test 
+    void initialPositionBall() {
+        GameState state = GameState.initial(GameConfig.standard());
+        
+        assertEquals(new Circle(400, 300, 8), state.ball());
+    }
 }

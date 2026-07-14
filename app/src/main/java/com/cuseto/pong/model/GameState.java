@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public record GameState(	// For things that can change during gameplay
     int arenaWidth,
-    int arenaHeight
+    int arenaHeight,
+	Circle ball
 ) {
 
     public static GameState initial(GameConfig config) {
@@ -12,7 +13,8 @@ public record GameState(	// For things that can change during gameplay
 
         return new GameState(		
             config.arenaWidth(),
-            config.arenaHeight()
+            config.arenaHeight(),
+			new Circle(400, 300, 8)
         );
     }
 }
