@@ -1,43 +1,29 @@
 package com.cuseto.pong;
 
+import com.cuseto.pong.model.GameConfig;
+import com.cuseto.pong.model.GameState;
+import com.cuseto.pong.view.PongRenderer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        GameState state = GameState.initial(GameConfig.standard());
 
-        final int WIDTH = 800;
-        final int HEIGHT = 600;
+        Canvas canvas = new Canvas(state.arenaWidth(), state.arenaHeight());
+        new PongRenderer().render(canvas.getGraphicsContext2D(), state);
 
-        StackPane stack = new StackPane();
-        Pane root = new Pane();
+        StackPane root = new StackPane(canvas);
         root.setStyle("-fx-background-color: black;");
 
-        Canvas canvas = new Canvas(WIDTH, HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        Label label = new Label("Pong");
-        label.setStyle("-fx-text-fill: white; " +
-               "-fx-padding: 10px; " +
-               "-fx-font-size: 20px;");
-        
-        root.getChildren().addAll(canvas, label);
-        stack.getChildren().add(root);
-        
-        Scene scene = new Scene(stack, WIDTH, HEIGHT);
+        Scene scene = new Scene(root, state.arenaWidth(), state.arenaHeight());
         stage.setTitle("Pong");
         stage.setScene(scene);
         stage.show();
-
-
     }
 }
