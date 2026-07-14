@@ -2,7 +2,11 @@ package com.cuseto.pong.model;
 
 public record GameConfig(   // For fixed things/rules
         int arenaWidth,
-        int arenaHeight
+        int arenaHeight,
+        int ballRadius,
+        int paddleInset,
+        int paddleWidth,
+        int paddleHeight
 ) {
 
     public GameConfig {
@@ -11,7 +15,7 @@ public record GameConfig(   // For fixed things/rules
     }
 
     public static GameConfig standard() {
-        return new GameConfig(800, 600);
+        return new GameConfig(800, 600, 8, 100, 10, 80);
     }
 
     private static void requirePositive(String name, int value) {
