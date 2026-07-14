@@ -5,6 +5,7 @@ import java.util.Objects;
 public record GameState(	// For things that can change during gameplay
     int arenaWidth,
     int arenaHeight,
+    int arenaBoundaryThickness,
 	Circle ball,
     Rectangle leftPaddle,
     Rectangle rightPaddle
@@ -37,6 +38,7 @@ public record GameState(	// For things that can change during gameplay
         return new GameState(		
             config.arenaWidth(),
             config.arenaHeight(),
+            config.arenaBoundaryThickness(),
             ball,
             leftPaddle,
             rightPaddle
