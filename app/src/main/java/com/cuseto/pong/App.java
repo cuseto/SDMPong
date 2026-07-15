@@ -18,7 +18,13 @@ public class App extends Application {
     public void start(Stage stage) {
         GameState state = GameState.initial(GameConfig.standard());
 
-        Canvas canvas = new Canvas(state.arenaWidth(), state.arenaHeight());
+        System.out.println(state.screenWidth());
+        System.out.println(state.screenHeight());
+        System.out.println(state.arenaWidth());
+        System.out.println(state.arenaHeight());
+
+
+        Canvas canvas = new Canvas(state.screenWidth(), state.screenHeight());
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         PongRenderer renderer = new PongRenderer();
         renderer.render(graphics, state);
@@ -26,10 +32,12 @@ public class App extends Application {
         StackPane root = new StackPane(canvas);
         root.setStyle("-fx-background-color: black;");
 
-        Scene scene = new Scene(root, state.arenaWidth(), state.arenaHeight());
+        Scene scene = new Scene(root, state.screenWidth(), state.screenHeight());
         stage.setTitle("Pong");
         stage.setScene(scene);
         stage.show();
+
+
 
         gameLoop = new GameLoop(
             state,
@@ -37,6 +45,8 @@ public class App extends Application {
             currentState -> renderer.render(graphics, currentState)
         );
         gameLoop.start();
+
+
     }
 
     @Override

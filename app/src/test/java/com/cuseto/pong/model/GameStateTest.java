@@ -6,25 +6,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GameStateTest {
 
     @Test
-    void standardGameStartsWithDocumentedArenaDimensions() {
+    void standardGameStartsWithDocumentedScreenDimensions() {
         GameState state = GameState.initial(GameConfig.standard());
 
-        assertEquals(800, state.arenaWidth());
-        assertEquals(600, state.arenaHeight());
-    }
-
-    @Test 
-    void initialPositionBall() {
-        GameState state = GameState.initial(GameConfig.standard());
-        
-        assertEquals(new Circle(400, 300, 8), state.ball());
+        assertEquals(800, state.screenWidth());
+        assertEquals(600, state.screenHeight());
     }
 
     @Test
-    void initialPositionPaddle () {
+    void standardGameStartsWithDocumentedArenaDimensions() {
         GameState state = GameState.initial(GameConfig.standard());
 
-        assertEquals(new Rectangle(100, 260, 10, 80), state.leftPaddle());
-        assertEquals(new Rectangle(690, 260, 10, 80), state.rightPaddle());
+        assertEquals(760, state.arenaWidth());
+        assertEquals(500, state.arenaHeight());
+    }
+
+    @Test 
+    void initialPositionBallWithTopSpacing80() {
+        GameState state = GameState.initial(GameConfig.standard());
+        
+        assertEquals(new Circle(400, 330, 8), state.ball());
+    }
+
+    @Test
+    void initialPositionPaddleWithTopSpacing80() {
+        GameState state = GameState.initial(GameConfig.standard());
+
+        assertEquals(new Rectangle(124, 290, 10, 80), state.leftPaddle());
+        assertEquals(new Rectangle(666, 290, 10, 80), state.rightPaddle());
     }
 }

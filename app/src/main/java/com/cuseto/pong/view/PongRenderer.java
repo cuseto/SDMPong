@@ -11,7 +11,7 @@ public final class PongRenderer {
 
     public void render(GraphicsContext graphics, GameState state) {
         graphics.setFill(Color.BLACK);
-        graphics.fillRect(0, 0, state.arenaWidth(), state.arenaHeight());
+        graphics.fillRect(0, 0, state.screenWidth(), state.screenHeight());
 
         drawArenaBoundaries(graphics, state);
         drawCircle(graphics, state.ball());
@@ -22,13 +22,12 @@ public final class PongRenderer {
     private void drawArenaBoundaries(GraphicsContext graphics, GameState state) {
         graphics.setStroke(Color.WHITE);
         graphics.setLineWidth(state.arenaBoundaryThickness());
-        double insetX = 20;
-        double insetY = 80;
+
         graphics.strokeRect(
-                insetX,
-                insetY,
-                state.arenaWidth() - 2.0 * insetX,
-                state.arenaHeight() - insetX - insetY
+            state.arenaSpacingOther(),
+            state.arenaSpacingTop(),
+            state.arenaWidth(),
+            state.arenaHeight()
         );    
     }
 
