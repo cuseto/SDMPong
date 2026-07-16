@@ -6,19 +6,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GameStateTest {
 
     @Test
-    void standardGameStartsWithDocumentedScreenDimensions() {
-        GameState state = GameState.initial(GameConfig.standard());
+    void standardConfigHasDocumentedScreenDimensions() {
+        GameConfig config = GameConfig.standard();
 
-        assertEquals(800, state.screenWidth());
-        assertEquals(600, state.screenHeight());
+        assertEquals(800, config.screenWidth());
+        assertEquals(600, config.screenHeight());
     }
 
     @Test
-    void standardGameStartsWithDocumentedArenaDimensions() {
-        GameState state = GameState.initial(GameConfig.standard());
+    void standardConfigDerivesDocumentedArenaDimensions() {
+        GameConfig config = GameConfig.standard();
 
-        assertEquals(760, state.arenaWidth());
-        assertEquals(500, state.arenaHeight());
+        assertEquals(760, config.arenaWidth());
+        assertEquals(500, config.arenaHeight());
     }
 
     @Test 

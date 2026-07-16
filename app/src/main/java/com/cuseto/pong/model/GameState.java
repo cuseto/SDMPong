@@ -3,21 +3,18 @@ package com.cuseto.pong.model;
 import java.util.Objects;
 
 public record GameState(    // For things that can change during gameplay
-    int screenWidth,
-    int screenHeight,
-    int arenaWidth,
-    int arenaHeight,
-    int arenaSpacingTop,
-    int arenaSpacingOther,
-    int arenaBoundaryThickness,
 	Circle ball,
     Rectangle leftPaddle,
     Rectangle rightPaddle
 ) {
+    public GameState {
+        Objects.requireNonNull(ball, "ball cannot be null");
+        Objects.requireNonNull(leftPaddle, "leftPaddle cannot be null");
+        Objects.requireNonNull(rightPaddle, "rightPaddle cannot be null");
+    }
 
     public static GameState initial(GameConfig config) {
         Objects.requireNonNull(config, "config cannot be null");
-
 
         double paddleY = config.arenaSpacingTop() + (config.arenaHeight() - config.paddleHeight()) / 2.0;
 
@@ -40,16 +37,7 @@ public record GameState(    // For things that can change during gameplay
             config.paddleHeight()
         );
 
-        //System.out.println()
-
         return new GameState(
-            config.screenWidth(),
-            config.screenHeight(),		
-            config.arenaWidth(),
-            config.arenaHeight(),
-            config.arenaSpacingTop(),
-            config.arenaSpacingOther(),
-            config.arenaBoundaryThickness(),
             ball,
             leftPaddle,
             rightPaddle

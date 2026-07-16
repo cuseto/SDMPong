@@ -1,6 +1,7 @@
 package com.cuseto.pong.view;
 
 import com.cuseto.pong.model.Circle;
+import com.cuseto.pong.model.GameConfig;
 import com.cuseto.pong.model.GameState;
 import com.cuseto.pong.model.Rectangle;
 
@@ -9,25 +10,25 @@ import javafx.scene.paint.Color;
 
 public final class PongRenderer {
 
-    public void render(GraphicsContext graphics, GameState state) {
+    public void render(GraphicsContext graphics, GameConfig config, GameState state) {
         graphics.setFill(Color.BLACK);
-        graphics.fillRect(0, 0, state.screenWidth(), state.screenHeight());
+        graphics.fillRect(0, 0, config.screenWidth(), config.screenHeight());
 
-        drawArenaBoundaries(graphics, state);
+        drawArenaBoundaries(graphics, config);
         drawCircle(graphics, state.ball());
         drawRectangle(graphics, state.leftPaddle());
         drawRectangle(graphics, state.rightPaddle());
     }
 
-    private void drawArenaBoundaries(GraphicsContext graphics, GameState state) {
+    private void drawArenaBoundaries(GraphicsContext graphics, GameConfig config) {
         graphics.setStroke(Color.WHITE);
-        graphics.setLineWidth(state.arenaBoundaryThickness());
+        graphics.setLineWidth(config.arenaBoundaryThickness());
 
         graphics.strokeRect(
-            state.arenaSpacingOther(),
-            state.arenaSpacingTop(),
-            state.arenaWidth(),
-            state.arenaHeight()
+            config.arenaSpacingOther(),
+            config.arenaSpacingTop(),
+            config.arenaWidth(),
+            config.arenaHeight()
         );    
     }
 
