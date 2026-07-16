@@ -40,6 +40,26 @@ public record GameConfig(   // For fixed things/rules
         return screenHeight - arenaSpacingTop - arenaSpacingOther;
     }
 
+    public int arenaLeft() {
+        return arenaSpacingOther + arenaBoundaryThickness;
+    }
+
+    public int arenaTop() {
+        return arenaSpacingTop + arenaBoundaryThickness;
+    }
+
+    public int arenaRight() {
+        return arenaSpacingOther + arenaWidth() - arenaBoundaryThickness;
+    }
+
+    public int arenaBottom() {
+        return arenaSpacingTop + arenaHeight() - arenaBoundaryThickness;
+    }
+
+    /**
+     * Standard game configuration, with the arena spaced 80px from the top
+     * and 20px from the other sides
+     */
     public static GameConfig standard() {
         return new GameConfig(
             800, 600, 

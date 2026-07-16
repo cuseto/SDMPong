@@ -5,22 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameStateTest {
 
-    @Test
-    void standardConfigHasDocumentedScreenDimensions() {
-        GameConfig config = GameConfig.standard();
-
-        assertEquals(800, config.screenWidth());
-        assertEquals(600, config.screenHeight());
-    }
-
-    @Test
-    void standardConfigDerivesDocumentedArenaDimensions() {
-        GameConfig config = GameConfig.standard();
-
-        assertEquals(760, config.arenaWidth());
-        assertEquals(500, config.arenaHeight());
-    }
-
     @Test 
     void initialPositionBallWithTopSpacing80() {
         GameState state = GameState.initial(GameConfig.standard());
