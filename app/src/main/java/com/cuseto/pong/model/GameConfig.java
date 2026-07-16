@@ -3,9 +3,6 @@ package com.cuseto.pong.model;
 public record GameConfig(   // For fixed things/rules
     int screenWidth,
     int screenHeight,
-
-    int arenaWidth,
-    int arenaHeight,
     int arenaSpacingTop,
     int arenaSpacingOther,
     int arenaBoundaryThickness,
@@ -17,24 +14,36 @@ public record GameConfig(   // For fixed things/rules
 ) {
 
     public GameConfig {
-        requirePositive("arenaWidth", arenaWidth);
-        requirePositive("arenaHeight", arenaHeight);
+        requirePositive("screenWidth", screenWidth);
+        requirePositive("screenHeight", screenHeight);
+        requirePositive("arenaSpacingTop", arenaSpacingTop);
+        requirePositive("arenaSpacingOther", arenaSpacingOther);
+        requirePositive("arenaBoundaryThickness", arenaBoundaryThickness);
+        requirePositive("ballRadius", ballRadius);
+        requirePositive("paddleInset", paddleInset);
+        requirePositive("paddleWidth", paddleWidth);
+        requirePositive("paddleHeight", paddleHeight);
+
+        if (screenWidth - 2 * arenaSpacingOther <= 0) {
+            throw new IllegalArgumentException("arenaWidth must be positive");
+        }
+        if (screenHeight - arenaSpacingTop - arenaSpacingOther <= 0) {
+            throw new IllegalArgumentException("arenaHeight must be positive");
+        }
+    }
+
+    public int arenaWidth() {
+        return screenWidth - 2 * arenaSpacingOther;
+    }
+
+    public int arenaHeight() {
+        return screenHeight - arenaSpacingTop - arenaSpacingOther;
     }
 
     public static GameConfig standard() {
-        int screenWidth = 800;
-        int screenHeight = 600;
-
-        int arenaSpacingTop = 80;
-        int arenaSpacingOther = 20;
-        int arenaBoundaryThickness = 4;
-        int arenaWidth = screenWidth - 2*arenaSpacingOther;
-        int arenaHeight = screenHeight - arenaSpacingTop - arenaSpacingOther;
-
         return new GameConfig(
-            screenWidth, screenHeight, 
-            arenaWidth, arenaHeight, 
-            arenaSpacingTop, arenaSpacingOther, arenaBoundaryThickness, 
+            800, 600, 
+            80, 20, 4, 
             8, 100, 10, 80
         );
     }
