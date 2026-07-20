@@ -31,4 +31,11 @@ public class GameConfigTest {
         assertEquals(776, config.arenaRight());
         assertEquals(576, config.arenaBottom());
     }
+
+    @Test
+    void standardConfigDefinesPaddleSpeed() {
+        GameConfig config = GameConfig.standard();
+
+        assertEquals(300.0, config.paddleSpeed());
+    }
 }

@@ -10,7 +10,8 @@ public record GameConfig(   // For fixed things/rules
     int ballRadius,
     int paddleInset,
     int paddleWidth,
-    int paddleHeight
+    int paddleHeight,
+    double paddleSpeed // double because pixels per second
 ) {
 
     public GameConfig {
@@ -64,7 +65,8 @@ public record GameConfig(   // For fixed things/rules
         return new GameConfig(
             800, 600, 
             80, 20, 4, 
-            8, 100, 10, 80
+            8, 100, 10, 80,
+            300.0
         );
     }
 

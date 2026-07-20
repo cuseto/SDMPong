@@ -24,6 +24,8 @@ public final class PaddleMovement {
             newY += delta;
         }
 
+        newY = Math.max(minY, Math.min(maxY, newY));
+
         return new Rectangle(paddle.startPosX(), newY, paddle.width(), paddle.height());
     }
 }
