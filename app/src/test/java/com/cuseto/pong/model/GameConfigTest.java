@@ -1,6 +1,7 @@
 package com.cuseto.pong.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -37,5 +38,12 @@ public class GameConfigTest {
         GameConfig config = GameConfig.standard();
 
         assertEquals(300.0, config.paddleSpeed());
+    }
+
+    @Test
+    void standardConfigDefinesNonZeroHorizontalBallVelocity() {
+        GameConfig config = GameConfig.standard();
+
+        assertNotEquals(0.0, config.ballVelocityX());
     }
 }

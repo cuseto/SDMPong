@@ -21,7 +21,9 @@ public record GameState(    // For things that can change during gameplay
         Circle ball = new Circle(
             config.arenaSpacingOther() + config.arenaWidth() / 2.0,  // == screenWidth / 2
             config.arenaSpacingTop() + config.arenaHeight() / 2.0, 
-            config.ballRadius()
+            config.ballRadius(),
+            config.ballVelocityX(),
+            config.ballVelocityY()
         );
 
         Rectangle leftPaddle = new Rectangle(
