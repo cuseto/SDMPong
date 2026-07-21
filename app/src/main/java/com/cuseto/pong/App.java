@@ -7,6 +7,7 @@ import com.cuseto.pong.game.PaddleGameUpdater;
 import com.cuseto.pong.game.PaddleInputState;
 import com.cuseto.pong.game.PaddleKeyMapping;
 import com.cuseto.pong.model.PaddleDirection;
+import com.cuseto.pong.game.BallGameUpdater;
 import com.cuseto.pong.view.PongRenderer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -59,7 +60,7 @@ public class App extends Application {
 
         gameLoop = new GameLoop(
             state,
-            new PaddleGameUpdater(inputState, config),
+            new PaddleGameUpdater(inputState, config).andThen(new BallGameUpdater()),
             currentState -> renderer.render(graphics, config, currentState)
         );
         gameLoop.start();
