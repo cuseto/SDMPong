@@ -12,4 +12,9 @@ import com.cuseto.pong.model.GameState;
 @FunctionalInterface
 public interface GameUpdater {
     GameState update(GameState state, double elapsedSeconds);
+
+    default GameUpdater andThen(GameUpdater next) {
+        return (state, elapsedSeconds) ->
+            next.update(this.update(state, elapsedSeconds), elapsedSeconds);
+    }
 }
