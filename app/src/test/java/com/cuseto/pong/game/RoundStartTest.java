@@ -1,10 +1,10 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import com.cuseto.pong.model.GameConfig;
+import com.cuseto.pong.model.GameState;
 
 class RoundStartTest {
 
@@ -14,7 +14,7 @@ class RoundStartTest {
         GameState readyState = GameState.initial(config);
 
         GameUpdater updater = new PaddleGameUpdater(new PaddleInputState(), config)
-            .andThen(new BallGameUpdater());
+            .andThen(new BallGameUpdater(config));
 
         GameState afterOneTick = updater.update(readyState, 0.1);
 
