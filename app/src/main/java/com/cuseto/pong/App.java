@@ -1,14 +1,15 @@
 package com.cuseto.pong;
 
+import com.cuseto.pong.game.BallGameUpdater;
 import com.cuseto.pong.game.GameLoop;
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
 import com.cuseto.pong.game.PaddleGameUpdater;
 import com.cuseto.pong.game.PaddleInputState;
 import com.cuseto.pong.game.PaddleKeyMapping;
+import com.cuseto.pong.model.GameConfig;
+import com.cuseto.pong.model.GameState;
 import com.cuseto.pong.model.PaddleDirection;
-import com.cuseto.pong.game.BallGameUpdater;
 import com.cuseto.pong.view.PongRenderer;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -60,7 +61,7 @@ public class App extends Application {
 
         gameLoop = new GameLoop(
             state,
-            new PaddleGameUpdater(inputState, config).andThen(new BallGameUpdater()),
+            new PaddleGameUpdater(inputState, config).andThen(new BallGameUpdater(config)),
             currentState -> renderer.render(graphics, config, currentState)
         );
         gameLoop.start();

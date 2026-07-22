@@ -1,10 +1,10 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.cuseto.pong.model.GameConfig;
+import com.cuseto.pong.model.GameState;
 
 class BallGameUpdaterTest {
 
@@ -13,7 +13,7 @@ class BallGameUpdaterTest {
         GameConfig config = GameConfig.standard();
         GameState initialState = GameState.initial(config);
 
-        BallGameUpdater updater = new BallGameUpdater();
+        BallGameUpdater updater = new BallGameUpdater(config);
 
         GameState updatedState = updater.update(initialState, 0.1);
 
