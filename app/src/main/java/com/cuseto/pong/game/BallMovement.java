@@ -21,7 +21,10 @@ public final class BallMovement {
             velocityY *= -1;
         }
 
-        if (newY > maxY) newY = maxY - (newY - maxY);
+        if (newY > maxY) {
+            newY = maxY - (newY - maxY);
+            velocityY *= -1;
+        }
 
 
         return new Circle(newX, newY, ball.radius(), ball.velocityX(), velocityY);
