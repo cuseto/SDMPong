@@ -40,4 +40,13 @@ class BallMovementTest {
         assertEquals(400, ballUpdated.startPosX());
         assertEquals(30, ballUpdated.startPosY());
     }
+
+    @Test
+    void ballBouncesOnBottomBoundary() {
+        Circle ball = new Circle(400, 110, 8, 200, 120);
+        Circle ballUpdated = BallMovement.move(ball, 0.0, 20, 100);
+
+        assertEquals(400, ballUpdated.startPosX());
+        assertEquals(90, ballUpdated.startPosY());
+    }
 }
