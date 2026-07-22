@@ -16,16 +16,11 @@ public final class BallMovement {
         double newY = ball.startPosY() + ball.velocityY() * elapsedSeconds;
         double velocityY = ball.velocityY();
 
-        if (newY < minY) {
-            newY = minY + (minY - newY);
+        if (newY < minY || newY > maxY) {
+            if (newY < minY) newY = minY + (minY - newY);
+            if (newY > maxY) newY = maxY - (newY - maxY);
             velocityY *= -1;
         }
-
-        if (newY > maxY) {
-            newY = maxY - (newY - maxY);
-            velocityY *= -1;
-        }
-
 
         return new Circle(newX, newY, ball.radius(), ball.velocityX(), velocityY);
     }
