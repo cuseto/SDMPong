@@ -49,4 +49,12 @@ class BallMovementTest {
         assertEquals(400, ballUpdated.startPosX());
         assertEquals(90, ballUpdated.startPosY());
     }
+
+    @Test
+    void ballChangesDirectionOnTopBoundary() {
+        Circle ball = new Circle(400, 10, 8, 200, 120);
+        Circle ballUpdated = BallMovement.move(ball, 0.0, 20, 100);
+
+        assertEquals(-120, ballUpdated.velocityY());
+    }
 }
