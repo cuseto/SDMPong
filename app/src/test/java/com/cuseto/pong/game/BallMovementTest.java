@@ -87,6 +87,15 @@ class BallMovementTest {
     }
 
     @Test
+    void ballChangesDirectionOnLeftPaddel() {
+        Circle ball = new Circle(15, 20, 4, -100, -120);
+        Rectangle paddle = new Rectangle(10, 20, 2, 150);
+        Circle ballUpdated = BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
+
+        assertEquals(100, ballUpdated.velocityX());
+    }
+
+    @Test
     void ballBouncesOnRightPaddel() {
         Circle ball = new Circle(5, 20, 4, 100, -120);
         Rectangle paddle = new Rectangle(10, 20, 2, 150);

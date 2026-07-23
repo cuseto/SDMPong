@@ -16,6 +16,7 @@ public final class BallMovement {
         Rectangle rightPaddle
     ) {
         double velocityY = ball.velocityY();
+        double velocityX = ball.velocityX();
 
         // basic ball update
         double newX = ball.startPosX() + ball.velocityX() * elapsedSeconds;
@@ -33,14 +34,17 @@ public final class BallMovement {
         double maxX = rightPaddle.startPosX();
 
         if (newX <= minX & ball.startPosX() > minX) {
-            if (ballCrossedPaddle(ball, leftPaddle, newX, newY)) newX = minX + (minX - newX);
+            if (ballCrossedPaddle(ball, leftPaddle, newX, newY)) {
+                newX = minX + (minX - newX);
+                velocityX *= -1;
+            }
         }
 
         if (ball.startPosX() < maxX & newX >= maxX) {
-            if (ballCrossedPaddle(ball, leftPaddle, newX, newY)) newX = maxX - (newX - maxX);
+            if (ballCrossedPaddle(ball, rightPaddle, newX, newY)) newX = maxX - (newX - maxX);
         }
 
-        return new Circle(newX, newY, ball.radius(), ball.velocityX(), velocityY);
+        return new Circle(newX, newY, ball.radius(), velocityX, velocityY);
     }
 
     private static boolean ballCrossedPaddle(Circle ball, Rectangle paddle, double newX, double newY) {
