@@ -69,7 +69,7 @@ public record GameConfig(   // For fixed things/rules
             80, 20, 4, 
             8, 100, 10, 80,
             300.0,
-            20.0, 140.0
+            -50.0, 140.0
         );
     }
 

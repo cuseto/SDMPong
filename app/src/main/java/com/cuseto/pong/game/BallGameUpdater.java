@@ -17,7 +17,8 @@ public class BallGameUpdater implements GameUpdater {
                 state.ball(),
                 elapsedSeconds,
                 config.arenaTop() + config.arenaBoundaryThickness(),
-                config.arenaBottom() - config.arenaBoundaryThickness()
+                config.arenaBottom() - config.arenaBoundaryThickness(),
+                state.leftPaddle()
             ),
             state.leftPaddle(),
             state.rightPaddle()
