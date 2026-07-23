@@ -17,6 +17,8 @@ public final class BallMovement {
     ) {
         double velocityY = ball.velocityY();
         double velocityX = ball.velocityX();
+        double minX = leftPaddle.startPosX() + leftPaddle.width();
+        double maxX = rightPaddle.startPosX();
 
         // basic ball update
         double newX = ball.startPosX() + ball.velocityX() * elapsedSeconds;
@@ -29,10 +31,8 @@ public final class BallMovement {
             velocityY *= -1;
         }
 
-        // checking paddles bounce
-        double minX = leftPaddle.startPosX() + leftPaddle.width();
-        double maxX = rightPaddle.startPosX();
-
+        // // checking paddles bounce
+        // left paddle
         if (newX <= minX & ball.startPosX() > minX) {
             if (ballCrossedPaddle(ball, leftPaddle, newX, newY)) {
                 newX = minX + (minX - newX);
@@ -40,6 +40,7 @@ public final class BallMovement {
             }
         }
 
+        // right paddle
         if (ball.startPosX() < maxX & newX >= maxX) {
             if (ballCrossedPaddle(ball, rightPaddle, newX, newY)) {
                 newX = maxX - (newX - maxX);
