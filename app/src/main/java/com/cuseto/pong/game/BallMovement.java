@@ -41,7 +41,10 @@ public final class BallMovement {
         }
 
         if (ball.startPosX() < maxX & newX >= maxX) {
-            if (ballCrossedPaddle(ball, rightPaddle, newX, newY)) newX = maxX - (newX - maxX);
+            if (ballCrossedPaddle(ball, rightPaddle, newX, newY)) {
+                newX = maxX - (newX - maxX);
+                velocityX *= -1;
+            }
         }
 
         return new Circle(newX, newY, ball.radius(), velocityX, velocityY);

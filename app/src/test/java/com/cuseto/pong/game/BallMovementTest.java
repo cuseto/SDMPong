@@ -104,4 +104,13 @@ class BallMovementTest {
         assertEquals(5, ballUpdated.startPosX());
         assertEquals(8, ballUpdated.startPosY());
     }
+
+        @Test
+    void ballChangesDirectionOnRightPaddel() {
+        Circle ball = new Circle(5, 20, 4, 100, -120);
+        Rectangle paddle = new Rectangle(10, 20, 2, 150);
+        Circle ballUpdated = BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
+
+        assertEquals(-100, ballUpdated.velocityX());
+    }
 }
