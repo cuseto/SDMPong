@@ -188,3 +188,60 @@ Feature: New match
     Then both scores are reset to zero
     And the ball and paddles return to their initial positions
 ```
+
+## PB-10 — Refactor Circle and Rectangle
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Refactor Circle and Rectangle into Ball and Paddle
+
+  Scenario: Refactor Circle and Rectangle into Ball and Paddle
+    Given Circle and Rectangle have evolved into more complex records
+    And having Superclasses Circle and Rectangle would be redundant
+    Then rename Circle and Rectangle into Ball and Paddle
+    And all the code related to them is updated accordingly
+    And all the tests related to them are updated accordingly
+```
+
+## PB-11 — Refactor folder structure
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Refactor folder structure to de-bloat
+
+  Scenario: Folder are becoming bloated by classes that have different purposes
+    Given game/, model/ folders may contain classes that do not match with their intended purpose
+    Then plan a restructuring of files and folders accordingly
+    And eventually create new folders
+    And eventually delete folders
+    And eventually rename folders
+```
+
+## PB-12 — Refactor records into mutable classes
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Right now, records are being used to represent dynamic objects. Since record fields are immutable, the current updater substitutes the old objects with new instantiations, at each game update. We want to swap records with mutable classes, so that the updater only needs to change the object's fields, without returning the a new instantiation.
+
+  Scenario: Refactor records into mutable classes
+    Given Ball, Paddle and Updater logic work with records
+    Then update their structure using mutable classes 
+    And any update logic does not need to return a new instance
+    And any update logic only needs to update the needed fields of the same instance
+    * Example: BallMovement.move() will update the Ball's fields instead of returning a new Ball object  
+    And all the tests related to them are updated accordingly
+```
+
+## PB-13 — Refactor GameConfig into a YAML config file/loader
+
+**Acceptance criteria**
+
+```gherkin
+Feature: GameConfig acts a record that holds all the game's "static data", but its access is not consistent across classes, the data it holds is not complete/standardized (e.g. Key controls), and configurations are not persistent across app reloads. 
+
+  Scenario: Refactor GameConfig into a YAML config file/loader
+    Boh Lollooooo scriviiii
+```
