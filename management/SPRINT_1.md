@@ -4,8 +4,8 @@
 
 - **Sprint name/number:** `Sprint 1 — Core Playable Game`
 - **Start date:** `<2026-07-11>`
-- **End date:** `<2026-07-14>`
-- **Duration:** `4 days`
+- **End date:** `<2026-07-24>`
+- **Duration:** `14 days`
 - **Scrum Master:** `Andrea Tonello`
 - **Developers:** `Giacomo Serafini, Lorenzo Cusin`
 - **Status:** `In Progress`
@@ -211,36 +211,11 @@ Feature: Paddle collision
 - [ ] Integrate the selected backlog items into one demonstrable game increment.
 - [ ] Update the README and Sprint documentation before the Sprint Review.
 
-## 5. Sprint Review Result
 
-- **Sprint Goal achieved:** `No`
-- **Completed backlog items:** `<IDs>`
-- **Incomplete backlog items:** `<IDs>`
-- **Increment demonstrated:** `< >`
-- **Acceptance criteria not satisfied:** `<None or list criteria>`
-- **Stakeholder feedback:** `<summary>`
-- **Product Backlog changes resulting from feedback:** `<new, removed, reordered, or revised items>`
+## 5. Sprint Improvements
 
-## 8. Sprint Improvements
-
-### What went well
-
-- `<positive point>`
-- `<positive point>`
-
-### What did not go well
-
-- `<problem>`
-- `<problem>`
-
-### What we learned
-
-- `<lesson>`
-- `<lesson>`
-
-### Improvement actions for the next Sprint
-
-| Improvement action  | Responsible person | Target date or Sprint | Status                           |
-| ------------------- | ------------------ | --------------------- | -------------------------------- |
-| `<specific action>` | `<name>`           | `<date or Sprint>`    | `<Planned / In progress / Done>` |
-| `<specific action>` | `<name>`           | `<date or Sprint>`    | `<Planned / In progress / Done>` |
+- We missed various critical infrastructure that had to be implemented with separate issues
+- We missed our target date more than once
+- We aknowledged that some implementations required major refactorings
+  - Some of these refactorings will be the goal of the next Sprint
+- We faced some problems with the ball/paddle compenetration logic

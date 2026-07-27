@@ -54,37 +54,9 @@
 - [ ] `<code review task>`
 - [ ] `<shared integration task>`
 
-## 5. Work Division
-
-> Ownership is temporary. The whole team remains responsible for the Sprint Goal.
-
-| Team member | Initial responsibilities | Collaborates with | Status |
-|---|---|---|---|
-| `<name>` | `<tasks or area>` | `<name or area>` | `<Not started/In progress/Done/Blocked>` |
-| `<name>` | `<tasks or area>` | `<name or area>` | `<Not started/In progress/Done/Blocked>` |
-| `<name>` | `<tasks or area>` | `<name or area>` | `<Not started/In progress/Done/Blocked>` |
-
-## 6. Sprint Review Result
-
-- **Sprint Goal achieved:** `<Yes / Partially / No>`
-- **Completed backlog items:** `<IDs>`
-- **Incomplete backlog items:** `<IDs>`
-- **Increment demonstrated:** `<short description>`
-- **Stakeholder feedback:** `<summary>`
-
-## 7. Sprint Improvements
-
-### What went well
-
-- `<positive point>`
-- `<positive point>`
+## 5. Sprint Improvements
 
 ### What did not go well
 
 - `<problem>`
 - `<problem>`
-
-### What we learned
-
-- `<lesson>`
-- `<lesson>`
