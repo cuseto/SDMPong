@@ -204,22 +204,7 @@ Feature: Refactor Circle and Rectangle into Ball and Paddle
     And all the tests related to them are updated accordingly
 ```
 
-## PB-11 — Refactor folder structure
-
-**Acceptance criteria**
-
-```gherkin
-Feature: Refactor folder structure to de-bloat
-
-  Scenario: Folder are becoming bloated by classes that have different purposes
-    Given game/, model/ folders may contain classes that do not match with their intended purpose
-    Then plan a restructuring of files and folders accordingly
-    And eventually create new folders
-    And eventually delete folders
-    And eventually rename folders
-```
-
-## PB-12 — Refactor records into mutable classes
+## PB-11 — Refactor records into mutable classes
 
 **Acceptance criteria**
 
@@ -235,13 +220,91 @@ Feature: Right now, records are being used to represent dynamic objects. Since r
     And all the tests related to them are updated accordingly
 ```
 
-## PB-13 — Refactor GameConfig into a YAML config file/loader
+## PB-12 — Unify application configuration
+
+**Developer story**
+
+As a developer, I want the application’s static settings to be loaded from a YAML file, so that configuration has a single source of truth and can be changed without modifying the source code.
 
 **Acceptance criteria**
 
 ```gherkin
-Feature: GameConfig acts a record that holds all the game's "static data", but its access is not consistent across classes, the data it holds is not complete/standardized (e.g. Key controls), and configurations are not persistent across app reloads. 
+Feature: Right now, static application settings are distributed across GameConfig, game objects, and hard-coded key mappings. We want to move these settings into a config.yaml file loaded into a structured and immutable AppConfig, so that the application has a single configuration source.
 
-  Scenario: Refactor GameConfig into a YAML config file/loader
-    Boh Lollooooo scriviiii
+  Scenario: Load and apply the application configuration
+    Given config.yaml contains the viewport, arena, ball, paddle, and control settings
+    When the application starts
+    Then YamlConfigLoader loads config.yaml once
+    And the loaded settings are represented by an immutable AppConfig
+    And AppConfig is composed of ViewportConfig, GamePageConfig, and ControlsConfig
+    And GamePageConfig is composed of ArenaConfig, BallConfig, and PaddleConfig
+    And GameSession uses the relevant AppConfig settings to initialize the arena, ball, and paddles
+    And GameSession passes only the required primitive values to the domain object constructors
+    And Arena, Ball, and Paddle are independent of AppConfig and its configuration records
+    And ControlsConfig is used to create the paddle key bindings
+    And the renderer and movement logic use the domain objects initialized by GameSession
+    And the old GameConfig and hard-coded key mappings are removed
+    And the default configuration preserves the current game behaviour
+    And existing tests are updated accordingly
+    And tests for configuration loading and validation are added
+
+  Scenario: Reject an invalid application configuration
+    Given config.yaml contains missing, unknown, or invalid properties
+    When YamlConfigLoader loads the configuration
+    Then a clear configuration error is produced
+    And the application does not start
+    And dimensions, radius, inset, and speed are required to be positive
+
+  Scenario: Change application settings without modifying the source code
+    Given config.yaml contains valid configuration values
+    When a viewport, arena, ball, paddle, or control value is changed
+    And the application is restarted
+    Then the application uses the updated value without requiring source-code changes
 ```
+
+### Technical details
+Since this PB describes a critical code refactoring, the main architectural requirements are shown.
+
+**Config file structure**
+
+```yaml
+viewport:
+  screenWidth: 800
+  screenHeight: 600
+
+gamePage:
+  arena:
+    spacingTop: 80
+    spacingOther: 20
+    boundaryThickness: 4
+
+  ball:
+    radius: 8
+    initialVelocityX: 100.0
+    initialVelocityY: 100.0
+
+  paddle:
+    width: 10
+    height: 80
+    inset: 100
+    speed: 300.0
+
+controls:
+  leftPaddle:
+    up: W
+    down: S
+  rightPaddle:
+    up: UP
+    down: DOWN
+```
+
+**Basic architectural structure**
+- `YamlConfigLoader` loads `config.yaml` and returns an immutable `AppConfig`.
+- `AppConfig` contains `ViewportConfig`, `GamePageConfig`, and `ControlsConfig`.
+- `GamePageConfig` contains `ArenaConfig`, `BallConfig`, and `PaddleConfig`.
+- `GameSession` acts as the abstraction layer between configuration and domain objects.
+- `GameSession` contains the `Arena`, `Ball`, left `Paddle`, and right `Paddle`.
+- `GameSession` passes primitive configuration values to the domain object constructors.
+- `Arena`, `Ball`, and `Paddle` do not depend on configuration classes.
+- `ControlsConfig` is converted into the game’s key bindings.
+- Rendering and movement logic operate on the initialized domain objects.
