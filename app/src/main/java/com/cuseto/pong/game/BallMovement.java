@@ -17,12 +17,12 @@ public final class BallMovement {
     ) {
         double velocityY = ball.velocityY();
         double velocityX = ball.velocityX();
-        double minX = leftPaddle.startPosX() + leftPaddle.width();
-        double maxX = rightPaddle.startPosX();
+        double minX = leftPaddle.x() + leftPaddle.width();
+        double maxX = rightPaddle.x();
 
         // basic ball update
-        double newX = ball.startPosX() + ball.velocityX() * elapsedSeconds;
-        double newY = ball.startPosY() + ball.velocityY() * elapsedSeconds;
+        double newX = ball.x() + ball.velocityX() * elapsedSeconds;
+        double newY = ball.y() + ball.velocityY() * elapsedSeconds;
 
         // checking arena bounce
         if (newY <= minY || newY >= maxY) {
@@ -33,7 +33,7 @@ public final class BallMovement {
 
         // // checking paddles bounce
         // left paddle
-        if (newX <= minX & ball.startPosX() > minX) {
+        if (newX <= minX & ball.x() > minX) {
             if (ballCrossedPaddle(ball, leftPaddle, newX, newY)) {
                 newX = minX + (minX - newX);
                 velocityX *= -1;
@@ -41,7 +41,7 @@ public final class BallMovement {
         }
 
         // right paddle
-        if (ball.startPosX() < maxX & newX >= maxX) {
+        if (ball.x() < maxX & newX >= maxX) {
             if (ballCrossedPaddle(ball, rightPaddle, newX, newY)) {
                 newX = maxX - (newX - maxX);
                 velocityX *= -1;
@@ -54,14 +54,14 @@ public final class BallMovement {
     private static boolean ballCrossedPaddle(Ball ball, Paddle paddle, double newX, double newY) {
         // take the Y range that the ball covers
         // while passing the paddle line
-        double paddleLine = paddle.startPosX();
-        double m = (newY - ball.startPosY()) / (newX - ball.startPosX());
-        double a = m * paddleLine + ball.startPosY() - m * ball.startPosX();
+        double paddleLine = paddle.x();
+        double m = (newY - ball.y()) / (newX - ball.x());
+        double a = m * paddleLine + ball.y() - m * ball.x();
         double b = Math.sqrt(Math.pow(m, 2) + 1);
         double topRange = a - ball.radius() * b;
         double bottomRange = a + ball.radius() * b;
 
-        return (topRange > paddle.startPosY() & topRange < paddle.startPosY() + paddle.height()) ||
-            (bottomRange > paddle.startPosY() & bottomRange < paddle.startPosY() + paddle.height());
+        return (topRange > paddle.y() & topRange < paddle.y() + paddle.height()) ||
+            (bottomRange > paddle.y() & bottomRange < paddle.y() + paddle.height());
     }
 }

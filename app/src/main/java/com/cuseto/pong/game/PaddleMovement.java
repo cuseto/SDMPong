@@ -16,7 +16,7 @@ public final class PaddleMovement {
         double maxY
     ) {
         double delta = speed * elapsedSeconds;
-        double newY = paddle.startPosY();
+        double newY = paddle.y();
 
         if (direction == PaddleDirection.UP) {
             newY -= delta;
@@ -26,6 +26,6 @@ public final class PaddleMovement {
 
         newY = Math.max(minY, Math.min(maxY, newY));
 
-        return new Paddle(paddle.startPosX(), newY, paddle.width(), paddle.height());
+        return new Paddle(paddle.x(), newY, paddle.width(), paddle.height());
     }
 }

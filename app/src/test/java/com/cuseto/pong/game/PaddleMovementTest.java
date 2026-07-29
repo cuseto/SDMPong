@@ -23,8 +23,8 @@ class PaddleMovementTest {
             576   // arenaBottom() for the standard config
         );
 
-        assertEquals(124, moved.startPosX());
-        assertEquals(260, moved.startPosY(), 0.000_001); // 290 - 300*0.1
+        assertEquals(124, moved.x());
+        assertEquals(260, moved.y(), 0.000_001); // 290 - 300*0.1
         assertEquals(10, moved.width());
         assertEquals(80, moved.height());
     }
@@ -44,8 +44,8 @@ class PaddleMovementTest {
             576
         );
 
-        assertEquals(666, moved.startPosX());
-        assertEquals(320, moved.startPosY(), 0.000_001); // 290 + 300*0.1
+        assertEquals(666, moved.x());
+        assertEquals(320, moved.y(), 0.000_001); // 290 + 300*0.1
         assertEquals(10, moved.width());
         assertEquals(80, moved.height());
     }
@@ -65,7 +65,7 @@ class PaddleMovementTest {
             496
         );
 
-        assertEquals(84, moved.startPosY(), 0.000_001);
+        assertEquals(84, moved.y(), 0.000_001);
     }
 
     @Test
@@ -83,6 +83,6 @@ class PaddleMovementTest {
             496
         );
 
-        assertEquals(496, moved.startPosY(), 0.000_001);
+        assertEquals(496, moved.y(), 0.000_001);
     }
 }

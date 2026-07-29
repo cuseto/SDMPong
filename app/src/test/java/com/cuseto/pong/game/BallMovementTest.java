@@ -16,8 +16,8 @@ class BallMovementTest {
 
         Ball moved = BallMovement.move(ball, elapsedSeconds, 0, 1000, dummyPaddle, dummyPaddle);
 
-        assertEquals(420, moved.startPosX(), 0.000_001); // 400 + 200*0.1
-        assertEquals(312, moved.startPosY(), 0.000_001); // 300 + 120*0.1
+        assertEquals(420, moved.x(), 0.000_001); // 400 + 200*0.1
+        assertEquals(312, moved.y(), 0.000_001); // 300 + 120*0.1
         assertEquals(8, moved.radius());
         assertEquals(200, moved.velocityX());
         assertEquals(120, moved.velocityY());
@@ -34,8 +34,8 @@ class BallMovementTest {
         );
         Ball oneFullTick = BallMovement.move(ball, 0.1, 0, 1000, dummyPaddle, dummyPaddle);
 
-        assertEquals(oneFullTick.startPosX(), twoHalfTicks.startPosX(), 0.000_001);
-        assertEquals(oneFullTick.startPosY(), twoHalfTicks.startPosY(), 0.000_001);
+        assertEquals(oneFullTick.x(), twoHalfTicks.x(), 0.000_001);
+        assertEquals(oneFullTick.y(), twoHalfTicks.y(), 0.000_001);
     }
 
     @Test
@@ -44,8 +44,8 @@ class BallMovementTest {
         Paddle dummyPaddle = new Paddle(0,0,1,1);
         Ball ballUpdated = BallMovement.move(ball, 0.0, 20, 100, dummyPaddle, dummyPaddle);
 
-        assertEquals(400, ballUpdated.startPosX());
-        assertEquals(30, ballUpdated.startPosY());
+        assertEquals(400, ballUpdated.x());
+        assertEquals(30, ballUpdated.y());
     }
 
     @Test
@@ -54,8 +54,8 @@ class BallMovementTest {
         Paddle dummyPaddle = new Paddle(0,0,1,1);
         Ball ballUpdated = BallMovement.move(ball, 0.0, 20, 100, dummyPaddle, dummyPaddle);
 
-        assertEquals(400, ballUpdated.startPosX());
-        assertEquals(90, ballUpdated.startPosY());
+        assertEquals(400, ballUpdated.x());
+        assertEquals(90, ballUpdated.y());
     }
 
     @Test
@@ -82,8 +82,8 @@ class BallMovementTest {
         Paddle paddle = new Paddle(10, 20, 2, 150);
         Ball ballUpdated = BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
 
-        assertEquals(19, ballUpdated.startPosX());
-        assertEquals(8, ballUpdated.startPosY());
+        assertEquals(19, ballUpdated.x());
+        assertEquals(8, ballUpdated.y());
     }
 
     @Test
@@ -101,8 +101,8 @@ class BallMovementTest {
         Paddle paddle = new Paddle(10, 20, 2, 150);
         Ball ballUpdated = BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
 
-        assertEquals(5, ballUpdated.startPosX());
-        assertEquals(8, ballUpdated.startPosY());
+        assertEquals(5, ballUpdated.x());
+        assertEquals(8, ballUpdated.y());
     }
 
         @Test

@@ -18,12 +18,12 @@ class GameUpdaterTest {
         );
 
         GameUpdater addTen = (s, elapsed) -> new GameState(
-            new Ball(s.ball().startPosX() + 10, s.ball().startPosY(), s.ball().radius(), s.ball().velocityX(), s.ball().velocityY()),
+            new Ball(s.ball().x() + 10, s.ball().y(), s.ball().radius(), s.ball().velocityX(), s.ball().velocityY()),
             s.leftPaddle(),
             s.rightPaddle()
         );
         GameUpdater addHundred = (s, elapsed) -> new GameState(
-            new Ball(s.ball().startPosX() + 100, s.ball().startPosY(), s.ball().radius(), s.ball().velocityX(), s.ball().velocityY()),
+            new Ball(s.ball().x() + 100, s.ball().y(), s.ball().radius(), s.ball().velocityX(), s.ball().velocityY()),
             s.leftPaddle(),
             s.rightPaddle()
         );
@@ -32,6 +32,6 @@ class GameUpdaterTest {
 
         GameState result = combined.update(state, 0.1);
 
-        assertEquals(110, result.ball().startPosX());
+        assertEquals(110, result.ball().x());
     }
 }

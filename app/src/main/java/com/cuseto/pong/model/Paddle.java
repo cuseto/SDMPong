@@ -4,8 +4,8 @@ package com.cuseto.pong.model;
  * Encapsulates the paddles' positions and dimensions
  */
 public record Paddle(
-    double startPosX,
-    double startPosY,
+    double x,
+    double y,
     double width,
     double height
 ) {

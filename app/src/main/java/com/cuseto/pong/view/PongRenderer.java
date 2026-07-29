@@ -36,8 +36,8 @@ public final class PongRenderer {
         graphics.setFill(Color.WHITE);
         double diameter = 2.0 * ball.radius();
         graphics.fillOval(
-            ball.startPosX() - ball.radius(),
-            ball.startPosY() - ball.radius(),
+            ball.x() - ball.radius(),
+            ball.y() - ball.radius(),
             diameter,
             diameter
         );
@@ -46,8 +46,8 @@ public final class PongRenderer {
     private void drawPaddle(GraphicsContext graphics, Paddle paddle) {
         graphics.setFill(Color.WHITE);
         graphics.fillRect(
-            paddle.startPosX(), 
-            paddle.startPosY(), 
+            paddle.x(), 
+            paddle.y(), 
             paddle.width(), 
             paddle.height()
         );

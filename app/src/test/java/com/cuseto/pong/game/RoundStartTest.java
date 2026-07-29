@@ -18,7 +18,7 @@ class RoundStartTest {
 
         GameState afterOneTick = updater.update(readyState, 0.1);
 
-        assertNotEquals(readyState.ball().startPosX(), afterOneTick.ball().startPosX());
+        assertNotEquals(readyState.ball().x(), afterOneTick.ball().x());
         assertNotEquals(0.0, readyState.ball().velocityX());
     }
 }

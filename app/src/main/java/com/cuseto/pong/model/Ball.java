@@ -4,8 +4,8 @@ package com.cuseto.pong.model;
  * Encapsulates the ball's position and radius
  */
 public record Ball (
-    double startPosX,
-    double startPosY,
+    double x,
+    double y,
     double radius,
     double velocityX,
     double velocityY
@@ -16,7 +16,7 @@ public record Ball (
         }
     }
 
-    public Ball(double startPosX, double startPosY, double radius) {
-        this(startPosX, startPosY, radius, 0.0, 0.0);
+    public Ball(double x, double y, double radius) {
+        this(x, y, radius, 0.0, 0.0);
     }
 }

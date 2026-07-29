@@ -17,11 +17,11 @@ class BallGameUpdaterTest {
 
         GameState updatedState = updater.update(initialState, 0.1);
 
-        double expectedX = initialState.ball().startPosX() + config.ballVelocityX() * 0.1;
-        double expectedY = initialState.ball().startPosY() + config.ballVelocityY() * 0.1;
+        double expectedX = initialState.ball().x() + config.ballVelocityX() * 0.1;
+        double expectedY = initialState.ball().y() + config.ballVelocityY() * 0.1;
 
-        assertEquals(expectedX, updatedState.ball().startPosX(), 0.000_001);
-        assertEquals(expectedY, updatedState.ball().startPosY(), 0.000_001);
+        assertEquals(expectedX, updatedState.ball().x(), 0.000_001);
+        assertEquals(expectedY, updatedState.ball().y(), 0.000_001);
         assertEquals(initialState.leftPaddle(), updatedState.leftPaddle());
         assertEquals(initialState.rightPaddle(), updatedState.rightPaddle());
     }
