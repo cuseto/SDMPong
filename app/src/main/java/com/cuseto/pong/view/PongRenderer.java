@@ -1,9 +1,9 @@
 package com.cuseto.pong.view;
 
-import com.cuseto.pong.model.Circle;
+import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.GameConfig;
 import com.cuseto.pong.model.GameState;
-import com.cuseto.pong.model.Rectangle;
+import com.cuseto.pong.model.Paddle;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -15,9 +15,9 @@ public final class PongRenderer {
         graphics.fillRect(0, 0, config.screenWidth(), config.screenHeight());
 
         drawArenaBoundaries(graphics, config);
-        drawCircle(graphics, state.ball());
-        drawRectangle(graphics, state.leftPaddle());
-        drawRectangle(graphics, state.rightPaddle());
+        drawBall(graphics, state.ball());
+        drawPaddle(graphics, state.leftPaddle());
+        drawPaddle(graphics, state.rightPaddle());
     }
 
     private void drawArenaBoundaries(GraphicsContext graphics, GameConfig config) {
@@ -32,24 +32,24 @@ public final class PongRenderer {
         );    
     }
 
-    private void drawCircle(GraphicsContext graphics, Circle circle) {
+    private void drawBall(GraphicsContext graphics, Ball ball) {
         graphics.setFill(Color.WHITE);
-        double diameter = 2.0 * circle.radius();
+        double diameter = 2.0 * ball.radius();
         graphics.fillOval(
-            circle.startPosX() - circle.radius(),
-            circle.startPosY() - circle.radius(),
+            ball.startPosX() - ball.radius(),
+            ball.startPosY() - ball.radius(),
             diameter,
             diameter
         );
     }
 
-    private void drawRectangle(GraphicsContext graphics, Rectangle rectangle) {
+    private void drawPaddle(GraphicsContext graphics, Paddle paddle) {
         graphics.setFill(Color.WHITE);
         graphics.fillRect(
-            rectangle.startPosX(), 
-            rectangle.startPosY(), 
-            rectangle.width(), 
-            rectangle.height()
+            paddle.startPosX(), 
+            paddle.startPosY(), 
+            paddle.width(), 
+            paddle.height()
         );
     }
 

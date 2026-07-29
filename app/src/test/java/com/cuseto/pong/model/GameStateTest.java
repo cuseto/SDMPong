@@ -10,15 +10,15 @@ class GameStateTest {
         GameConfig config = GameConfig.standard();
         GameState state = GameState.initial(config);
         
-        assertEquals(new Circle(400, 330, 8, config.ballVelocityX(), config.ballVelocityY()), state.ball());
+        assertEquals(new Ball(400, 330, 8, config.ballVelocityX(), config.ballVelocityY()), state.ball());
     }
 
     @Test
     void initialPositionPaddleWithTopSpacing80() {
         GameState state = GameState.initial(GameConfig.standard());
 
-        assertEquals(new Rectangle(124, 290, 10, 80), state.leftPaddle());
-        assertEquals(new Rectangle(666, 290, 10, 80), state.rightPaddle());
+        assertEquals(new Paddle(124, 290, 10, 80), state.leftPaddle());
+        assertEquals(new Paddle(666, 290, 10, 80), state.rightPaddle());
     }
 
     @Test

@@ -1,14 +1,14 @@
 package com.cuseto.pong.game;
 
 import com.cuseto.pong.model.PaddleDirection;
-import com.cuseto.pong.model.Rectangle;
+import com.cuseto.pong.model.Paddle;
 
 public final class PaddleMovement {
     private PaddleMovement() {
     }
 
-    public static Rectangle move(
-        Rectangle paddle,
+    public static Paddle move(
+        Paddle paddle,
         PaddleDirection direction,
         double elapsedSeconds,
         double speed,
@@ -26,6 +26,6 @@ public final class PaddleMovement {
 
         newY = Math.max(minY, Math.min(maxY, newY));
 
-        return new Rectangle(paddle.startPosX(), newY, paddle.width(), paddle.height());
+        return new Paddle(paddle.startPosX(), newY, paddle.width(), paddle.height());
     }
 }

@@ -1,7 +1,7 @@
 package com.cuseto.pong.game;
 
 import com.cuseto.pong.model.PaddleDirection;
-import com.cuseto.pong.model.Rectangle;
+import com.cuseto.pong.model.Paddle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,11 +10,11 @@ class PaddleMovementTest {
 
     @Test
     void movingUpDecreasesPaddleYBySpeedTimesElapsedSeconds() {
-        Rectangle paddle = new Rectangle(124, 290, 10, 80);
+        Paddle paddle = new Paddle(124, 290, 10, 80);
         double speed = 300.0;
         double elapsedSeconds = 0.1;
 
-        Rectangle moved = PaddleMovement.move(
+        Paddle moved = PaddleMovement.move(
             paddle,
             PaddleDirection.UP,
             elapsedSeconds,
@@ -31,11 +31,11 @@ class PaddleMovementTest {
 
     @Test
     void movingDownIncreasesPaddleYBySpeedTimesElapsedSeconds() {
-        Rectangle paddle = new Rectangle(666, 290, 10, 80);
+        Paddle paddle = new Paddle(666, 290, 10, 80);
         double speed = 300.0;
         double elapsedSeconds = 0.1;
 
-        Rectangle moved = PaddleMovement.move(
+        Paddle moved = PaddleMovement.move(
             paddle,
             PaddleDirection.DOWN,
             elapsedSeconds,
@@ -52,11 +52,11 @@ class PaddleMovementTest {
 
     @Test
     void movingUpAtTopBoundaryStaysWithinArena() {
-        Rectangle paddle = new Rectangle(124, 84, 10, 80); // already sitting at the top boundary
+        Paddle paddle = new Paddle(124, 84, 10, 80); // already sitting at the top boundary
         double speed = 300.0;
         double elapsedSeconds = 0.5; // would overshoot by 150px if unclamped
 
-        Rectangle moved = PaddleMovement.move(
+        Paddle moved = PaddleMovement.move(
             paddle,
             PaddleDirection.UP,
             elapsedSeconds,
@@ -70,11 +70,11 @@ class PaddleMovementTest {
 
     @Test
     void movingDownAtBottomBoundaryStaysWithinArena() {
-        Rectangle paddle = new Rectangle(666, 496, 10, 80); // already sitting at the bottom boundary
+        Paddle paddle = new Paddle(666, 496, 10, 80); // already sitting at the bottom boundary
         double speed = 300.0;
         double elapsedSeconds = 0.5; // would overshoot by 150px if unclamped
 
-        Rectangle moved = PaddleMovement.move(
+        Paddle moved = PaddleMovement.move(
             paddle,
             PaddleDirection.DOWN,
             elapsedSeconds,

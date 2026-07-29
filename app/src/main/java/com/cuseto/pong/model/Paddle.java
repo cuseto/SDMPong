@@ -3,13 +3,13 @@ package com.cuseto.pong.model;
 /**
  * Encapsulates the paddles' positions and dimensions
  */
-public record Rectangle(
+public record Paddle(
     double startPosX,
     double startPosY,
     double width,
     double height
 ) {
-    public Rectangle {
+    public Paddle {
         if (width <= 0) {
             throw new IllegalArgumentException("Paddle width must be positive");
         }

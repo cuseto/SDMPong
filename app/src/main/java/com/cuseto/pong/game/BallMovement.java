@@ -1,19 +1,19 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.Circle;
-import com.cuseto.pong.model.Rectangle;
+import com.cuseto.pong.model.Ball;
+import com.cuseto.pong.model.Paddle;
 
 public final class BallMovement {
     private BallMovement() {
     }
 
-    public static Circle move(
-        Circle ball,
+    public static Ball move(
+        Ball ball,
         double elapsedSeconds,
         int minY,
         int maxY,
-        Rectangle leftPaddle,
-        Rectangle rightPaddle
+        Paddle leftPaddle,
+        Paddle rightPaddle
     ) {
         double velocityY = ball.velocityY();
         double velocityX = ball.velocityX();
@@ -48,10 +48,10 @@ public final class BallMovement {
             }
         }
 
-        return new Circle(newX, newY, ball.radius(), velocityX, velocityY);
+        return new Ball(newX, newY, ball.radius(), velocityX, velocityY);
     }
 
-    private static boolean ballCrossedPaddle(Circle ball, Rectangle paddle, double newX, double newY) {
+    private static boolean ballCrossedPaddle(Ball ball, Paddle paddle, double newX, double newY) {
         // take the Y range that the ball covers
         // while passing the paddle line
         double paddleLine = paddle.startPosX();

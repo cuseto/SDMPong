@@ -2,7 +2,7 @@ package com.cuseto.pong.game;
 
 import com.cuseto.pong.model.GameConfig;
 import com.cuseto.pong.model.GameState;
-import com.cuseto.pong.model.Rectangle;
+import com.cuseto.pong.model.Paddle;
 
 public class PaddleGameUpdater implements GameUpdater {
 
@@ -19,7 +19,7 @@ public class PaddleGameUpdater implements GameUpdater {
         double minY = config.arenaTop();
         double maxY = config.arenaBottom() - config.paddleHeight();
 
-        Rectangle leftPaddle = PaddleMovement.move(
+        Paddle leftPaddle = PaddleMovement.move(
             state.leftPaddle(),
             inputState.leftDirection(),
             elapsedSeconds,
@@ -28,7 +28,7 @@ public class PaddleGameUpdater implements GameUpdater {
             maxY
         );
 
-        Rectangle rightPaddle = PaddleMovement.move(
+        Paddle rightPaddle = PaddleMovement.move(
             state.rightPaddle(),
             inputState.rightDirection(),
             elapsedSeconds,
