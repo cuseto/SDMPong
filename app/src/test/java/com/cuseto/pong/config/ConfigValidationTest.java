@@ -1,7 +1,9 @@
 package com.cuseto.pong.config;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import com.cuseto.pong.config.model.ArenaConfig;
 import com.cuseto.pong.config.model.BallConfig;
@@ -14,43 +16,66 @@ import javafx.scene.input.KeyCode;
 class ConfigValidationTest {
     @Test
     void viewportDimensionsMustBePositive() {
-        assertThrows(IllegalArgumentException.class, () -> new ViewportConfig(0, 600));
-        assertThrows(IllegalArgumentException.class, () -> new ViewportConfig(800, -1));
+        assertInvalid(IllegalArgumentException.class, "screenWidth",
+            () -> new ViewportConfig(0, 600));
+        assertInvalid(IllegalArgumentException.class, "screenHeight",
+            () -> new ViewportConfig(800, -1));
     }
 
     @Test
     void arenaSpacingMustBeNonNegativeAndBoundaryMustBePositive() {
-        assertThrows(IllegalArgumentException.class, () -> new ArenaConfig(-1, 20, 4));
-        assertThrows(IllegalArgumentException.class, () -> new ArenaConfig(80, -1, 4));
-        assertThrows(IllegalArgumentException.class, () -> new ArenaConfig(80, 20, 0));
+        assertInvalid(IllegalArgumentException.class, "spacingTop",
+            () -> new ArenaConfig(-1, 20, 4));
+        assertInvalid(IllegalArgumentException.class, "spacingOther",
+            () -> new ArenaConfig(80, -1, 4));
+        assertInvalid(IllegalArgumentException.class, "boundaryThickness",
+            () -> new ArenaConfig(80, 20, 0));
     }
 
     @Test
     void ballRadiusMustBePositiveAndVelocitiesMustBeFinite() {
-        assertThrows(IllegalArgumentException.class, () -> new BallConfig(0, 100.0, 100.0));
-        assertThrows(IllegalArgumentException.class,
+        assertInvalid(IllegalArgumentException.class, "radius",
+            () -> new BallConfig(0, 100.0, 100.0));
+        assertInvalid(IllegalArgumentException.class, "initialVelocityX",
             () -> new BallConfig(8, Double.NaN, 100.0));
-        assertThrows(IllegalArgumentException.class,
+        assertInvalid(IllegalArgumentException.class, "initialVelocityY",
             () -> new BallConfig(8, 100.0, Double.POSITIVE_INFINITY));
     }
 
     @Test
     void paddleDimensionsAndSpeedMustBePositiveAndInsetNonNegative() {
-        assertThrows(IllegalArgumentException.class, () -> new PaddleConfig(0, 80, 100, 300.0));
-        assertThrows(IllegalArgumentException.class, () -> new PaddleConfig(10, 0, 100, 300.0));
-        assertThrows(IllegalArgumentException.class, () -> new PaddleConfig(10, 80, -1, 300.0));
-        assertThrows(IllegalArgumentException.class, () -> new PaddleConfig(10, 80, 100, 0.0));
-        assertThrows(IllegalArgumentException.class,
+        assertInvalid(IllegalArgumentException.class, "width",
+            () -> new PaddleConfig(0, 80, 100, 300.0));
+        assertInvalid(IllegalArgumentException.class, "height",
+            () -> new PaddleConfig(10, 0, 100, 300.0));
+        assertInvalid(IllegalArgumentException.class, "inset",
+            () -> new PaddleConfig(10, 80, -1, 300.0));
+        assertInvalid(IllegalArgumentException.class, "speed",
+            () -> new PaddleConfig(10, 80, 100, 0.0));
+        assertInvalid(IllegalArgumentException.class, "speed",
             () -> new PaddleConfig(10, 80, 100, Double.NaN));
     }
 
     @Test
     void controlKeysMustBePresentAndDifferent() {
-        assertThrows(NullPointerException.class,
+        assertInvalid(NullPointerException.class, "up",
             () -> new PaddleControlsConfig(null, KeyCode.S));
-        assertThrows(NullPointerException.class,
+        assertInvalid(NullPointerException.class, "down",
             () -> new PaddleControlsConfig(KeyCode.W, null));
-        assertThrows(IllegalArgumentException.class,
+        assertInvalid(IllegalArgumentException.class, "different keys",
             () -> new PaddleControlsConfig(KeyCode.W, KeyCode.W));
+    }
+
+    private static <T extends Throwable> void assertInvalid(
+        Class<T> expectedType,
+        String expectedMessagePart,
+        Executable operation
+    ) {
+        T exception = assertThrows(expectedType, operation);
+
+        assertTrue(
+            exception.getMessage().contains(expectedMessagePart),
+            () -> "Expected error message to contain: " + expectedMessagePart
+        );
     }
 }
