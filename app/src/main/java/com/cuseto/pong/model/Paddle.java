@@ -1,20 +1,45 @@
 package com.cuseto.pong.model;
 
 /**
- * Encapsulates the paddles' positions and dimensions
+ * Encapsulates a paddle's mutable vertical position and fixed dimensions.
  */
-public record Paddle(
-    double x,
-    double y,
-    double width,
-    double height
-) {
-    public Paddle {
+public final class Paddle {
+    private final double x;
+    private double y;
+    private final double width;
+    private final double height;
+
+    public Paddle(double x, double y, double width, double height) {
         if (width <= 0) {
             throw new IllegalArgumentException("Paddle width must be positive");
         }
         if (height <= 0) {
             throw new IllegalArgumentException("Paddle height must be positive");
         }
+
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    public double x() {
+        return x;
+    }
+
+    public double y() {
+        return y;
+    }
+
+    public double width() {
+        return width;
+    }
+
+    public double height() {
+        return height;
+    }
+
+    public void moveToY(double y) {
+        this.y = y;
     }
 }
