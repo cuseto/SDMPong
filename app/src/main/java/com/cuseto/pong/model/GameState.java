@@ -2,15 +2,30 @@ package com.cuseto.pong.model;
 
 import java.util.Objects;
 
-public record GameState(    // For things that can change during gameplay
-	Ball ball,
-    Paddle leftPaddle,
-    Paddle rightPaddle
-) {
-    public GameState {
-        Objects.requireNonNull(ball, "ball cannot be null");
-        Objects.requireNonNull(leftPaddle, "leftPaddle cannot be null");
-        Objects.requireNonNull(rightPaddle, "rightPaddle cannot be null");
+/**
+ * Owns the mutable objects that make up one match.
+ */
+public final class GameState {
+    private final Ball ball;
+    private final Paddle leftPaddle;
+    private final Paddle rightPaddle;
+
+    public GameState(Ball ball, Paddle leftPaddle, Paddle rightPaddle) {
+        this.ball = Objects.requireNonNull(ball, "ball cannot be null");
+        this.leftPaddle = Objects.requireNonNull(leftPaddle, "leftPaddle cannot be null");
+        this.rightPaddle = Objects.requireNonNull(rightPaddle, "rightPaddle cannot be null");
+    }
+
+    public Ball ball() {
+        return ball;
+    }
+
+    public Paddle leftPaddle() {
+        return leftPaddle;
+    }
+
+    public Paddle rightPaddle() {
+        return rightPaddle;
     }
 
     public static GameState initial(GameConfig config) {
