@@ -1,10 +1,12 @@
 package com.cuseto.pong.config;
 
-import javafx.scene.input.KeyCode;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import com.cuseto.pong.config.model.AppConfig;
+
+import javafx.scene.input.KeyCode;
 
 class ConfigLoaderTest {
     @Test

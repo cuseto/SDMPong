@@ -1,17 +1,20 @@
 package com.cuseto.pong.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 
+import com.cuseto.pong.config.model.AppConfig;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 public final class ConfigLoader {
     private static final String DEFAULT_CONFIG_RESOURCE = "/config.yaml";
     private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory())
-        .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        .enable(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES)
+        .enable(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES);
 
     private ConfigLoader() {
     }
