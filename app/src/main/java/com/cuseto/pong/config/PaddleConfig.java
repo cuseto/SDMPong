@@ -4,5 +4,5 @@ public record PaddleConfig(
     int width,
     int height,
     int inset,
-    float speed
+    double speed
 ) {}
