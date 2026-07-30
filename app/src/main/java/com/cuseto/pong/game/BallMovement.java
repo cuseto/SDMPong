@@ -7,7 +7,7 @@ public final class BallMovement {
     private BallMovement() {
     }
 
-    public static Ball move(
+    public static void move(
         Ball ball,
         double elapsedSeconds,
         int minY,
@@ -48,7 +48,8 @@ public final class BallMovement {
             }
         }
 
-        return new Ball(newX, newY, ball.radius(), velocityX, velocityY);
+        ball.moveTo(newX, newY);
+        ball.setVelocity(velocityX, velocityY);
     }
 
     private static boolean ballCrossedPaddle(Ball ball, Paddle paddle, double newX, double newY) {

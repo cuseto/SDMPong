@@ -10,7 +10,11 @@ class GameStateTest {
         GameConfig config = GameConfig.standard();
         GameState state = GameState.initial(config);
         
-        assertEquals(new Ball(400, 330, 8, config.ballVelocityX(), config.ballVelocityY()), state.ball());
+        assertEquals(400, state.ball().x());
+        assertEquals(330, state.ball().y());
+        assertEquals(8, state.ball().radius());
+        assertEquals(config.ballVelocityX(), state.ball().velocityX());
+        assertEquals(config.ballVelocityY(), state.ball().velocityY());
     }
 
     @Test

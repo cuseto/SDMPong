@@ -12,17 +12,15 @@ public class BallGameUpdater implements GameUpdater {
 
     @Override
     public GameState update(GameState state, double elapsedSeconds) {
-        return new GameState(
-            BallMovement.move(
-                state.ball(),
-                elapsedSeconds,
-                config.arenaTop() + config.arenaBoundaryThickness(),
-                config.arenaBottom() - config.arenaBoundaryThickness(),
-                state.leftPaddle(),
-                state.rightPaddle()
-            ),
+        BallMovement.move(
+            state.ball(),
+            elapsedSeconds,
+            config.arenaTop() + config.arenaBoundaryThickness(),
+            config.arenaBottom() - config.arenaBoundaryThickness(),
             state.leftPaddle(),
             state.rightPaddle()
         );
+
+        return state;
     }
 }
