@@ -14,7 +14,7 @@ public class PaddleGameUpdater implements GameUpdater {
     }
 
     @Override
-    public GameState update(GameState state, double elapsedSeconds) {
+    public void update(GameState state, double elapsedSeconds) {
         double minY = config.arenaTop();
         double maxY = config.arenaBottom() - config.paddleHeight();
 
@@ -36,6 +36,5 @@ public class PaddleGameUpdater implements GameUpdater {
             maxY
         );
 
-        return state;
     }
 }

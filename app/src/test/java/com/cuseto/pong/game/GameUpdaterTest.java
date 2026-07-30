@@ -17,21 +17,15 @@ class GameUpdaterTest {
             new Paddle(0, 0, 10, 80)
         );
 
-        GameUpdater addTen = (s, elapsed) -> new GameState(
-            new Ball(s.ball().x() + 10, s.ball().y(), s.ball().radius(), s.ball().velocityX(), s.ball().velocityY()),
-            s.leftPaddle(),
-            s.rightPaddle()
-        );
-        GameUpdater addHundred = (s, elapsed) -> new GameState(
-            new Ball(s.ball().x() + 100, s.ball().y(), s.ball().radius(), s.ball().velocityX(), s.ball().velocityY()),
-            s.leftPaddle(),
-            s.rightPaddle()
-        );
+        GameUpdater setBallXToTen = (s, elapsed) ->
+            s.ball().moveTo(10, s.ball().y());
+        GameUpdater doubleBallX = (s, elapsed) ->
+            s.ball().moveTo(s.ball().x() * 2, s.ball().y());
 
-        GameUpdater combined = addTen.andThen(addHundred);
+        GameUpdater combined = setBallXToTen.andThen(doubleBallX);
 
-        GameState result = combined.update(state, 0.1);
+        combined.update(state, 0.1);
 
-        assertEquals(110, result.ball().x());
+        assertEquals(20, state.ball().x());
     }
 }

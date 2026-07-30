@@ -20,7 +20,6 @@ class GameLoopTest {
             initialState,
             (state, elapsed) -> {
                 elapsedSeconds.add(elapsed);
-                return state;
             },
             state -> { }
         );

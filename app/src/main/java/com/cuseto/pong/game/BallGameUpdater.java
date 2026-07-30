@@ -11,7 +11,7 @@ public class BallGameUpdater implements GameUpdater {
     }
 
     @Override
-    public GameState update(GameState state, double elapsedSeconds) {
+    public void update(GameState state, double elapsedSeconds) {
         BallMovement.move(
             state.ball(),
             elapsedSeconds,
@@ -21,6 +21,5 @@ public class BallGameUpdater implements GameUpdater {
             state.rightPaddle()
         );
 
-        return state;
     }
 }

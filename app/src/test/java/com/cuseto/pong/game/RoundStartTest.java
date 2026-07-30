@@ -17,9 +17,9 @@ class RoundStartTest {
         GameUpdater updater = new PaddleGameUpdater(new PaddleInputState(), config)
             .andThen(new BallGameUpdater(config));
 
-        GameState afterOneTick = updater.update(readyState, 0.1);
+        updater.update(readyState, 0.1);
 
-        assertNotEquals(initialBallX, afterOneTick.ball().x());
-        assertNotEquals(0.0, afterOneTick.ball().velocityX());
+        assertNotEquals(initialBallX, readyState.ball().x());
+        assertNotEquals(0.0, readyState.ball().velocityX());
     }
 }

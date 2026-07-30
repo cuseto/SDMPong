@@ -13,7 +13,7 @@ public final class GameLoop extends AnimationTimer {
     private final GameUpdater updater;
     private final Consumer<GameState> renderer;
 
-    private GameState currentState;
+    private final GameState currentState;
     private long previousFrameNanos = NO_PREVIOUS_FRAME;
 
     public GameLoop(GameState initialState, GameUpdater updater, Consumer<GameState> renderer) {
@@ -31,10 +31,7 @@ public final class GameLoop extends AnimationTimer {
         double elapsedSeconds = elapsedSecondsSincePreviousFrame(now);
         previousFrameNanos = now;
 
-        currentState = Objects.requireNonNull(
-            updater.update(currentState, elapsedSeconds),
-            "updater cannot return null"
-        );
+        updater.update(currentState, elapsedSeconds);
         renderer.accept(currentState);
     }
 
