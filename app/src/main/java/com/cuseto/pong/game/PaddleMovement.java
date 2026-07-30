@@ -7,7 +7,7 @@ public final class PaddleMovement {
     private PaddleMovement() {
     }
 
-    public static Paddle move(
+    public static void move(
         Paddle paddle,
         PaddleDirection direction,
         double elapsedSeconds,
@@ -26,6 +26,6 @@ public final class PaddleMovement {
 
         newY = Math.max(minY, Math.min(maxY, newY));
 
-        return new Paddle(paddle.x(), newY, paddle.width(), paddle.height());
+        paddle.moveToY(newY);
     }
 }

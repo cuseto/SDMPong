@@ -21,8 +21,14 @@ class GameStateTest {
     void initialPositionPaddleWithTopSpacing80() {
         GameState state = GameState.initial(GameConfig.standard());
 
-        assertEquals(new Paddle(124, 290, 10, 80), state.leftPaddle());
-        assertEquals(new Paddle(666, 290, 10, 80), state.rightPaddle());
+        assertEquals(124, state.leftPaddle().x());
+        assertEquals(290, state.leftPaddle().y());
+        assertEquals(10, state.leftPaddle().width());
+        assertEquals(80, state.leftPaddle().height());
+        assertEquals(666, state.rightPaddle().x());
+        assertEquals(290, state.rightPaddle().y());
+        assertEquals(10, state.rightPaddle().width());
+        assertEquals(80, state.rightPaddle().height());
     }
 
     @Test

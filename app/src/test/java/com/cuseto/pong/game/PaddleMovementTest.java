@@ -14,7 +14,7 @@ class PaddleMovementTest {
         double speed = 300.0;
         double elapsedSeconds = 0.1;
 
-        Paddle moved = PaddleMovement.move(
+        PaddleMovement.move(
             paddle,
             PaddleDirection.UP,
             elapsedSeconds,
@@ -23,10 +23,10 @@ class PaddleMovementTest {
             576   // arenaBottom() for the standard config
         );
 
-        assertEquals(124, moved.x());
-        assertEquals(260, moved.y(), 0.000_001); // 290 - 300*0.1
-        assertEquals(10, moved.width());
-        assertEquals(80, moved.height());
+        assertEquals(124, paddle.x());
+        assertEquals(260, paddle.y(), 0.000_001); // 290 - 300*0.1
+        assertEquals(10, paddle.width());
+        assertEquals(80, paddle.height());
     }
 
     @Test
@@ -35,7 +35,7 @@ class PaddleMovementTest {
         double speed = 300.0;
         double elapsedSeconds = 0.1;
 
-        Paddle moved = PaddleMovement.move(
+        PaddleMovement.move(
             paddle,
             PaddleDirection.DOWN,
             elapsedSeconds,
@@ -44,10 +44,10 @@ class PaddleMovementTest {
             576
         );
 
-        assertEquals(666, moved.x());
-        assertEquals(320, moved.y(), 0.000_001); // 290 + 300*0.1
-        assertEquals(10, moved.width());
-        assertEquals(80, moved.height());
+        assertEquals(666, paddle.x());
+        assertEquals(320, paddle.y(), 0.000_001); // 290 + 300*0.1
+        assertEquals(10, paddle.width());
+        assertEquals(80, paddle.height());
     }
 
     @Test
@@ -56,7 +56,7 @@ class PaddleMovementTest {
         double speed = 300.0;
         double elapsedSeconds = 0.5; // would overshoot by 150px if unclamped
 
-        Paddle moved = PaddleMovement.move(
+        PaddleMovement.move(
             paddle,
             PaddleDirection.UP,
             elapsedSeconds,
@@ -65,7 +65,7 @@ class PaddleMovementTest {
             496
         );
 
-        assertEquals(84, moved.y(), 0.000_001);
+        assertEquals(84, paddle.y(), 0.000_001);
     }
 
     @Test
@@ -74,7 +74,7 @@ class PaddleMovementTest {
         double speed = 300.0;
         double elapsedSeconds = 0.5; // would overshoot by 150px if unclamped
 
-        Paddle moved = PaddleMovement.move(
+        PaddleMovement.move(
             paddle,
             PaddleDirection.DOWN,
             elapsedSeconds,
@@ -83,6 +83,6 @@ class PaddleMovementTest {
             496
         );
 
-        assertEquals(496, moved.y(), 0.000_001);
+        assertEquals(496, paddle.y(), 0.000_001);
     }
 }
