@@ -1,24 +1,21 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
-
 public class BallGameUpdater implements GameUpdater {
-    private final GameConfig config;
+    private final GameSession gameSession;
 
-    public BallGameUpdater(GameConfig config) {
-        this.config = config;
+    public BallGameUpdater(GameSession gameSession) {
+        this.gameSession = gameSession;
     }
 
     @Override
-    public void update(GameState state, double elapsedSeconds) {
+    public void update(GameSession gameSession, double elapsedSeconds) {
         BallMovement.move(
-            state.ball(),
+            gameSession.ball,
             elapsedSeconds,
-            config.arenaTop() + config.arenaBoundaryThickness(),
-            config.arenaBottom() - config.arenaBoundaryThickness(),
-            state.leftPaddle(),
-            state.rightPaddle()
+            gameSession.arena.innerTopBoundary(),
+            gameSession.arena.innerBottomBoundary(),
+            gameSession.leftPaddle,
+            gameSession.rightPaddle
         );
 
     }

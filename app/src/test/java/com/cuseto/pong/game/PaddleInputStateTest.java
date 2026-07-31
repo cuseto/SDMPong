@@ -1,9 +1,9 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.PaddleDirection;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.cuseto.pong.model.PaddleDirection;
 
 class PaddleInputStateTest {
 

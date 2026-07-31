@@ -1,8 +1,8 @@
 package com.cuseto.pong.view;
 
+import com.cuseto.pong.game.GameSession;
+import com.cuseto.pong.model.Arena;
 import com.cuseto.pong.model.Ball;
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
 import com.cuseto.pong.model.Paddle;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -10,25 +10,25 @@ import javafx.scene.paint.Color;
 
 public final class PongRenderer {
 
-    public void render(GraphicsContext graphics, GameConfig config, GameState state) {
+    public void render(GraphicsContext graphics, GameSession gameSession, int screenWidth, int screenHeight) {
         graphics.setFill(Color.BLACK);
-        graphics.fillRect(0, 0, config.screenWidth(), config.screenHeight());
+        graphics.fillRect(0, 0, screenWidth, screenHeight);
 
-        drawArenaBoundaries(graphics, config);
-        drawBall(graphics, state.ball());
-        drawPaddle(graphics, state.leftPaddle());
-        drawPaddle(graphics, state.rightPaddle());
+        drawArenaBoundaries(graphics, gameSession.arena);
+        drawBall(graphics, gameSession.ball);
+        drawPaddle(graphics, gameSession.leftPaddle);
+        drawPaddle(graphics, gameSession.rightPaddle);
     }
 
-    private void drawArenaBoundaries(GraphicsContext graphics, GameConfig config) {
+    private void drawArenaBoundaries(GraphicsContext graphics, Arena arena) {
         graphics.setStroke(Color.WHITE);
-        graphics.setLineWidth(config.arenaBoundaryThickness());
+        graphics.setLineWidth(arena.boundaryThickness());
 
         graphics.strokeRect(
-            config.arenaSpacingOther(),
-            config.arenaSpacingTop(),
-            config.arenaWidth(),
-            config.arenaHeight()
+            arena.anchorX(),
+            arena.anchorY(),
+            arena.width(),
+            arena.height()
         );    
     }
 

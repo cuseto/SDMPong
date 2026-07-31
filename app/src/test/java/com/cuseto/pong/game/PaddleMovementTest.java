@@ -1,17 +1,17 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.PaddleDirection;
-import com.cuseto.pong.model.Paddle;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.cuseto.pong.model.Paddle;
+import com.cuseto.pong.model.PaddleDirection;
 
 class PaddleMovementTest {
 
     @Test
     void movingUpDecreasesPaddleYBySpeedTimesElapsedSeconds() {
-        Paddle paddle = new Paddle(124, 290, 10, 80);
         double speed = 300.0;
+        Paddle paddle = new Paddle(124, 290, 10, 80, speed);
         double elapsedSeconds = 0.1;
 
         PaddleMovement.move(
@@ -31,8 +31,8 @@ class PaddleMovementTest {
 
     @Test
     void movingDownIncreasesPaddleYBySpeedTimesElapsedSeconds() {
-        Paddle paddle = new Paddle(666, 290, 10, 80);
         double speed = 300.0;
+        Paddle paddle = new Paddle(666, 290, 10, 80, speed);
         double elapsedSeconds = 0.1;
 
         PaddleMovement.move(
@@ -52,8 +52,8 @@ class PaddleMovementTest {
 
     @Test
     void movingUpAtTopBoundaryStaysWithinArena() {
-        Paddle paddle = new Paddle(124, 84, 10, 80); // already sitting at the top boundary
         double speed = 300.0;
+        Paddle paddle = new Paddle(124, 84, 10, 80, speed); // already sitting at the top boundary
         double elapsedSeconds = 0.5; // would overshoot by 150px if unclamped
 
         PaddleMovement.move(
@@ -70,8 +70,8 @@ class PaddleMovementTest {
 
     @Test
     void movingDownAtBottomBoundaryStaysWithinArena() {
-        Paddle paddle = new Paddle(666, 496, 10, 80); // already sitting at the bottom boundary
         double speed = 300.0;
+        Paddle paddle = new Paddle(666, 496, 10, 80, speed); // already sitting at the bottom boundary
         double elapsedSeconds = 0.5; // would overshoot by 150px if unclamped
 
         PaddleMovement.move(

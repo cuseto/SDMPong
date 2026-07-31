@@ -1,23 +1,24 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import com.cuseto.pong.config.ConfigLoader;
+import com.cuseto.pong.config.model.AppConfig;
 
 class GameLoopTest {
 
     @Test
     void elapsedSecondsAreComputedFromAnimationTimerNanoseconds() {
-        GameState initialState = GameState.initial(GameConfig.standard());
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
         List<Double> elapsedSeconds = new ArrayList<>();
 
         GameLoop loop = new GameLoop(
-            initialState,
+            gameSession,
             (state, elapsed) -> {
                 elapsedSeconds.add(elapsed);
             },

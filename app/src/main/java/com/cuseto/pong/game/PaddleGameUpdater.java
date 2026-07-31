@@ -1,39 +1,36 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
-
 public class PaddleGameUpdater implements GameUpdater {
 
     private final PaddleInputState inputState;
-    private final GameConfig config;
+    private final GameSession gameSession;
 
-    public PaddleGameUpdater(PaddleInputState inputState, GameConfig config) {
+    public PaddleGameUpdater(PaddleInputState inputState, GameSession gameSession) {
         this.inputState = inputState;
-        this.config = config;
+        this.gameSession = gameSession;
     }
 
     @Override
-    public void update(GameState state, double elapsedSeconds) {
-        double minY = config.arenaTop();
-        double maxY = config.arenaBottom() - config.paddleHeight();
+    public void update(GameSession state, double elapsedSeconds) {
+        double minY = gameSession.arena.innerTopBoundary();
+        double maxY = gameSession.arena.innerBottomBoundary();
 
         PaddleMovement.move(
-            state.leftPaddle(),
+            state.leftPaddle,
             inputState.leftDirection(),
             elapsedSeconds,
-            config.paddleSpeed(),
+            state.leftPaddle.speed(),
             minY,
-            maxY
+            maxY - gameSession.leftPaddle.height()
         );
 
         PaddleMovement.move(
-            state.rightPaddle(),
+            state.rightPaddle,
             inputState.rightDirection(),
             elapsedSeconds,
-            config.paddleSpeed(),
+            state.rightPaddle.speed(),
             minY,
-            maxY
+            maxY - gameSession.rightPaddle.height()
         );
 
     }

@@ -27,7 +27,7 @@ class ConfigLoaderTest {
         assertEquals(12, appConfig.gamePage().paddle().width());
         assertEquals(90, appConfig.gamePage().paddle().height());
         assertEquals(70, appConfig.gamePage().paddle().inset());
-        assertEquals(250.0, appConfig.gamePage().paddle().speed());
+        assertEquals(300.0, appConfig.gamePage().paddle().speed());
 
         assertEquals(KeyCode.A, appConfig.controls().leftPaddle().up());
         assertEquals(KeyCode.Z, appConfig.controls().leftPaddle().down());

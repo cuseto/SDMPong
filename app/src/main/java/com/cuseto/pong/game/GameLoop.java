@@ -1,22 +1,21 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.GameState;
-import javafx.animation.AnimationTimer;
-
 import java.util.Objects;
 import java.util.function.Consumer;
+
+import javafx.animation.AnimationTimer;
 
 public final class GameLoop extends AnimationTimer {
     private static final long NO_PREVIOUS_FRAME = -1L;
     private static final double NANOS_PER_SECOND = 1_000_000_000.0;
 
     private final GameUpdater updater;
-    private final Consumer<GameState> renderer;
+    private final Consumer<GameSession> renderer;
 
-    private final GameState currentState;
+    private final GameSession currentState;
     private long previousFrameNanos = NO_PREVIOUS_FRAME;
 
-    public GameLoop(GameState initialState, GameUpdater updater, Consumer<GameState> renderer) {
+    public GameLoop(GameSession initialState, GameUpdater updater, Consumer<GameSession> renderer) {
         this.currentState = Objects.requireNonNull(initialState, "initialState cannot be null");
         this.updater = Objects.requireNonNull(updater, "updater cannot be null");
         this.renderer = Objects.requireNonNull(renderer, "renderer cannot be null");
@@ -35,7 +34,7 @@ public final class GameLoop extends AnimationTimer {
         renderer.accept(currentState);
     }
 
-    public GameState currentState() {
+    public GameSession currentState() {
         return currentState;
     }
 

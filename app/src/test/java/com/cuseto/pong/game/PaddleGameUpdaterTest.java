@@ -1,31 +1,32 @@
 package com.cuseto.pong.game;
 
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
-import com.cuseto.pong.model.PaddleDirection;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.cuseto.pong.config.ConfigLoader;
+import com.cuseto.pong.config.model.AppConfig;
+import com.cuseto.pong.model.PaddleDirection;
 
 public class PaddleGameUpdaterTest {
     
     @Test
     void updateMovesLeftPaddleUpWhenLeftDirectionIsUp() {
-        GameConfig config = GameConfig.standard();
-        GameState initialState = GameState.initial(config);
-        double initialBallX = initialState.ball().x();
-        double initialBallY = initialState.ball().y();
-        double initialRightPaddleY = initialState.rightPaddle().y();
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+
+        double initialBallX = gameSession.ball.x();
+        double initialBallY = gameSession.ball.y();
+        double initialRightPaddleY = gameSession.rightPaddle.y();
         PaddleInputState inputState = new PaddleInputState();
         inputState.setLeftDirection(PaddleDirection.UP);
 
-        PaddleGameUpdater updater = new PaddleGameUpdater(inputState, config);
+        PaddleGameUpdater updater = new PaddleGameUpdater(inputState, gameSession);
 
-        updater.update(initialState, 0.1);
+        updater.update(gameSession, 0.1);
 
-        assertEquals(260, initialState.leftPaddle().y(), 0.000_001); // 290 - 300*0.1
-        assertEquals(initialRightPaddleY, initialState.rightPaddle().y());
-        assertEquals(initialBallX, initialState.ball().x());
-        assertEquals(initialBallY, initialState.ball().y());
+        assertEquals(329, gameSession.leftPaddle.y(), 0.000_001); // 359 - 300*0.1
+        assertEquals(initialRightPaddleY, gameSession.rightPaddle.y());
+        assertEquals(initialBallX, gameSession.ball.x());
+        assertEquals(initialBallY, gameSession.ball.y());
     }
 }

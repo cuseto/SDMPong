@@ -3,26 +3,28 @@ package com.cuseto.pong.game;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
+import com.cuseto.pong.config.ConfigLoader;
+import com.cuseto.pong.config.model.AppConfig;
+
 
 class BallGameUpdaterTest {
 
     @Test
     void updateMovesBallByVelocityTimesElapsedSeconds() {
-        GameConfig config = GameConfig.standard();
-        GameState initialState = GameState.initial(config);
-        double initialX = initialState.ball().x();
-        double initialY = initialState.ball().y();
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
 
-        BallGameUpdater updater = new BallGameUpdater(config);
+        double initialX = gameSession.ball.x();
+        double initialY = gameSession.ball.y();
 
-        updater.update(initialState, 0.1);
+        BallGameUpdater updater = new BallGameUpdater(gameSession);
 
-        double expectedX = initialX + config.ballVelocityX() * 0.1;
-        double expectedY = initialY + config.ballVelocityY() * 0.1;
+        updater.update(gameSession, 0.1);
 
-        assertEquals(expectedX, initialState.ball().x(), 0.000_001);
-        assertEquals(expectedY, initialState.ball().y(), 0.000_001);
+        double expectedX = initialX + gameSession.ball.velocityX() * 0.1;
+        double expectedY = initialY + gameSession.ball.velocityY() * 0.1;
+
+        assertEquals(expectedX, gameSession.ball.x(), 0.000_001);
+        assertEquals(expectedY, gameSession.ball.y(), 0.000_001);
     }
 }

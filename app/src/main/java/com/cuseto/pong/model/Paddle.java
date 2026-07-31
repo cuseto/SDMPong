@@ -8,8 +8,9 @@ public final class Paddle {
     private double y;
     private final double width;
     private final double height;
+    private double speed; 
 
-    public Paddle(double x, double y, double width, double height) {
+    public Paddle(double x, double y, double width, double height, double speed) {
         if (width <= 0) {
             throw new IllegalArgumentException("Paddle width must be positive");
         }
@@ -21,6 +22,7 @@ public final class Paddle {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.speed = speed;
     }
 
     public double x() {
@@ -37,6 +39,10 @@ public final class Paddle {
 
     public double height() {
         return height;
+    }
+
+    public double speed() {
+        return speed;
     }
 
     public void moveToY(double y) {

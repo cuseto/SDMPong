@@ -12,7 +12,7 @@ class BallMovementTest {
     void ballMovesByVelocityTimesElapsedSeconds() {
         Ball ball = new Ball(400, 300, 8, 200, 120);
         double elapsedSeconds = 0.1;
-        Paddle dummyPaddle = new Paddle(0,0,1,1);
+        Paddle dummyPaddle = new Paddle(0,0,1,1,1);
 
         BallMovement.move(ball, elapsedSeconds, 0, 1000, dummyPaddle, dummyPaddle);
 
@@ -27,7 +27,7 @@ class BallMovementTest {
     void movementIsConsistentRegardlessOfTickSize() {
         Ball twoHalfTicks = new Ball(400, 300, 8, 200, 120);
         Ball oneFullTick = new Ball(400, 300, 8, 200, 120);
-        Paddle dummyPaddle = new Paddle(0,0,1,1);
+        Paddle dummyPaddle = new Paddle(0,0,1,1,1);
 
         BallMovement.move(twoHalfTicks, 0.05, 0, 1000, dummyPaddle, dummyPaddle);
         BallMovement.move(twoHalfTicks, 0.05, 0, 1000, dummyPaddle, dummyPaddle);
@@ -40,7 +40,7 @@ class BallMovementTest {
     @Test
     void ballBouncesOnTopBoundary() {
         Ball ball = new Ball(400, 10, 8, 200, 120);
-        Paddle dummyPaddle = new Paddle(0,0,1,1);
+        Paddle dummyPaddle = new Paddle(0,0,1,1,1);
         BallMovement.move(ball, 0.0, 20, 100, dummyPaddle, dummyPaddle);
 
         assertEquals(400, ball.x());
@@ -50,7 +50,7 @@ class BallMovementTest {
     @Test
     void ballBouncesOnBottomBoundary() {
         Ball ball = new Ball(400, 110, 8, 200, 120);
-        Paddle dummyPaddle = new Paddle(0,0,1,1);
+        Paddle dummyPaddle = new Paddle(0,0,1,1,1);
         BallMovement.move(ball, 0.0, 20, 100, dummyPaddle, dummyPaddle);
 
         assertEquals(400, ball.x());
@@ -60,7 +60,7 @@ class BallMovementTest {
     @Test
     void ballChangesDirectionOnTopBoundary() {
         Ball ball = new Ball(400, 10, 8, 200, 120);
-        Paddle dummyPaddle = new Paddle(0,0,1,1);
+        Paddle dummyPaddle = new Paddle(0,0,1,1,1);
         BallMovement.move(ball, 0.0, 20, 100, dummyPaddle, dummyPaddle);
 
         assertEquals(-120, ball.velocityY());
@@ -69,7 +69,7 @@ class BallMovementTest {
     @Test
     void ballChangesDirectionOnBottomBoundary() {
         Ball ball = new Ball(400, 110, 8, 200, -120);
-        Paddle dummyPaddle = new Paddle(0,0,1,1);
+        Paddle dummyPaddle = new Paddle(0,0,1,1,1);
         BallMovement.move(ball, 0.0, 20, 100, dummyPaddle, dummyPaddle);
 
         assertEquals(120, ball.velocityY());
@@ -78,7 +78,7 @@ class BallMovementTest {
     @Test
     void ballBouncesOnLeftPaddel() {
         Ball ball = new Ball(15, 20, 4, -100, -120);
-        Paddle paddle = new Paddle(10, 20, 2, 150);
+        Paddle paddle = new Paddle(10, 20, 2, 150, 1);
         BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
 
         assertEquals(19, ball.x());
@@ -88,7 +88,7 @@ class BallMovementTest {
     @Test
     void ballChangesDirectionOnLeftPaddel() {
         Ball ball = new Ball(15, 20, 4, -100, -120);
-        Paddle paddle = new Paddle(10, 20, 2, 150);
+        Paddle paddle = new Paddle(10, 20, 2, 150, 1);
         BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
 
         assertEquals(100, ball.velocityX());
@@ -97,7 +97,7 @@ class BallMovementTest {
     @Test
     void ballBouncesOnRightPaddel() {
         Ball ball = new Ball(5, 20, 4, 100, -120);
-        Paddle paddle = new Paddle(10, 20, 2, 150);
+        Paddle paddle = new Paddle(10, 20, 2, 150, 1);
         BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
 
         assertEquals(5, ball.x());
@@ -107,7 +107,7 @@ class BallMovementTest {
         @Test
     void ballChangesDirectionOnRightPaddel() {
         Ball ball = new Ball(5, 20, 4, 100, -120);
-        Paddle paddle = new Paddle(10, 20, 2, 150);
+        Paddle paddle = new Paddle(10, 20, 2, 150, 1);
         BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
 
         assertEquals(-100, ball.velocityX());
