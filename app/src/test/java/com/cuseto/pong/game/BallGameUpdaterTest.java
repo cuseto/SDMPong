@@ -17,7 +17,7 @@ class BallGameUpdaterTest {
         double initialX = gameSession.ball().x();
         double initialY = gameSession.ball().y();
 
-        BallGameUpdater updater = new BallGameUpdater(gameSession);
+        BallGameUpdater updater = new BallGameUpdater();
 
         updater.update(gameSession, 0.1);
 
