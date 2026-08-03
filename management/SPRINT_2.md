@@ -133,6 +133,154 @@ Feature: Right now, static application settings are distributed across GameConfi
     And the application is restarted
     Then the application uses the updated value without requiring source-code changes
 ```
+## Additional PBs
+
+### APB-1 — Refactor the Rendering API
+
+- Change `PongRenderer.render` to accept a `Canvas` and a `GameSession`.
+- Retrieve the `GraphicsContext` from the canvas inside `render`.
+- Retrieve the rendering width and height from the canvas inside `render`.
+- Update all rendering calls to use `renderer.render(canvas, gameSession)`.
+- Update all related automated tests.
+- Run the complete test suite and verify that existing rendering behaviour is preserved.
+
+#### Acceptance criteria
+
+```
+Feature: Render the game through its canvas
+
+  Scenario: Render a game session
+    Given PongRenderer receives a Canvas and a GameSession
+    When the game session is rendered
+    Then the GraphicsContext is retrieved from the Canvas
+    And the rendering width and height are retrieved from the Canvas
+    And width and height are not passed as separate parameters
+```
+
+---
+
+### APB-2 — Introduce Read-Only Game Model Views
+
+- Create `BallView`, `PaddleView`, and `ArenaView` interfaces under `model/view`.
+- Make `Ball`, `Paddle`, and `Arena` implement their corresponding view interfaces.
+- Use the view interfaces wherever access to game state does not require mutation.
+- Reorganize the packages so concrete game state and related behaviour are under `game`.
+- Keep the read-only interfaces under `model/view`.
+- Update all affected package declarations and imports.
+- Update all related automated tests.
+- Run the complete test suite and verify that existing game behaviour is preserved.
+
+#### Acceptance criteria
+
+```
+Feature: Expose read-only views of game state
+
+  Scenario: Access game state without allowing mutation
+    Given Ball, Paddle, and Arena contain internal game state
+    When their state is exposed to code that does not require mutation
+    Then BallView, PaddleView, and ArenaView are used
+    And each concrete game type implements its corresponding view interface
+    And the view interfaces are located under model/view
+
+  Scenario: Reorganize the game packages
+    Given concrete game state and behaviour belong to the game domain
+    When the packages are reorganized
+    Then concrete game state and related behaviour are located under game
+    And all package declarations and imports are updated accordingly
+```
+
+---
+
+### APB-3 — Remove Redundant Game Updater Parameters
+
+- Remove `GameSession` from the constructors of `BallGameUpdater` and `PaddleGameUpdater`.
+- Keep `GameSession` as a parameter of `GameUpdater.update`.
+- Use the `GameSession` supplied to `update` when modifying the game state.
+- Remove the `speed` parameter from `PaddleMovement.move`.
+- Retrieve the movement speed from the supplied `Paddle`.
+- Update all updater and movement calls.
+- Update all related automated tests.
+- Run the complete test suite and verify that existing movement behaviour is preserved.
+
+#### Acceptance criteria
+
+```
+Feature: Remove redundant updater parameters
+
+  Scenario: Update the game using the supplied game session
+    Given BallGameUpdater and PaddleGameUpdater implement GameUpdater
+    When an updater is created
+    Then GameSession is not passed to its constructor
+    And the GameSession supplied to update is used
+    And the updater does not store a redundant GameSession reference
+
+  Scenario: Move a paddle using its configured speed
+    Given a Paddle contains its movement speed
+    When PaddleMovement moves the Paddle
+    Then the speed is retrieved from the Paddle
+    And speed is not passed as a separate movement parameter
+```
+
+---
+
+### APB-4 — Separate Ball Movement Responsibilities
+
+- Divide ball movement into `moveBall`, `bounceOffHorizontalWalls`, and `bounceOffPaddles`.
+- Use `moveBall` to update the ball position.
+- Use `bounceOffHorizontalWalls` to handle collisions with horizontal arena boundaries.
+- Use `bounceOffPaddles` to handle collisions with the paddles.
+- Remove redundant velocity variables and declare velocity values only where required.
+- Update all related automated tests.
+- Run the complete test suite and verify that existing ball movement and collision behaviour is preserved.
+
+#### Acceptance criteria
+
+```
+Feature: Separate ball movement responsibilities
+
+  Scenario: Move the ball and handle its collisions
+    Given BallMovement updates a Ball in place
+    When the Ball is updated for a game tick
+    Then its position is updated by moveBall
+    And horizontal-wall collisions are handled by bounceOffHorizontalWalls
+    And paddle collisions are handled by bounceOffPaddles
+    And velocity values are declared only where they are required
+```
+
+---
+
+### APB-5 — Complete Game Model Validation
+
+- Review every constructor parameter of `Ball`, `Paddle`, and `Arena`.
+- Add validation for parameters that can produce invalid game state.
+- Review every mutable value of `Ball`, `Paddle`, and `Arena`.
+- Add validation when mutable values are updated.
+- Preserve configuration validation for invalid external configuration values.
+- Update all related automated tests.
+- Run the complete test suite and verify that valid game behaviour is preserved.
+
+#### Acceptance criteria
+
+```
+Feature: Validate the game model
+
+  Scenario Outline: Reject invalid game model state
+    Given a <game type> is created or updated
+    When an invalid parameter value is supplied
+    Then the invalid value is rejected by the owning type
+
+    Examples:
+      | game type |
+      | Ball      |
+      | Paddle    |
+      | Arena     |
+
+  Scenario: Accept valid game model state
+    Given valid parameters are supplied
+    When a Ball, Paddle, or Arena is created or updated
+    Then the operation succeeds
+    And the supplied state is preserved
+```
 
 ### Shared sprint tasks
 
