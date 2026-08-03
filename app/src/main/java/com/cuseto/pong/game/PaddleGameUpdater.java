@@ -12,8 +12,8 @@ public class PaddleGameUpdater implements GameUpdater {
 
     @Override
     public void update(GameSession state, double elapsedSeconds) {
-        double minY = gameSession.arena.innerTopBoundary();
-        double maxY = gameSession.arena.innerBottomBoundary();
+        double minY = gameSession.arena().innerTopBoundary();
+        double maxY = gameSession.arena().innerBottomBoundary();
 
         PaddleMovement.move(
             state.leftPaddle(),

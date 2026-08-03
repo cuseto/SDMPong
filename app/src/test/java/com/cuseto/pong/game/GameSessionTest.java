@@ -14,7 +14,7 @@ class GameSessionTest {
 
     @Test
     void arenaProperlyLoaded() {
-        Arena arena = createSession().arena;
+        Arena arena = createSession().arena();
 
         assertAll(
             () -> assertEquals(1004, arena.width()),

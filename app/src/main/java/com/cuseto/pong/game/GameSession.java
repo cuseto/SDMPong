@@ -8,7 +8,7 @@ import com.cuseto.pong.model.view.BallView;
 import com.cuseto.pong.model.view.PaddleView;
 
 public final class GameSession {
-    public final Arena arena;
+    private final Arena arena;
     private final Paddle leftPaddle;
     private final Paddle rightPaddle;
     private final Ball ball;
@@ -86,6 +86,10 @@ public final class GameSession {
 
     public PaddleView rightPaddleInfo() {
         return this.rightPaddle;
+    }
+
+    public Arena arena() {
+        return this.arena;
     }
 
     protected Ball ball() {

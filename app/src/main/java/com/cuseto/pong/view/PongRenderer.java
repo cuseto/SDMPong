@@ -19,7 +19,7 @@ public final class PongRenderer {
         graphics.setFill(Color.BLACK);
         graphics.fillRect(0, 0, screenWidth, screenHeight);
 
-        drawArenaBoundaries(graphics, gameSession.arena);
+        drawArenaBoundaries(graphics, gameSession.arena());
         drawBall(graphics, gameSession.ballInfo());
         drawPaddle(graphics, gameSession.leftPaddleInfo());
         drawPaddle(graphics, gameSession.rightPaddleInfo());
