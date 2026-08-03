@@ -4,12 +4,13 @@ import com.cuseto.pong.config.model.AppConfig;
 import com.cuseto.pong.model.Arena;
 import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
+import com.cuseto.pong.model.view.BallView;
 
 public final class GameSession {
     public final Arena arena;
     public final Paddle leftPaddle;
     public final Paddle rightPaddle;
-    public final Ball ball;
+    private final Ball ball;
 
     public GameSession(AppConfig appConfig) {
         this.arena = getArena(appConfig);
@@ -71,5 +72,14 @@ public final class GameSession {
             appConfig.gamePage().ball().initialVelocityX(),
             appConfig.gamePage().ball().initialVelocityY()
         );
+    }
+
+    // getter
+    public BallView ballInfo() {
+        return this.ball;
+    }
+
+    protected Ball ball() {
+        return this.ball;
     }
 }

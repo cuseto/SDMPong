@@ -14,14 +14,14 @@ class GameUpdaterTest {
         GameSession gameSession = new GameSession(appConfig);
 
         GameUpdater setBallXToTen = (s, elapsed) ->
-            s.ball.moveTo(10, s.ball.y());
+            s.ball().moveTo(10, s.ball().y());
         GameUpdater doubleBallX = (s, elapsed) ->
-            s.ball.moveTo(s.ball.x() * 2, s.ball.y());
+            s.ball().moveTo(s.ball().x() * 2, s.ball().y());
 
         GameUpdater combined = setBallXToTen.andThen(doubleBallX);
 
         combined.update(gameSession, 0.1);
 
-        assertEquals(20, gameSession.ball.x());
+        assertEquals(20, gameSession.ball().x());
     }
 }

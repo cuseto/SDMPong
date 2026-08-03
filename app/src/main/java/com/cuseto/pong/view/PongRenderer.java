@@ -2,8 +2,8 @@ package com.cuseto.pong.view;
 
 import com.cuseto.pong.game.GameSession;
 import com.cuseto.pong.model.Arena;
-import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
+import com.cuseto.pong.model.view.BallView;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,7 +20,7 @@ public final class PongRenderer {
         graphics.fillRect(0, 0, screenWidth, screenHeight);
 
         drawArenaBoundaries(graphics, gameSession.arena);
-        drawBall(graphics, gameSession.ball);
+        drawBall(graphics, gameSession.ballInfo());
         drawPaddle(graphics, gameSession.leftPaddle);
         drawPaddle(graphics, gameSession.rightPaddle);
     }
@@ -37,7 +37,7 @@ public final class PongRenderer {
         );    
     }
 
-    private void drawBall(GraphicsContext graphics, Ball ball) {
+    private void drawBall(GraphicsContext graphics, BallView ball) {
         graphics.setFill(Color.WHITE);
         double diameter = 2.0 * ball.radius();
         graphics.fillOval(

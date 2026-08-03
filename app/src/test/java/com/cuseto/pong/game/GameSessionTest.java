@@ -53,7 +53,7 @@ class GameSessionTest {
 
     @Test
     void ballProperlyLoadedAtArenaCenter() {
-        Ball ball = createSession().ball;
+        Ball ball = createSession().ball();
 
         assertAll(
             () -> assertEquals(512.0, ball.x()),

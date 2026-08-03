@@ -10,7 +10,7 @@ public class BallGameUpdater implements GameUpdater {
     @Override
     public void update(GameSession gameSession, double elapsedSeconds) {
         BallMovement.move(
-            gameSession.ball,
+            gameSession.ball(),
             elapsedSeconds,
             gameSession.arena.innerTopBoundary(),
             gameSession.arena.innerBottomBoundary(),

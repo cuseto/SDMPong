@@ -1,9 +1,11 @@
 package com.cuseto.pong.model;
 
+import com.cuseto.pong.model.view.BallView;
+
 /**
  * Encapsulates the ball's mutable position and velocity.
  */
-public final class Ball {
+public final class Ball implements BallView{
     private double x;
     private double y;
     private final double radius;
@@ -26,22 +28,27 @@ public final class Ball {
         this(x, y, radius, 0.0, 0.0);
     }
 
+    @Override
     public double x() {
         return x;
     }
 
+    @Override
     public double y() {
         return y;
     }
 
+    @Override
     public double radius() {
         return radius;
     }
 
+    @Override
     public double velocityX() {
         return velocityX;
     }
 
+    @Override
     public double velocityY() {
         return velocityY;
     }

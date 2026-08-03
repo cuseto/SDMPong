@@ -13,14 +13,14 @@ class RoundStartTest {
     void ballMovesFromInitialPositionOncePlayStarts() {
         AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
         GameSession gameSession = new GameSession(appConfig);
-        double initialBallX = gameSession.ball.x();
+        double initialBallX = gameSession.ball().x();
 
         GameUpdater updater = new PaddleGameUpdater(new PaddleInputState(), gameSession)
             .andThen(new BallGameUpdater(gameSession));
 
         updater.update(gameSession, 0.1);
 
-        assertNotEquals(initialBallX, gameSession.ball.x());
-        assertNotEquals(0.0, gameSession.ball.velocityX());
+        assertNotEquals(initialBallX, gameSession.ball().x());
+        assertNotEquals(0.0, gameSession.ball().velocityX());
     }
 }
