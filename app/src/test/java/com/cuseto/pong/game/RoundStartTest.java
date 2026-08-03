@@ -15,7 +15,7 @@ class RoundStartTest {
         GameSession gameSession = new GameSession(appConfig);
         double initialBallX = gameSession.ball().x();
 
-        GameUpdater updater = new PaddleGameUpdater(new PaddleInputState(), gameSession)
+        GameUpdater updater = new PaddleGameUpdater(new PaddleInputState())
             .andThen(new BallGameUpdater());
 
         updater.update(gameSession, 0.1);

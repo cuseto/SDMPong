@@ -68,7 +68,7 @@ public class App extends Application {
 
         gameLoop = new GameLoop(
             gameSession,
-            new PaddleGameUpdater(inputState, gameSession).andThen(new BallGameUpdater()),
+            new PaddleGameUpdater(inputState).andThen(new BallGameUpdater()),
             currentState -> renderer.render(canvas, gameSession)
         );
         gameLoop.start();

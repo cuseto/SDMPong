@@ -18,7 +18,6 @@ class PaddleMovementTest {
             paddle,
             PaddleDirection.UP,
             elapsedSeconds,
-            speed,
             84,   // arenaTop() for the standard config
             576   // arenaBottom() for the standard config
         );
@@ -39,7 +38,6 @@ class PaddleMovementTest {
             paddle,
             PaddleDirection.DOWN,
             elapsedSeconds,
-            speed,
             84,
             576
         );
@@ -60,7 +58,6 @@ class PaddleMovementTest {
             paddle,
             PaddleDirection.UP,
             elapsedSeconds,
-            speed,
             84,
             496
         );
@@ -78,7 +75,6 @@ class PaddleMovementTest {
             paddle,
             PaddleDirection.DOWN,
             elapsedSeconds,
-            speed,
             84,
             496
         );

@@ -20,7 +20,7 @@ public class PaddleGameUpdaterTest {
         PaddleInputState inputState = new PaddleInputState();
         inputState.setLeftDirection(PaddleDirection.UP);
 
-        PaddleGameUpdater updater = new PaddleGameUpdater(inputState, gameSession);
+        PaddleGameUpdater updater = new PaddleGameUpdater(inputState);
 
         updater.update(gameSession, 0.1);
 
