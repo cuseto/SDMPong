@@ -14,7 +14,6 @@ import com.cuseto.pong.view.PongRenderer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -29,14 +28,8 @@ public class App extends Application {
 
         // rendering the page
         Canvas canvas = new Canvas(appConfig.viewport().screenWidth(), appConfig.viewport().screenHeight());
-        GraphicsContext graphics = canvas.getGraphicsContext2D();
         PongRenderer renderer = new PongRenderer();
-        renderer.render(
-            graphics,
-            gameSession, 
-            appConfig.viewport().screenWidth(),
-            appConfig.viewport().screenHeight()
-        );
+        renderer.render(canvas, gameSession);
 
         StackPane root = new StackPane(canvas);
         root.setStyle("-fx-background-color: black;");
@@ -76,12 +69,7 @@ public class App extends Application {
         gameLoop = new GameLoop(
             gameSession,
             new PaddleGameUpdater(inputState, gameSession).andThen(new BallGameUpdater(gameSession)),
-            currentState -> renderer.render(
-                graphics, 
-                gameSession, 
-                appConfig.viewport().screenWidth(),
-                appConfig.viewport().screenHeight()
-            )
+            currentState -> renderer.render(canvas, gameSession)
         );
         gameLoop.start();
     }

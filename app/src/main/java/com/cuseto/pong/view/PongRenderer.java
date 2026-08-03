@@ -5,12 +5,17 @@ import com.cuseto.pong.model.Arena;
 import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public final class PongRenderer {
 
-    public void render(GraphicsContext graphics, GameSession gameSession, int screenWidth, int screenHeight) {
+    public void render(Canvas canvas, GameSession gameSession) {
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
+        double screenWidth = canvas.getWidth();
+        double screenHeight = canvas.getHeight();
+
         graphics.setFill(Color.BLACK);
         graphics.fillRect(0, 0, screenWidth, screenHeight);
 
