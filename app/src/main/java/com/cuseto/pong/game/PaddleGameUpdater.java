@@ -16,21 +16,21 @@ public class PaddleGameUpdater implements GameUpdater {
         double maxY = gameSession.arena.innerBottomBoundary();
 
         PaddleMovement.move(
-            state.leftPaddle,
+            state.leftPaddle(),
             inputState.leftDirection(),
             elapsedSeconds,
-            state.leftPaddle.speed(),
+            state.leftPaddle().speed(),
             minY,
-            maxY - gameSession.leftPaddle.height()
+            maxY - gameSession.leftPaddle().height()
         );
 
         PaddleMovement.move(
-            state.rightPaddle,
+            state.rightPaddle(),
             inputState.rightDirection(),
             elapsedSeconds,
-            state.rightPaddle.speed(),
+            state.rightPaddle().speed(),
             minY,
-            maxY - gameSession.rightPaddle.height()
+            maxY - gameSession.rightPaddle().height()
         );
 
     }

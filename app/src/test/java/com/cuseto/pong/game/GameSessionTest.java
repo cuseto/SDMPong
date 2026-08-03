@@ -34,8 +34,8 @@ class GameSessionTest {
     @Test
     void paddlesProperlyLoadedAndCentered() {
         GameSession gameSession = createSession();
-        Paddle leftPaddle = gameSession.leftPaddle;
-        Paddle rightPaddle = gameSession.rightPaddle;
+        Paddle leftPaddle = gameSession.leftPaddle();
+        Paddle rightPaddle = gameSession.rightPaddle();
 
         assertAll(
             () -> assertEquals(83.0, leftPaddle.x()),

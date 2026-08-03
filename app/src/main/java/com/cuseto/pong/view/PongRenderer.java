@@ -2,8 +2,8 @@ package com.cuseto.pong.view;
 
 import com.cuseto.pong.game.GameSession;
 import com.cuseto.pong.model.Arena;
-import com.cuseto.pong.model.Paddle;
 import com.cuseto.pong.model.view.BallView;
+import com.cuseto.pong.model.view.PaddleView;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -21,8 +21,8 @@ public final class PongRenderer {
 
         drawArenaBoundaries(graphics, gameSession.arena);
         drawBall(graphics, gameSession.ballInfo());
-        drawPaddle(graphics, gameSession.leftPaddle);
-        drawPaddle(graphics, gameSession.rightPaddle);
+        drawPaddle(graphics, gameSession.leftPaddleInfo());
+        drawPaddle(graphics, gameSession.rightPaddleInfo());
     }
 
     private void drawArenaBoundaries(GraphicsContext graphics, Arena arena) {
@@ -48,7 +48,7 @@ public final class PongRenderer {
         );
     }
 
-    private void drawPaddle(GraphicsContext graphics, Paddle paddle) {
+    private void drawPaddle(GraphicsContext graphics, PaddleView paddle) {
         graphics.setFill(Color.WHITE);
         graphics.fillRect(
             paddle.x(), 

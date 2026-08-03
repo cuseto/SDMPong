@@ -16,7 +16,7 @@ public class PaddleGameUpdaterTest {
 
         double initialBallX = gameSession.ball().x();
         double initialBallY = gameSession.ball().y();
-        double initialRightPaddleY = gameSession.rightPaddle.y();
+        double initialRightPaddleY = gameSession.rightPaddle().y();
         PaddleInputState inputState = new PaddleInputState();
         inputState.setLeftDirection(PaddleDirection.UP);
 
@@ -24,8 +24,8 @@ public class PaddleGameUpdaterTest {
 
         updater.update(gameSession, 0.1);
 
-        assertEquals(329, gameSession.leftPaddle.y(), 0.000_001); // 359 - 300*0.1
-        assertEquals(initialRightPaddleY, gameSession.rightPaddle.y());
+        assertEquals(329, gameSession.leftPaddle().y(), 0.000_001); // 359 - 300*0.1
+        assertEquals(initialRightPaddleY, gameSession.rightPaddle().y());
         assertEquals(initialBallX, gameSession.ball().x());
         assertEquals(initialBallY, gameSession.ball().y());
     }

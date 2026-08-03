@@ -5,11 +5,12 @@ import com.cuseto.pong.model.Arena;
 import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
 import com.cuseto.pong.model.view.BallView;
+import com.cuseto.pong.model.view.PaddleView;
 
 public final class GameSession {
     public final Arena arena;
-    public final Paddle leftPaddle;
-    public final Paddle rightPaddle;
+    private final Paddle leftPaddle;
+    private final Paddle rightPaddle;
     private final Ball ball;
 
     public GameSession(AppConfig appConfig) {
@@ -79,7 +80,23 @@ public final class GameSession {
         return this.ball;
     }
 
+    public PaddleView leftPaddleInfo() {
+        return this.leftPaddle;
+    }
+
+    public PaddleView rightPaddleInfo() {
+        return this.rightPaddle;
+    }
+
     protected Ball ball() {
         return this.ball;
+    }
+
+    protected Paddle leftPaddle() {
+        return this.leftPaddle;
+    }
+
+    protected Paddle rightPaddle() {
+        return this.rightPaddle;
     }
 }

@@ -14,8 +14,8 @@ public class BallGameUpdater implements GameUpdater {
             elapsedSeconds,
             gameSession.arena.innerTopBoundary(),
             gameSession.arena.innerBottomBoundary(),
-            gameSession.leftPaddle,
-            gameSession.rightPaddle
+            gameSession.leftPaddle(),
+            gameSession.rightPaddle()
         );
 
     }

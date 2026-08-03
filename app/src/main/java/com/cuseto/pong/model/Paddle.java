@@ -1,9 +1,11 @@
 package com.cuseto.pong.model;
 
+import com.cuseto.pong.model.view.PaddleView;
+
 /**
  * Encapsulates a paddle's mutable vertical position and fixed dimensions.
  */
-public final class Paddle {
+public final class Paddle implements PaddleView{
     private final double x;
     private double y;
     private final double width;
@@ -25,22 +27,27 @@ public final class Paddle {
         this.speed = speed;
     }
 
+    @Override
     public double x() {
         return x;
     }
 
+    @Override
     public double y() {
         return y;
     }
 
+    @Override
     public double width() {
         return width;
     }
 
+    @Override
     public double height() {
         return height;
     }
 
+    @Override
     public double speed() {
         return speed;
     }
