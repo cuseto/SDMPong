@@ -88,8 +88,9 @@ class BallMovementTest {
     @Test
     void ballChangesDirectionOnLeftPaddel() {
         Ball ball = new Ball(15, 20, 4, -100, -120);
-        Paddle paddle = new Paddle(10, 20, 2, 150, 1);
-        BallMovement.move(ball, 0.1, 0, 1000, paddle, paddle);
+        Paddle paddleLeft = new Paddle(10, 20, 2, 150, 1);
+        Paddle paddleRight = new Paddle(10, 20, 2, 150, 1);
+        BallMovement.move(ball, 0.1, 0, 1000, paddleLeft, paddleRight);
 
         assertEquals(100, ball.velocityX());
     }

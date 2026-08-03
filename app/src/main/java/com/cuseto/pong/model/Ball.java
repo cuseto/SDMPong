@@ -58,6 +58,14 @@ public final class Ball implements BallView{
         this.y = y;
     }
 
+    public void setX(double newX) {
+        this.x = newX;
+    }
+
+    public void setY(double newY) {
+        this.y = newY;
+    }
+
     public void setVelocity(double velocityX, double velocityY) {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
