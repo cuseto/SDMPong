@@ -5,26 +5,19 @@ import com.cuseto.pong.model.view.PaddleView;
 /**
  * Encapsulates a paddle's mutable vertical position and fixed dimensions.
  */
-public final class Paddle implements PaddleView{
+public final class Paddle implements PaddleView {
     private final double x;
     private double y;
     private final double width;
     private final double height;
-    private double speed; 
+    private final double speed;
 
     public Paddle(double x, double y, double width, double height, double speed) {
-        if (width <= 0) {
-            throw new IllegalArgumentException("Paddle width must be positive");
-        }
-        if (height <= 0) {
-            throw new IllegalArgumentException("Paddle height must be positive");
-        }
-
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.speed = speed;
+        this.x = ModelValidation.requireFinite("x", x);
+        this.y = ModelValidation.requireFinite("y", y);
+        this.width = ModelValidation.requirePositiveFinite("width", width);
+        this.height = ModelValidation.requirePositiveFinite("height", height);
+        this.speed = ModelValidation.requirePositiveFinite("speed", speed);
     }
 
     @Override
@@ -53,6 +46,6 @@ public final class Paddle implements PaddleView{
     }
 
     public void moveToY(double y) {
-        this.y = y;
+        this.y = ModelValidation.requireFinite("y", y);
     }
 }
