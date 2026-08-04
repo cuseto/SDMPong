@@ -5,7 +5,7 @@ import com.cuseto.pong.model.view.BallView;
 /**
  * Encapsulates the ball's mutable position and velocity.
  */
-public final class Ball implements BallView{
+public final class Ball implements BallView {
     private double x;
     private double y;
     private final double radius;
@@ -13,15 +13,11 @@ public final class Ball implements BallView{
     private double velocityY;
 
     public Ball(double x, double y, double radius, double velocityX, double velocityY) {
-        if (radius <= 0) {
-            throw new IllegalArgumentException("Radius must be positive");
-        }
-
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
+        this.x = ModelValidation.requireFinite("x", x);
+        this.y = ModelValidation.requireFinite("y", y);
+        this.radius = ModelValidation.requirePositiveFinite("radius", radius);
+        this.velocityX = ModelValidation.requireFinite("velocityX", velocityX);
+        this.velocityY = ModelValidation.requireFinite("velocityY", velocityY);
     }
 
     public Ball(double x, double y, double radius) {
@@ -54,20 +50,24 @@ public final class Ball implements BallView{
     }
 
     public void moveTo(double x, double y) {
-        this.x = x;
-        this.y = y;
+        double validatedX = ModelValidation.requireFinite("x", x);
+        double validatedY = ModelValidation.requireFinite("y", y);
+        this.x = validatedX;
+        this.y = validatedY;
     }
 
     public void setX(double newX) {
-        this.x = newX;
+        this.x = ModelValidation.requireFinite("x", newX);
     }
 
     public void setY(double newY) {
-        this.y = newY;
+        this.y = ModelValidation.requireFinite("y", newY);
     }
 
     public void setVelocity(double velocityX, double velocityY) {
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
+        double validatedVelocityX = ModelValidation.requireFinite("velocityX", velocityX);
+        double validatedVelocityY = ModelValidation.requireFinite("velocityY", velocityY);
+        this.velocityX = validatedVelocityX;
+        this.velocityY = validatedVelocityY;
     }
 }
