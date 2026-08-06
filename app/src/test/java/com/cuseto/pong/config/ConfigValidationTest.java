@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import com.cuseto.pong.config.model.ArenaConfig;
-import com.cuseto.pong.config.model.BallConfig;
-import com.cuseto.pong.config.model.PaddleConfig;
-import com.cuseto.pong.config.model.PaddleControlsConfig;
-import com.cuseto.pong.config.model.ViewportConfig;
+import com.cuseto.pong.config.schema.ViewportConfig;
+import com.cuseto.pong.config.schema.controls.PaddleControlsConfig;
+import com.cuseto.pong.config.schema.game.ArenaConfig;
+import com.cuseto.pong.config.schema.game.BallConfig;
+import com.cuseto.pong.config.schema.game.PaddleConfig;
 
 import javafx.scene.input.KeyCode;
 

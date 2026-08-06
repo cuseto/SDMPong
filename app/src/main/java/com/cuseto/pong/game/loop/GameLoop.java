@@ -1,7 +1,10 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.loop;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+
+import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.game.update.GameUpdater;
 
 import javafx.animation.AnimationTimer;
 

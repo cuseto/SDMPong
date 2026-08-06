@@ -1,4 +1,8 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.update;
+
+import com.cuseto.pong.game.input.PaddleInputState;
+import com.cuseto.pong.game.physics.PaddleMovement;
+import com.cuseto.pong.game.session.GameSession;
 
 public class PaddleGameUpdater implements GameUpdater {
     private final PaddleInputState inputState;

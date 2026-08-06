@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import com.cuseto.pong.config.model.AppConfig;
+import com.cuseto.pong.config.schema.AppConfig;
 
 import javafx.scene.input.KeyCode;
 

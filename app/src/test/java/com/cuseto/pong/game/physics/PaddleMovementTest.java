@@ -1,4 +1,4 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.physics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;

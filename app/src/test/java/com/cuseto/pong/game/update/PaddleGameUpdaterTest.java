@@ -1,10 +1,12 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.update;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.ConfigLoader;
-import com.cuseto.pong.config.model.AppConfig;
+import com.cuseto.pong.config.schema.AppConfig;
+import com.cuseto.pong.game.input.PaddleInputState;
+import com.cuseto.pong.game.session.GameSession;
 import com.cuseto.pong.model.PaddleDirection;
 
 public class PaddleGameUpdaterTest {

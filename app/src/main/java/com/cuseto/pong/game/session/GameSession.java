@@ -1,6 +1,6 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.session;
 
-import com.cuseto.pong.config.model.AppConfig;
+import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.model.Arena;
 import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
@@ -92,15 +92,15 @@ public final class GameSession {
         return this.arena;
     }
 
-    protected Ball ball() {
+    public Ball ball() {
         return this.ball;
     }
 
-    protected Paddle leftPaddle() {
+    public Paddle leftPaddle() {
         return this.leftPaddle;
     }
 
-    protected Paddle rightPaddle() {
+    public Paddle rightPaddle() {
         return this.rightPaddle;
     }
 }

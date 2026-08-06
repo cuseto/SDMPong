@@ -1,13 +1,13 @@
 package com.cuseto.pong;
 
 import com.cuseto.pong.config.ConfigLoader;
-import com.cuseto.pong.config.model.AppConfig;
-import com.cuseto.pong.game.BallGameUpdater;
-import com.cuseto.pong.game.GameLoop;
-import com.cuseto.pong.game.GameSession;
-import com.cuseto.pong.game.PaddleGameUpdater;
-import com.cuseto.pong.game.PaddleInputState;
-import com.cuseto.pong.game.PaddleKeyMapping;
+import com.cuseto.pong.config.schema.AppConfig;
+import com.cuseto.pong.game.input.PaddleInputState;
+import com.cuseto.pong.game.input.PaddleKeyMapping;
+import com.cuseto.pong.game.loop.GameLoop;
+import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.game.update.BallGameUpdater;
+import com.cuseto.pong.game.update.PaddleGameUpdater;
 import com.cuseto.pong.model.PaddleDirection;
 import com.cuseto.pong.view.PongRenderer;
 

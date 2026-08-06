@@ -1,11 +1,11 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.session;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.ConfigLoader;
-import com.cuseto.pong.config.model.AppConfig;
+import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.model.Arena;
 import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;

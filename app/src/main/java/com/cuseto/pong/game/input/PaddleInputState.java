@@ -1,4 +1,4 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.input;
 
 import com.cuseto.pong.model.PaddleDirection;
 

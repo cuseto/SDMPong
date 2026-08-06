@@ -1,4 +1,6 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.update;
+
+import com.cuseto.pong.game.session.GameSession;
 
 /**
  * Updates a game state for one frame.

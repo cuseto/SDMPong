@@ -1,6 +1,6 @@
 package com.cuseto.pong.view;
 
-import com.cuseto.pong.game.GameSession;
+import com.cuseto.pong.game.session.GameSession;
 import com.cuseto.pong.model.Arena;
 import com.cuseto.pong.model.view.BallView;
 import com.cuseto.pong.model.view.PaddleView;

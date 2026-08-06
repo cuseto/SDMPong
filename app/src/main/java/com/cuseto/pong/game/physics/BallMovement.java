@@ -1,4 +1,4 @@
-package com.cuseto.pong.game;
+package com.cuseto.pong.game.physics;
 
 import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
