@@ -1,19 +1,19 @@
 package com.cuseto.pong;
 
-import com.cuseto.pong.game.BallGameUpdater;
-import com.cuseto.pong.game.GameLoop;
-import com.cuseto.pong.game.PaddleGameUpdater;
-import com.cuseto.pong.game.PaddleInputState;
-import com.cuseto.pong.game.PaddleKeyMapping;
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
+import com.cuseto.pong.config.ConfigLoader;
+import com.cuseto.pong.config.schema.AppConfig;
+import com.cuseto.pong.game.input.PaddleInputState;
+import com.cuseto.pong.game.input.PaddleKeyMapping;
+import com.cuseto.pong.game.loop.GameLoop;
+import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.game.update.BallGameUpdater;
+import com.cuseto.pong.game.update.PaddleGameUpdater;
 import com.cuseto.pong.model.PaddleDirection;
 import com.cuseto.pong.view.PongRenderer;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -22,21 +22,27 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        GameConfig config = GameConfig.standard();
-        GameState state = GameState.initial(config);
+        // getting configs
+        AppConfig appConfig = ConfigLoader.load();
+        GameSession gameSession = new GameSession(appConfig);
 
-        Canvas canvas = new Canvas(config.screenWidth(), config.screenHeight());
-        GraphicsContext graphics = canvas.getGraphicsContext2D();
+        // rendering the page
+        Canvas canvas = new Canvas(appConfig.viewport().screenWidth(), appConfig.viewport().screenHeight());
         PongRenderer renderer = new PongRenderer();
-        renderer.render(graphics, config, state);
+        renderer.render(canvas, gameSession);
 
         StackPane root = new StackPane(canvas);
         root.setStyle("-fx-background-color: black;");
 
-        Scene scene = new Scene(root, config.screenWidth(), config.screenHeight());
+        Scene scene = new Scene(
+            root,
+            appConfig.viewport().screenWidth(),
+            appConfig.viewport().screenHeight()
+        );
         stage.setTitle("Pong");
         stage.setScene(scene);
 
+        // enabling key controls for the paddles
         PaddleInputState inputState = new PaddleInputState();
         scene.setOnKeyPressed(event -> {
             PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
@@ -48,6 +54,7 @@ public class App extends Application {
                 inputState.setRightDirection(rightDirection);
             }
         });
+
         scene.setOnKeyReleased(event -> {
             if (PaddleKeyMapping.leftDirectionFor(event.getCode()) != PaddleDirection.NONE) {
                 inputState.setLeftDirection(PaddleDirection.NONE);
@@ -60,9 +67,9 @@ public class App extends Application {
         stage.show();
 
         gameLoop = new GameLoop(
-            state,
-            new PaddleGameUpdater(inputState, config).andThen(new BallGameUpdater(config)),
-            currentState -> renderer.render(graphics, config, currentState)
+            gameSession,
+            new PaddleGameUpdater(inputState).andThen(new BallGameUpdater()),
+            currentState -> renderer.render(canvas, gameSession)
         );
         gameLoop.start();
     }

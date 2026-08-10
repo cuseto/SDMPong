@@ -11,7 +11,7 @@ plugins {
 }
 
 group = 'pong'
-version = '0.1'
+version = '0.2'
 
 java {
     toolchain {
@@ -27,6 +27,7 @@ dependencies {
     testImplementation libs.junit.jupiter
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation libs.guava
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.21.2'
 
     testImplementation 'org.testfx:testfx-core:4.0.18'
     testImplementation 'org.testfx:testfx-junit5:4.0.18'

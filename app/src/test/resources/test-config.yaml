@@ -1,0 +1,28 @@
+viewport:
+  screenWidth: 1024
+  screenHeight: 768
+
+gamePage:
+  arena:
+    spacingTop: 50
+    spacingOther: 10
+    boundaryThickness: 3
+
+  ball:
+    radius: 6
+    initialVelocityX: 120.0
+    initialVelocityY: 80.0
+
+  paddle:
+    width: 12
+    height: 90
+    inset: 70
+    speed: 300.0
+
+controls:
+  leftPaddle:
+    up: A
+    down: Z
+  rightPaddle:
+    up: UP
+    down: DOWN

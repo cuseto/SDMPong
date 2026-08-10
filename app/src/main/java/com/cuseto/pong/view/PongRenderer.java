@@ -1,55 +1,60 @@
 package com.cuseto.pong.view;
 
-import com.cuseto.pong.model.Circle;
-import com.cuseto.pong.model.GameConfig;
-import com.cuseto.pong.model.GameState;
-import com.cuseto.pong.model.Rectangle;
+import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.model.Arena;
+import com.cuseto.pong.model.view.BallView;
+import com.cuseto.pong.model.view.PaddleView;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public final class PongRenderer {
 
-    public void render(GraphicsContext graphics, GameConfig config, GameState state) {
-        graphics.setFill(Color.BLACK);
-        graphics.fillRect(0, 0, config.screenWidth(), config.screenHeight());
+    public void render(Canvas canvas, GameSession gameSession) {
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
+        double screenWidth = canvas.getWidth();
+        double screenHeight = canvas.getHeight();
 
-        drawArenaBoundaries(graphics, config);
-        drawCircle(graphics, state.ball());
-        drawRectangle(graphics, state.leftPaddle());
-        drawRectangle(graphics, state.rightPaddle());
+        graphics.setFill(Color.BLACK);
+        graphics.fillRect(0, 0, screenWidth, screenHeight);
+
+        drawArenaBoundaries(graphics, gameSession.arena());
+        drawBall(graphics, gameSession.ballInfo());
+        drawPaddle(graphics, gameSession.leftPaddleInfo());
+        drawPaddle(graphics, gameSession.rightPaddleInfo());
     }
 
-    private void drawArenaBoundaries(GraphicsContext graphics, GameConfig config) {
+    private void drawArenaBoundaries(GraphicsContext graphics, Arena arena) {
         graphics.setStroke(Color.WHITE);
-        graphics.setLineWidth(config.arenaBoundaryThickness());
+        graphics.setLineWidth(arena.boundaryThickness());
 
         graphics.strokeRect(
-            config.arenaSpacingOther(),
-            config.arenaSpacingTop(),
-            config.arenaWidth(),
-            config.arenaHeight()
+            arena.anchorX(),
+            arena.anchorY(),
+            arena.width(),
+            arena.height()
         );    
     }
 
-    private void drawCircle(GraphicsContext graphics, Circle circle) {
+    private void drawBall(GraphicsContext graphics, BallView ball) {
         graphics.setFill(Color.WHITE);
-        double diameter = 2.0 * circle.radius();
+        double diameter = 2.0 * ball.radius();
         graphics.fillOval(
-            circle.startPosX() - circle.radius(),
-            circle.startPosY() - circle.radius(),
+            ball.x() - ball.radius(),
+            ball.y() - ball.radius(),
             diameter,
             diameter
         );
     }
 
-    private void drawRectangle(GraphicsContext graphics, Rectangle rectangle) {
+    private void drawPaddle(GraphicsContext graphics, PaddleView paddle) {
         graphics.setFill(Color.WHITE);
         graphics.fillRect(
-            rectangle.startPosX(), 
-            rectangle.startPosY(), 
-            rectangle.width(), 
-            rectangle.height()
+            paddle.x(), 
+            paddle.y(), 
+            paddle.width(), 
+            paddle.height()
         );
     }
 
