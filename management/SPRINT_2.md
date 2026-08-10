@@ -4,11 +4,11 @@
 
 - **Sprint name/number:** `Sprint 2 — Model and Configuration Refactoring`
 - **Start date:** `<2026-07-28>`
-- **End date:** `<2026-08-01>`
-- **Duration:** `4 days`
+- **End date:** `<2026-08-06>`
+- **Duration:** `10 days`
 - **Scrum Master:** `Lorenzo Cusin`
 - **Developers:** `Andrea Tonello, Giacomo Serafini`
-- **Status:** `Planned`
+- **Status:** `Closed`
 
 ## 2. Sprint Goal
 
@@ -301,7 +301,3 @@ Feature: Validate the game model
 - Changes required to satisfy the selected Product Backlog Items are added as tasks to the relevant item in this Sprint Backlog.
 - Useful but non-essential improvements are documented as new Product Backlog Items with their own scope and acceptance criteria.
 - New Product Backlog Items are added to the Product Backlog and prioritized before being selected for a Sprint; they do not automatically expand the scope of Sprint 2.
-
-## 5. Sprint Improvements
-
-...
