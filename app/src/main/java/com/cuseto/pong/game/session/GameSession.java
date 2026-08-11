@@ -12,6 +12,8 @@ public final class GameSession {
     private final Paddle leftPaddle;
     private final Paddle rightPaddle;
     private final Ball ball;
+    private int leftScore;
+    private int rightScore;
 
     public GameSession(AppConfig appConfig) {
         this.arena = getArena(appConfig);
@@ -102,5 +104,21 @@ public final class GameSession {
 
     public Paddle rightPaddle() {
         return this.rightPaddle;
+    }
+
+    public void updateScore() {
+        if (ball.x() > arena.innerRightBoundary()) {
+            leftScore++;
+        } else if (ball.x() < arena.innerLeftBoundary()) {
+            rightScore++;
+        }
+    }
+
+    public int leftScore() {
+        return leftScore;
+    }
+
+    public int rightScore() {
+        return rightScore;
     }
 }
