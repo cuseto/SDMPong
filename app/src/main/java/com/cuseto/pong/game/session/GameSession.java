@@ -12,6 +12,8 @@ public final class GameSession {
     private final Paddle leftPaddle;
     private final Paddle rightPaddle;
     private final Ball ball;
+    private final double initialBallVelocityX;
+    private final double initialBallVelocityY;
     private int leftScore;
     private int rightScore;
 
@@ -19,6 +21,10 @@ public final class GameSession {
         this.arena = getArena(appConfig);
         this.leftPaddle = getLeftPaddle(appConfig, arena);
         this.rightPaddle = getRightPaddle(appConfig, arena);
+
+        this.initialBallVelocityX = appConfig.gamePage().ball().initialVelocityX();
+        this.initialBallVelocityY = appConfig.gamePage().ball().initialVelocityY();
+
         this.ball = getBall(appConfig, arena);
     }
 
@@ -65,16 +71,37 @@ public final class GameSession {
         );
     }
 
+    private double initialPaddleY(Paddle paddle) {
+        return arena.innerTopBoundary() + ((arena.innerHeight() - paddle.height()) / 2.0);
+    }
+
     private Ball getBall(AppConfig appConfig, Arena arena) {
-        double x = arena.innerLeftBoundary() + (arena.innerWidth() / 2);
-        double y = arena.innerTopBoundary() + (arena.innerHeight() / 2);
+        double x = initialBallX(arena);
+        double y = initialBallY(arena);
         return new Ball(
             x,
             y,
             appConfig.gamePage().ball().radius(),
-            appConfig.gamePage().ball().initialVelocityX(),
-            appConfig.gamePage().ball().initialVelocityY()
+            initialBallVelocityX,
+            initialBallVelocityY
         );
+    }
+
+    private double initialBallX(Arena arena) {
+        return arena.innerLeftBoundary() + arena.innerWidth() / 2.0;
+    }
+
+    private double initialBallY(Arena arena) {
+        return arena.innerTopBoundary() + arena.innerHeight() / 2.0;
+    }
+
+    public void resetRound() {
+        ball.setX(initialBallX(arena));
+        ball.setY(initialBallY(arena));
+        ball.setVelocity(initialBallVelocityX, initialBallVelocityY);
+
+        leftPaddle.moveToY(initialPaddleY(leftPaddle));
+        rightPaddle.moveToY(initialPaddleY(rightPaddle));
     }
 
     // getter
