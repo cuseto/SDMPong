@@ -106,19 +106,19 @@ public final class GameSession {
         return this.rightPaddle;
     }
 
-    public void updateScore() {
-        if (ball.x() > arena.innerRightBoundary()) {
-            leftScore++;
-        } else if (ball.x() < arena.innerLeftBoundary()) {
-            rightScore++;
-        }
-    }
-
     public int leftScore() {
         return leftScore;
     }
 
     public int rightScore() {
         return rightScore;
+    }
+
+    public void incrementLeftScore() {
+        leftScore++;
+    }
+
+    public void incrementRightScore() {
+        rightScore++;
     }
 }
