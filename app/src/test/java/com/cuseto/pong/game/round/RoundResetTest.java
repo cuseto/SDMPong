@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.game.update.ScoreGameUpdater;
 
 
 public class RoundResetTest {
@@ -94,5 +95,33 @@ public class RoundResetTest {
 
         assertEquals(2, gameSession.leftScore());
         assertEquals(1, gameSession.rightScore());
+    }
+
+    @Test
+    void scoringAutomaticallyStartsNextRound() {
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+        ScoreGameUpdater scoreGameUpdater = new ScoreGameUpdater();
+
+        double initialBallX = gameSession.ball().x();
+        double initialBallY = gameSession.ball().y();
+
+        double rightScoringBoundary =
+            gameSession.arena().innerRightBoundary();
+
+        // Establish the previous ball position.
+        scoreGameUpdater.update(gameSession, 0.0);
+
+        // Cross the scoring boundary.
+        gameSession.ball().setX(rightScoringBoundary + 1);
+
+        scoreGameUpdater.update(gameSession, 0.0);
+
+        assertEquals(1, gameSession.leftScore());
+        assertEquals(0, gameSession.rightScore());
+
+        // Scoring should automatically prepare the next round.
+        assertEquals(initialBallX, gameSession.ball().x());
+        assertEquals(initialBallY, gameSession.ball().y());
     }
 }

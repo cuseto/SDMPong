@@ -22,14 +22,16 @@ public final class ScoreGameUpdater implements GameUpdater {
         if (previousX <= rightScoringBoundary &&
             currentX > rightScoringBoundary) {
             gameSession.incrementLeftScore();
+            gameSession.resetRound();
         }
 
         // Ball crossed the left boundary: right player scores.
         else if (previousX >= leftScoringBoundary &&
                  currentX < leftScoringBoundary) {
             gameSession.incrementRightScore();
+            gameSession.resetRound();
         }
 
-        previousX = currentX;
+        previousX = gameSession.ball().x();;
     }
 }
