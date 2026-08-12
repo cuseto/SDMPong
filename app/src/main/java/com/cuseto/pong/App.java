@@ -8,6 +8,7 @@ import com.cuseto.pong.game.loop.GameLoop;
 import com.cuseto.pong.game.session.GameSession;
 import com.cuseto.pong.game.update.BallGameUpdater;
 import com.cuseto.pong.game.update.PaddleGameUpdater;
+import com.cuseto.pong.game.update.ScoreGameUpdater;
 import com.cuseto.pong.model.PaddleDirection;
 import com.cuseto.pong.view.PongRenderer;
 
@@ -68,7 +69,7 @@ public class App extends Application {
 
         gameLoop = new GameLoop(
             gameSession,
-            new PaddleGameUpdater(inputState).andThen(new BallGameUpdater()),
+            new PaddleGameUpdater(inputState).andThen(new BallGameUpdater()).andThen(new ScoreGameUpdater()),
             currentState -> renderer.render(canvas, gameSession)
         );
         gameLoop.start();
