@@ -1,4 +1,4 @@
-# Sprint 3 --- Match Lifecycle and Scoring
+# Sprint 3 — Match Lifecycle and Scoring
 
 ## 1. Sprint Information
 
@@ -32,7 +32,7 @@
 
 ## 4. Sprint Backlog
 
-### PB-06 --- Score a point
+### PB-06 — Score a point
 
 -   [ ] Define the left and right scoring boundaries.
 -   [ ] Define which player is awarded a point for each scoring boundary.
@@ -65,7 +65,7 @@ Feature: Point scoring
     And exactly one point is awarded
 ```
 
-### PB-07 --- Start the next round
+### PB-07 — Start the next round
 
 -   [ ] Define the initial ball position for a new round.
 -   [ ] Define valid initial positions for both paddles.
@@ -93,7 +93,7 @@ Feature: Round reset
     And the scores are preserved
 ```
 
-### PB-08 --- Finish the match
+### PB-08 — Finish the match
 
 -   [ ] Define the winning score as five points.
 -   [ ] Detect when either player reaches the winning score.
@@ -120,7 +120,7 @@ Feature: Match completion
     And normal gameplay stops
 ```
 
-### PB-09 --- Start a new match
+### PB-09 — Start a new match
 
 -   [ ] Define the transition from the finished state to a new match.
 -   [ ] Provide a user action for starting a new match.
@@ -146,6 +146,46 @@ Feature: New match
     When the players start a new match
     Then both scores are reset to zero
     And the ball and paddles return to their initial positions
+```
+
+## Additional PBs
+
+### APB-1 — Prevent Ball Compenetration with Horizontal Walls
+
+- [ ] Fix the horizontal wall collision handling so that the ball cannot remain beyond the wall boundary after a collision.
+- [ ] When the ball crosses the lower horizontal boundary, reposition it to the corresponding position inside the arena based on the penetration depth.
+- [ ] When the ball crosses the upper horizontal boundary, reposition it to the corresponding position inside the arena based on the penetration depth.
+- [ ] Reverse the ball's vertical velocity when a horizontal wall collision occurs.
+- [ ] Ensure that the collision correction works correctly even when the ball moves more than one distance unit beyond the wall between two updates.
+- [ ] Add automated tests covering collisions with both horizontal walls and different penetration depths.
+- [ ] Run the complete test suite and verify that existing ball movement and wall-bouncing behaviour is preserved.
+
+#### Acceptance criteria
+
+```gherkin
+Feature: Prevent ball compenetration with horizontal walls
+
+  Scenario: Ball crosses the lower horizontal wall
+    Given the ball is moving towards the lower horizontal wall
+    And the ball crosses the lower wall during an update
+    When the horizontal wall collision is handled
+    Then the ball is repositioned inside the arena
+    And the ball does not remain below the lower wall
+    And the vertical velocity is reversed
+
+  Scenario: Ball crosses the upper horizontal wall
+    Given the ball is moving towards the upper horizontal wall
+    And the ball crosses the upper wall during an update
+    When the horizontal wall collision is handled
+    Then the ball is repositioned inside the arena
+    And the ball does not remain above the upper wall
+    And the vertical velocity is reversed
+
+  Scenario: Ball crosses a wall by more than one distance unit
+    Given the ball crosses a horizontal wall with a penetration depth greater than one distance unit
+    When the horizontal wall collision is handled
+    Then the ball is repositioned inside the arena according to the penetration depth
+    And the ball does not remain beyond the wall boundary
 ```
 
 ### Shared sprint tasks
