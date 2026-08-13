@@ -69,11 +69,11 @@ class GameSessionTest {
     void leftPlayerIsDeclaredWinnerUponReachingFivePoints() {
         GameSession gameSession = createSession();
 
-        for (int score = 0; score < GameSession.WINNING_SCORE; score++) {
+        for (int score = 0; score < gameSession.winningScore(); score++) {
             gameSession.incrementLeftScore();
         }
 
-        assertEquals(GameSession.WINNING_SCORE, gameSession.leftScore());
+        assertEquals(gameSession.winningScore(), gameSession.leftScore());
         assertEquals(0, gameSession.rightScore());
         assertEquals(Player.LEFT, gameSession.winner());
         assertTrue(gameSession.isMatchOver());
@@ -83,12 +83,12 @@ class GameSessionTest {
     void rightPlayerIsDeclaredWinnerUponReachingFivePoints() {
         GameSession gameSession = createSession();
 
-        for (int score = 0; score < GameSession.WINNING_SCORE; score++) {
+        for (int score = 0; score < gameSession.winningScore(); score++) {
             gameSession.incrementRightScore();
         }
 
         assertEquals(0, gameSession.leftScore());
-        assertEquals(GameSession.WINNING_SCORE, gameSession.rightScore());
+        assertEquals(gameSession.winningScore(), gameSession.rightScore());
         assertEquals(Player.RIGHT, gameSession.winner());
         assertTrue(gameSession.isMatchOver());
     }

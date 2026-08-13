@@ -3,6 +3,8 @@ viewport:
   screenHeight: 768
 
 gamePage:
+  winningScore: 5
+
   arena:
     spacingTop: 50
     spacingOther: 10

@@ -18,7 +18,7 @@ class ScoreGameUpdaterTest {
         ScoreGameUpdater scoreGameUpdater = new ScoreGameUpdater();
         double rightBoundary = gameSession.arena().innerRightBoundary();
 
-        for (int score = 0; score < GameSession.WINNING_SCORE - 1; score++) {
+        for (int score = 0; score < gameSession.winningScore() - 1; score++) {
             gameSession.incrementLeftScore();
         }
         gameSession.ball().setX(rightBoundary - 1);
@@ -27,7 +27,7 @@ class ScoreGameUpdaterTest {
 
         scoreGameUpdater.update(gameSession, 0.0);
 
-        assertEquals(GameSession.WINNING_SCORE, gameSession.leftScore());
+        assertEquals(gameSession.winningScore(), gameSession.leftScore());
         assertEquals(Player.LEFT, gameSession.winner());
         assertEquals(rightBoundary + 1, gameSession.ball().x());
     }
@@ -40,7 +40,7 @@ class ScoreGameUpdaterTest {
         double rightBoundary = gameSession.arena().innerRightBoundary();
         double leftBoundary = gameSession.arena().innerLeftBoundary();
 
-        for (int score = 0; score < GameSession.WINNING_SCORE - 1; score++) {
+        for (int score = 0; score < gameSession.winningScore() - 1; score++) {
             gameSession.incrementLeftScore();
         }
         gameSession.ball().setX(rightBoundary - 1);
@@ -53,7 +53,7 @@ class ScoreGameUpdaterTest {
         gameSession.ball().setX(leftBoundary - 1);
         scoreGameUpdater.update(gameSession, 0.0);
 
-        assertEquals(GameSession.WINNING_SCORE, gameSession.leftScore());
+        assertEquals(gameSession.winningScore(), gameSession.leftScore());
         assertEquals(0, gameSession.rightScore());
         assertEquals(Player.LEFT, gameSession.winner());
     }

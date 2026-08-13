@@ -9,6 +9,7 @@ import com.cuseto.pong.config.schema.ViewportConfig;
 import com.cuseto.pong.config.schema.controls.PaddleControlsConfig;
 import com.cuseto.pong.config.schema.game.ArenaConfig;
 import com.cuseto.pong.config.schema.game.BallConfig;
+import com.cuseto.pong.config.schema.game.GamePageConfig;
 import com.cuseto.pong.config.schema.game.PaddleConfig;
 
 import javafx.scene.input.KeyCode;
@@ -54,6 +55,16 @@ class ConfigValidationTest {
             () -> new PaddleConfig(10, 80, 100, 0.0));
         assertInvalid(IllegalArgumentException.class, "speed",
             () -> new PaddleConfig(10, 80, 100, Double.NaN));
+    }
+
+    @Test
+    void winningScoreMustBePositive() {
+        ArenaConfig arena = new ArenaConfig(80, 20, 4);
+        BallConfig ball = new BallConfig(8, 100.0, 100.0);
+        PaddleConfig paddle = new PaddleConfig(10, 80, 100, 300.0);
+
+        assertInvalid(IllegalArgumentException.class, "winningScore",
+            () -> new GamePageConfig(arena, ball, paddle, 0));
     }
 
     @Test

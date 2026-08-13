@@ -36,7 +36,7 @@ public class PaddleGameUpdaterTest {
     void updateDoesNotMovePaddlesAfterMatchEnds() {
         AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
         GameSession gameSession = new GameSession(appConfig);
-        for (int score = 0; score < GameSession.WINNING_SCORE; score++) {
+        for (int score = 0; score < gameSession.winningScore(); score++) {
             gameSession.incrementLeftScore();
         }
         gameSession.leftPaddle().moveToY(200);

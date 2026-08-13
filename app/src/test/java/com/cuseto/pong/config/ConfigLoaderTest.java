@@ -15,6 +15,7 @@ class ConfigLoaderTest {
 
         assertEquals(1024, appConfig.viewport().screenWidth());
         assertEquals(768, appConfig.viewport().screenHeight());
+        assertEquals(5, appConfig.gamePage().winningScore());
 
         assertEquals(50, appConfig.gamePage().arena().spacingTop());
         assertEquals(10, appConfig.gamePage().arena().spacingOther());

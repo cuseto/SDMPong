@@ -33,7 +33,7 @@ class BallGameUpdaterTest {
     void updateDoesNotMoveBallAfterMatchEnds() {
         AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
         GameSession gameSession = new GameSession(appConfig);
-        for (int score = 0; score < GameSession.WINNING_SCORE; score++) {
+        for (int score = 0; score < gameSession.winningScore(); score++) {
             gameSession.incrementLeftScore();
         }
         gameSession.ball().moveTo(300, 250);
