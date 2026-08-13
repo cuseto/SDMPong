@@ -7,6 +7,10 @@ public final class ScoreGameUpdater implements GameUpdater {
 
     @Override
     public void update(GameSession gameSession, double elapsedSeconds) {
+        if (gameSession.isMatchOver()) {
+            return;
+        }
+
         double currentX = gameSession.ball().x();
 
         // First update: establish the initial position.
@@ -22,16 +26,22 @@ public final class ScoreGameUpdater implements GameUpdater {
         if (previousX <= rightScoringBoundary &&
             currentX > rightScoringBoundary) {
             gameSession.incrementLeftScore();
-            gameSession.resetRound();
+            resetForNextRoundIfNeeded(gameSession);
         }
 
         // Ball crossed the left boundary: right player scores.
         else if (previousX >= leftScoringBoundary &&
                  currentX < leftScoringBoundary) {
             gameSession.incrementRightScore();
-            gameSession.resetRound();
+            resetForNextRoundIfNeeded(gameSession);
         }
 
-        previousX = gameSession.ball().x();;
+        previousX = gameSession.ball().x();
+    }
+
+    private void resetForNextRoundIfNeeded(GameSession gameSession) {
+        if (!gameSession.isMatchOver()) {
+            gameSession.resetRound();
+        }
     }
 }
