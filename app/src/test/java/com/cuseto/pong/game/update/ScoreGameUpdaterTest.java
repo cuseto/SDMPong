@@ -12,6 +12,79 @@ import com.cuseto.pong.game.session.Player;
 class ScoreGameUpdaterTest {
 
     @Test
+    void leftPlayerScoresWhenBallCrossesRightScoringBoundary() {
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+        ScoreGameUpdater scoreGameUpdater = new ScoreGameUpdater();
+
+        double rightScoringBoundary = gameSession.arena().innerRightBoundary();
+
+        gameSession.ball().setX(rightScoringBoundary - 1);
+        scoreGameUpdater.update(gameSession, 0.0);
+        gameSession.ball().setX(rightScoringBoundary + 1);
+
+        scoreGameUpdater.update(gameSession, 0.0);
+
+        assertEquals(1, gameSession.leftScore());
+        assertEquals(0, gameSession.rightScore());
+    }
+
+    @Test
+    void rightPlayerScoresWhenBallCrossesLeftScoringBoundary() {
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+        ScoreGameUpdater scoreGameUpdater = new ScoreGameUpdater();
+
+        double leftScoringBoundary = gameSession.arena().innerLeftBoundary();
+
+        gameSession.ball().setX(leftScoringBoundary + 1);
+        scoreGameUpdater.update(gameSession, 0.0);
+        gameSession.ball().setX(leftScoringBoundary - 1);
+
+        scoreGameUpdater.update(gameSession, 0.0);
+
+        assertEquals(0, gameSession.leftScore());
+        assertEquals(1, gameSession.rightScore());
+    }
+
+    @Test
+    void sameBallCrossingDoesNotScoreMoreThanOnce() {
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+        ScoreGameUpdater scoreGameUpdater = new ScoreGameUpdater();
+
+        double rightScoringBoundary = gameSession.arena().innerRightBoundary();
+
+        gameSession.ball().setX(rightScoringBoundary - 1);
+        scoreGameUpdater.update(gameSession, 0.0);
+        gameSession.ball().setX(rightScoringBoundary + 1);
+        scoreGameUpdater.update(gameSession, 0.0);
+
+        scoreGameUpdater.update(gameSession, 0.0);
+        scoreGameUpdater.update(gameSession, 0.0);
+
+        assertEquals(1, gameSession.leftScore());
+        assertEquals(0, gameSession.rightScore());
+    }
+
+    @Test
+    void scoreIsUpdatedWhenBallCrossesBoundaryDuringGameUpdate() {
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+        GameUpdater updater = new BallGameUpdater().andThen(new ScoreGameUpdater());
+        double rightScoringBoundary = gameSession.arena().innerRightBoundary();
+
+        gameSession.ball().setX(rightScoringBoundary - 1);
+        gameSession.ball().setVelocity(1, 0);
+
+        updater.update(gameSession, 0.0);
+        updater.update(gameSession, 2.0);
+
+        assertEquals(1, gameSession.leftScore());
+        assertEquals(0, gameSession.rightScore());
+    }
+
+    @Test
     void finalPointDeclaresWinnerAndDoesNotResetRound() {
         AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
         GameSession gameSession = new GameSession(appConfig);
