@@ -6,6 +6,10 @@ import com.cuseto.pong.game.session.GameSession;
 public class BallGameUpdater implements GameUpdater {
     @Override
     public void update(GameSession gameSession, double elapsedSeconds) {
+        if (gameSession.isMatchOver()) {
+            return;
+        }
+
         BallMovement.move(
             gameSession.ball(),
             elapsedSeconds,
