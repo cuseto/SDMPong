@@ -2,6 +2,7 @@ package com.cuseto.pong.game.session;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.ConfigLoader;
@@ -62,6 +63,34 @@ class GameSessionTest {
             () -> assertEquals(120.0, ball.velocityX()),
             () -> assertEquals(80.0, ball.velocityY())
         );
+    }
+
+    @Test
+    void leftPlayerIsDeclaredWinnerUponReachingFivePoints() {
+        GameSession gameSession = createSession();
+
+        for (int score = 0; score < GameSession.WINNING_SCORE; score++) {
+            gameSession.incrementLeftScore();
+        }
+
+        assertEquals(GameSession.WINNING_SCORE, gameSession.leftScore());
+        assertEquals(0, gameSession.rightScore());
+        assertEquals(Player.LEFT, gameSession.winner());
+        assertTrue(gameSession.isMatchOver());
+    }
+
+    @Test
+    void rightPlayerIsDeclaredWinnerUponReachingFivePoints() {
+        GameSession gameSession = createSession();
+
+        for (int score = 0; score < GameSession.WINNING_SCORE; score++) {
+            gameSession.incrementRightScore();
+        }
+
+        assertEquals(0, gameSession.leftScore());
+        assertEquals(GameSession.WINNING_SCORE, gameSession.rightScore());
+        assertEquals(Player.RIGHT, gameSession.winner());
+        assertTrue(gameSession.isMatchOver());
     }
 
     private static GameSession createSession() {

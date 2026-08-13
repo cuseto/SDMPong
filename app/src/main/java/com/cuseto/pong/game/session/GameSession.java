@@ -8,6 +8,8 @@ import com.cuseto.pong.model.view.BallView;
 import com.cuseto.pong.model.view.PaddleView;
 
 public final class GameSession {
+    public static final int WINNING_SCORE = 5;
+
     private final Arena arena;
     private final Paddle leftPaddle;
     private final Paddle rightPaddle;
@@ -16,6 +18,7 @@ public final class GameSession {
     private final double initialBallVelocityY;
     private int leftScore;
     private int rightScore;
+    private Player winner;
 
     public GameSession(AppConfig appConfig) {
         this.arena = getArena(appConfig);
@@ -141,11 +144,33 @@ public final class GameSession {
         return rightScore;
     }
 
+    public boolean isMatchOver() {
+        return winner != null;
+    }
+
+    public Player winner() {
+        return winner;
+    }
+
     public void incrementLeftScore() {
+        if (isMatchOver()) {
+            return;
+        }
+
         leftScore++;
+        if (leftScore == WINNING_SCORE) {
+            winner = Player.LEFT;
+        }
     }
 
     public void incrementRightScore() {
+        if (isMatchOver()) {
+            return;
+        }
+
         rightScore++;
+        if (rightScore == WINNING_SCORE) {
+            winner = Player.RIGHT;
+        }
     }
 }
