@@ -15,6 +15,7 @@ import com.cuseto.pong.view.PongRenderer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -46,6 +47,13 @@ public class App extends Application {
         // enabling key controls for the paddles
         PaddleInputState inputState = new PaddleInputState();
         scene.setOnKeyPressed(event -> {
+            if (gameSession.isMatchOver() && event.getCode() == KeyCode.ENTER) {
+                gameSession.startNewMatch();
+                inputState.setLeftDirection(PaddleDirection.NONE);
+                inputState.setRightDirection(PaddleDirection.NONE);
+                return;
+            }
+
             PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
             if (leftDirection != PaddleDirection.NONE) {
                 inputState.setLeftDirection(leftDirection);

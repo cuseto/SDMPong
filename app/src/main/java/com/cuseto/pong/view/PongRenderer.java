@@ -89,7 +89,11 @@ public final class PongRenderer {
                 screenHeight / 2.0 - 8
             );
             graphics.setFont(Font.font(18));
-            graphics.fillText("MATCH OVER", screenWidth / 2.0, screenHeight / 2.0 + 25);
+            graphics.fillText(
+                "MATCH OVER - PRESS ENTER TO START A NEW MATCH",
+                screenWidth / 2.0,
+                screenHeight / 2.0 + 25
+            );
         }
     }
 
