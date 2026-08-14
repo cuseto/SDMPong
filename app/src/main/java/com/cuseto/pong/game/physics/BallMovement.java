@@ -26,10 +26,14 @@ public final class BallMovement {
     }
 
     private static void bounceOffHorizontalWalls(Ball ball, int minY, int maxY) {
-        double ballY = ball.y();
-        if (ballY <= minY || ballY >= maxY) {
-            if (ballY <= minY) ball.setY(minY + (minY - ballY));
-            if (ballY >= maxY) ball.setY(maxY - (ballY - maxY));
+        double ballTopY = ball.y() - ball.radius();
+        double ballBottomY = ball.y() + ball.radius();
+        boolean touchedTopBoundary = ballTopY <= minY;
+        boolean touchedBottomBoundary = ballBottomY >= maxY;
+
+        if (touchedTopBoundary || touchedBottomBoundary) {
+            if (touchedTopBoundary) ball.setY(ball.y() + 2*(minY - ballTopY));
+            if (touchedBottomBoundary) ball.setY(ball.y() - 2*(ballBottomY - maxY));
             ball.setVelocity(ball.velocityX(), -1 * ball.velocityY());
         }
     }
