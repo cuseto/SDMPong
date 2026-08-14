@@ -90,7 +90,7 @@ public final class PongRenderer {
             );
             graphics.setFont(Font.font(18));
             graphics.fillText(
-                "MATCH OVER - PRESS ENTER TO START A NEW MATCH",
+                "ENTER: NEW MATCH    ESC: QUIT",
                 screenWidth / 2.0,
                 screenHeight / 2.0 + 25
             );
