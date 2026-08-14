@@ -130,4 +130,28 @@ class ScoreGameUpdaterTest {
         assertEquals(0, gameSession.rightScore());
         assertEquals(Player.LEFT, gameSession.winner());
     }
+
+    @Test
+    void scoringResumesAfterVictoryAndNewMatch() {
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+        ScoreGameUpdater scoreGameUpdater = new ScoreGameUpdater();
+        double rightBoundary = gameSession.arena().innerRightBoundary();
+
+        for (int score = 0; score < gameSession.winningScore() - 1; score++) {
+            gameSession.incrementLeftScore();
+        }
+        gameSession.ball().setX(rightBoundary - 1);
+        scoreGameUpdater.update(gameSession, 0.0);
+        gameSession.ball().setX(rightBoundary + 1);
+        scoreGameUpdater.update(gameSession, 0.0);
+
+        gameSession.startNewMatch();
+        scoreGameUpdater.update(gameSession, 0.0);
+        gameSession.ball().setX(rightBoundary + 1);
+        scoreGameUpdater.update(gameSession, 0.0);
+
+        assertEquals(1, gameSession.leftScore());
+        assertEquals(0, gameSession.rightScore());
+    }
 }

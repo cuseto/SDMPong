@@ -107,6 +107,13 @@ public final class GameSession {
         rightPaddle.moveToY(initialPaddleY(rightPaddle));
     }
 
+    public void startNewMatch() {
+        leftScore = 0;
+        rightScore = 0;
+        winner = null;
+        resetRound();
+    }
+
     // getter
     public BallView ballInfo() {
         return this.ball;

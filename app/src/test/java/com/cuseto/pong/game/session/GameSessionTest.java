@@ -2,6 +2,8 @@ package com.cuseto.pong.game.session;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
@@ -91,6 +93,40 @@ class GameSessionTest {
         assertEquals(gameSession.winningScore(), gameSession.rightScore());
         assertEquals(Player.RIGHT, gameSession.winner());
         assertTrue(gameSession.isMatchOver());
+    }
+
+    @Test
+    void startNewMatchRestoresInitialStateAfterVictory() {
+        GameSession gameSession = createSession();
+        double initialBallX = gameSession.ball().x();
+        double initialBallY = gameSession.ball().y();
+        double initialBallVelocityX = gameSession.ball().velocityX();
+        double initialBallVelocityY = gameSession.ball().velocityY();
+        double initialLeftPaddleY = gameSession.leftPaddle().y();
+        double initialRightPaddleY = gameSession.rightPaddle().y();
+
+        gameSession.leftPaddle().moveToY(initialLeftPaddleY + 100);
+        gameSession.rightPaddle().moveToY(initialRightPaddleY - 100);
+        gameSession.ball().moveTo(initialBallX + 100, initialBallY + 50);
+        gameSession.ball().setVelocity(-50, 40);
+        for (int score = 0; score < gameSession.winningScore(); score++) {
+            gameSession.incrementLeftScore();
+        }
+
+        gameSession.startNewMatch();
+
+        assertAll(
+            () -> assertEquals(0, gameSession.leftScore()),
+            () -> assertEquals(0, gameSession.rightScore()),
+            () -> assertFalse(gameSession.isMatchOver()),
+            () -> assertNull(gameSession.winner()),
+            () -> assertEquals(initialBallX, gameSession.ball().x()),
+            () -> assertEquals(initialBallY, gameSession.ball().y()),
+            () -> assertEquals(initialBallVelocityX, gameSession.ball().velocityX()),
+            () -> assertEquals(initialBallVelocityY, gameSession.ball().velocityY()),
+            () -> assertEquals(initialLeftPaddleY, gameSession.leftPaddle().y()),
+            () -> assertEquals(initialRightPaddleY, gameSession.rightPaddle().y())
+        );
     }
 
     private static GameSession createSession() {
