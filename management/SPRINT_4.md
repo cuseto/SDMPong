@@ -35,7 +35,7 @@
 
 ## 4. Sprint Backlog
 
-### General structure reminder table
+#### Sprint 4 general menu structure reminder table
 
 | State | JavaFX structure | Allowed transitions |
 |---|---|---|
@@ -104,6 +104,7 @@ Feature: Pause gameplay
 
 ### PB-15 — Options menu
 
+- **Important:** adding individual options in this menu requires additional work, covered by PBs 17, 18, 19. This PB only implements a "back to main menu" option
 - [ ] Create a dedicated Options Menu scene.
 - [ ] Add navigation from Main Menu to Options Menu.
 - [ ] Add a Back action from Options Menu to Main Menu.
