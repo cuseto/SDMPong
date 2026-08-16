@@ -4,11 +4,11 @@
 
 -   **Sprint name/number:** `Sprint 3 - Match Lifecycle and Scoring`
 -   **Start date:** `2026-08-10`
--   **End date:** `2026-08-17`
--   **Duration:** `7 days`
+-   **End date:** `2026-08-14`
+-   **Duration:** `5 days`
 -   **Scrum Master:** `Giacomo Serafini`
 -   **Developers:** `Lorenzo Cusin, Andrea Tonello`
--   **Status:** `In Progress`
+-   **Status:** `Closed`
 
 ## 2. Sprint Goal
 
