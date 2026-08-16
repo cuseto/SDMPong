@@ -308,3 +308,112 @@ controls:
 - `Arena`, `Ball`, and `Paddle` do not depend on configuration classes.
 - `ControlsConfig` is converted into the game’s key bindings.
 - Rendering and movement logic operate on the initialized domain objects.
+
+## PB-13 — Main menu and application navigation
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Main menu navigation
+
+  Scenario: Start a game from the main menu
+    Given the application is displaying the main menu
+    When the player chooses to start a game
+    Then the gameplay scene is displayed
+    And a new match uses the configured initial game state
+```
+
+## PB-14 — Pause gameplay
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Pause gameplay
+
+  Scenario: Pause and resume a match
+    Given a match is in progress
+    When the player presses Esc
+    Then the pause menu is displayed
+    And ball and paddle movement stop
+    When the player presses Esc again
+    Then the pause menu is hidden
+    And gameplay resumes from the preserved match state
+```
+
+## PB-15 — Options menu
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Options navigation
+
+  Scenario: Return from options to the main menu
+    Given the application is displaying the main menu
+    When the player opens the options menu
+    Then the options scene is displayed
+    When the player returns from options
+    Then the main menu scene is displayed
+```
+
+## PB-16 — Match finished menu navigation
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Match finished menu
+
+  Scenario: Start a new match after victory
+    Given a player has won the match
+    When the match finished menu is displayed
+    And the player starts a new match
+    Then the match finished menu is hidden
+    And both scores are zero
+    And normal gameplay resumes
+```
+
+## PB-17 — Persist player configuration
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Persistent player configuration
+
+  Scenario: Load saved configuration
+    Given a valid user configuration file exists
+    When the application starts
+    Then the saved configuration is used
+
+  Scenario: Fall back to defaults
+    Given no user configuration file exists
+    When the application starts
+    Then the bundled default configuration is used
+```
+
+## PB-18 — Configure match and movement settings
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Match and movement settings
+
+  Scenario: Start a match with saved gameplay settings
+    Given the player saves a winning score, ball speed, and paddle speed in Options
+    When the player starts a new match from the main menu
+    Then the match uses the saved winning score
+    And the ball uses the saved speed for both initial velocity axes
+    And the paddles use the saved speed
+```
+
+## PB-19 — Configure paddle controls
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Configurable paddle controls
+
+  Scenario: Use saved paddle controls
+    Given the player saves valid paddle control bindings in Options
+    When the player starts a new match from the main menu
+    And the player presses a saved movement key
+    Then the intended paddle moves in the configured direction
+```
