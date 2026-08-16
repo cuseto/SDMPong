@@ -13,6 +13,10 @@ public class PaddleGameUpdater implements GameUpdater {
 
     @Override
     public void update(GameSession gameSession, double elapsedSeconds) {
+        if (gameSession.isMatchOver()) {
+            return;
+        }
+
         double minY = gameSession.arena().innerTopBoundary();
         double maxY = gameSession.arena().innerBottomBoundary();
 

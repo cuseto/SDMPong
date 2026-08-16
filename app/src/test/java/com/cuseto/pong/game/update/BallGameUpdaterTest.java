@@ -28,4 +28,20 @@ class BallGameUpdaterTest {
         assertEquals(expectedX, gameSession.ball().x(), 0.000_001);
         assertEquals(expectedY, gameSession.ball().y(), 0.000_001);
     }
+
+    @Test
+    void updateDoesNotMoveBallAfterMatchEnds() {
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+        for (int score = 0; score < gameSession.winningScore(); score++) {
+            gameSession.incrementLeftScore();
+        }
+        gameSession.ball().moveTo(300, 250);
+        gameSession.ball().setVelocity(120, 80);
+
+        new BallGameUpdater().update(gameSession, 1.0);
+
+        assertEquals(300, gameSession.ball().x());
+        assertEquals(250, gameSession.ball().y());
+    }
 }

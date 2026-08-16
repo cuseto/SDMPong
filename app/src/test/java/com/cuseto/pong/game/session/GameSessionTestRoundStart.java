@@ -1,4 +1,4 @@
-package com.cuseto.pong.game.update;
+package com.cuseto.pong.game.session;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.Test;
@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.game.input.PaddleInputState;
-import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.game.update.BallGameUpdater;
+import com.cuseto.pong.game.update.GameUpdater;
+import com.cuseto.pong.game.update.PaddleGameUpdater;
 
 
-class RoundStartTest {
+class GameSessionTestRoundStart {
 
     @Test
     void ballMovesFromInitialPositionOncePlayStarts() {

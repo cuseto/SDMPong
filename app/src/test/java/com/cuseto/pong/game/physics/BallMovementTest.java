@@ -39,22 +39,22 @@ class BallMovementTest {
 
     @Test
     void ballBouncesOnTopBoundary() {
-        Ball ball = new Ball(400, 10, 8, 200, 120);
+        Ball ball = new Ball(400, 22, 8, 200, 120);
         Paddle dummyPaddle = new Paddle(0,0,1,1,1);
         BallMovement.move(ball, 0.0, 20, 100, dummyPaddle, dummyPaddle);
 
         assertEquals(400, ball.x());
-        assertEquals(30, ball.y());
+        assertEquals(34, ball.y());
     }
 
     @Test
     void ballBouncesOnBottomBoundary() {
-        Ball ball = new Ball(400, 110, 8, 200, 120);
+        Ball ball = new Ball(400, 120, 8, 200, 120);
         Paddle dummyPaddle = new Paddle(0,0,1,1,1);
         BallMovement.move(ball, 0.0, 20, 100, dummyPaddle, dummyPaddle);
 
         assertEquals(400, ball.x());
-        assertEquals(90, ball.y());
+        assertEquals(64, ball.y());
     }
 
     @Test

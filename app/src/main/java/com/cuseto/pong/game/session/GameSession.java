@@ -12,11 +12,22 @@ public final class GameSession {
     private final Paddle leftPaddle;
     private final Paddle rightPaddle;
     private final Ball ball;
+    private final double initialBallVelocityX;
+    private final double initialBallVelocityY;
+    private final int winningScore;
+    private int leftScore;
+    private int rightScore;
+    private Player winner;
 
     public GameSession(AppConfig appConfig) {
         this.arena = getArena(appConfig);
         this.leftPaddle = getLeftPaddle(appConfig, arena);
         this.rightPaddle = getRightPaddle(appConfig, arena);
+
+        this.initialBallVelocityX = appConfig.gamePage().ball().initialVelocityX();
+        this.initialBallVelocityY = appConfig.gamePage().ball().initialVelocityY();
+        this.winningScore = appConfig.gamePage().winningScore();
+
         this.ball = getBall(appConfig, arena);
     }
 
@@ -63,16 +74,44 @@ public final class GameSession {
         );
     }
 
+    private double initialPaddleY(Paddle paddle) {
+        return arena.innerTopBoundary() + ((arena.innerHeight() - paddle.height()) / 2.0);
+    }
+
     private Ball getBall(AppConfig appConfig, Arena arena) {
-        double x = arena.innerLeftBoundary() + (arena.innerWidth() / 2);
-        double y = arena.innerTopBoundary() + (arena.innerHeight() / 2);
+        double x = initialBallX(arena);
+        double y = initialBallY(arena);
         return new Ball(
             x,
             y,
             appConfig.gamePage().ball().radius(),
-            appConfig.gamePage().ball().initialVelocityX(),
-            appConfig.gamePage().ball().initialVelocityY()
+            initialBallVelocityX,
+            initialBallVelocityY
         );
+    }
+
+    private double initialBallX(Arena arena) {
+        return arena.innerLeftBoundary() + arena.innerWidth() / 2.0;
+    }
+
+    private double initialBallY(Arena arena) {
+        return arena.innerTopBoundary() + arena.innerHeight() / 2.0;
+    }
+
+    public void resetRound() {
+        ball.setX(initialBallX(arena));
+        ball.setY(initialBallY(arena));
+        ball.setVelocity(initialBallVelocityX, initialBallVelocityY);
+
+        leftPaddle.moveToY(initialPaddleY(leftPaddle));
+        rightPaddle.moveToY(initialPaddleY(rightPaddle));
+    }
+
+    public void startNewMatch() {
+        leftScore = 0;
+        rightScore = 0;
+        winner = null;
+        resetRound();
     }
 
     // getter
@@ -102,5 +141,47 @@ public final class GameSession {
 
     public Paddle rightPaddle() {
         return this.rightPaddle;
+    }
+
+    public int leftScore() {
+        return leftScore;
+    }
+
+    public int rightScore() {
+        return rightScore;
+    }
+
+    public int winningScore() {
+        return winningScore;
+    }
+
+    public boolean isMatchOver() {
+        return winner != null;
+    }
+
+    public Player winner() {
+        return winner;
+    }
+
+    public void incrementLeftScore() {
+        if (isMatchOver()) {
+            return;
+        }
+
+        leftScore++;
+        if (leftScore == winningScore) {
+            winner = Player.LEFT;
+        }
+    }
+
+    public void incrementRightScore() {
+        if (isMatchOver()) {
+            return;
+        }
+
+        rightScore++;
+        if (rightScore == winningScore) {
+            winner = Player.RIGHT;
+        }
     }
 }

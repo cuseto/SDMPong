@@ -8,12 +8,15 @@ import com.cuseto.pong.game.loop.GameLoop;
 import com.cuseto.pong.game.session.GameSession;
 import com.cuseto.pong.game.update.BallGameUpdater;
 import com.cuseto.pong.game.update.PaddleGameUpdater;
+import com.cuseto.pong.game.update.ScoreGameUpdater;
 import com.cuseto.pong.model.PaddleDirection;
 import com.cuseto.pong.view.PongRenderer;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -45,6 +48,18 @@ public class App extends Application {
         // enabling key controls for the paddles
         PaddleInputState inputState = new PaddleInputState();
         scene.setOnKeyPressed(event -> {
+            if (gameSession.isMatchOver()) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    gameSession.startNewMatch();
+                    inputState.setLeftDirection(PaddleDirection.NONE);
+                    inputState.setRightDirection(PaddleDirection.NONE);
+                }
+                else if (event.getCode() == KeyCode.ESCAPE) {
+                    Platform.exit();
+                }
+                return;
+            }
+
             PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
             if (leftDirection != PaddleDirection.NONE) {
                 inputState.setLeftDirection(leftDirection);
@@ -68,7 +83,7 @@ public class App extends Application {
 
         gameLoop = new GameLoop(
             gameSession,
-            new PaddleGameUpdater(inputState).andThen(new BallGameUpdater()),
+            new PaddleGameUpdater(inputState).andThen(new BallGameUpdater()).andThen(new ScoreGameUpdater()),
             currentState -> renderer.render(canvas, gameSession)
         );
         gameLoop.start();

@@ -31,4 +31,24 @@ public class PaddleGameUpdaterTest {
         assertEquals(initialBallX, gameSession.ball().x());
         assertEquals(initialBallY, gameSession.ball().y());
     }
+
+    @Test
+    void updateDoesNotMovePaddlesAfterMatchEnds() {
+        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
+        GameSession gameSession = new GameSession(appConfig);
+        for (int score = 0; score < gameSession.winningScore(); score++) {
+            gameSession.incrementLeftScore();
+        }
+        gameSession.leftPaddle().moveToY(200);
+        gameSession.rightPaddle().moveToY(300);
+
+        PaddleInputState inputState = new PaddleInputState();
+        inputState.setLeftDirection(PaddleDirection.DOWN);
+        inputState.setRightDirection(PaddleDirection.UP);
+
+        new PaddleGameUpdater(inputState).update(gameSession, 1.0);
+
+        assertEquals(200, gameSession.leftPaddle().y());
+        assertEquals(300, gameSession.rightPaddle().y());
+    }
 }
