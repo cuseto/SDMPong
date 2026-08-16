@@ -8,7 +8,7 @@
 - **Duration:** `14 days`
 - **Scrum Master:** `Andrea Tonello`
 - **Developers:** `Giacomo Serafini, Lorenzo Cusin`
-- **Status:** `In Progress`
+- **Status:** `Closed`
 
 ## 2. Sprint Goal
 
