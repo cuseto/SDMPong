@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.game.controller.GameplayController;
+import com.cuseto.pong.view.MainMenuView;
 
 import javafx.stage.Stage;
 
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 public final class AppNavigator {
     private final Stage stage;
     private final AppConfig appConfig;
+    private final MainMenuView mainMenuView;
 
     private ApplicationScreen currentScreen;
     private GameplayOverlay gameplayOverlay = GameplayOverlay.NONE;
@@ -21,14 +23,33 @@ public final class AppNavigator {
     public AppNavigator(Stage stage, AppConfig appConfig) {
         this.stage = Objects.requireNonNull(stage, "stage cannot be null");
         this.appConfig = Objects.requireNonNull(appConfig, "appConfig cannot be null");
+        mainMenuView = new MainMenuView();
     }
 
     public void start() {
         stage.setTitle("Pong");
+        showMainMenu();
         stage.show();
     }
 
+    public void showMainMenu() {
+        stopGameplay();
+        stage.setScene(mainMenuView.createScene(
+            appConfig.viewport().screenWidth(),
+            appConfig.viewport().screenHeight(),
+            this::startGameplay
+        ));
+        currentScreen = ApplicationScreen.MAIN_MENU;
+        gameplayOverlay = GameplayOverlay.NONE;
+    }
+
     public void startGameplay() {
+        stopGameplay();
+        gameplayController = new GameplayController(appConfig);
+        stage.setScene(gameplayController.scene());
+        currentScreen = ApplicationScreen.GAMEPLAY;
+        gameplayOverlay = GameplayOverlay.NONE;
+        gameplayController.start();
     }
 
     public void stop() {
@@ -48,6 +69,9 @@ public final class AppNavigator {
     }
 
     private void stopGameplay() {
-    
+        if (gameplayController != null) {
+            gameplayController.stop();
+            gameplayController = null;
+        }
     }
 }
