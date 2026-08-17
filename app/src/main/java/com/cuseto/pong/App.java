@@ -1,6 +1,6 @@
 package com.cuseto.pong;
 
-import com.cuseto.pong.config.ConfigLoader;
+import com.cuseto.pong.config.ConfigRepository;
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.navigation.AppNavigator;
 
@@ -12,7 +12,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        AppConfig appConfig = ConfigLoader.load();
+        AppConfig appConfig = new ConfigRepository().load();
         navigator = new AppNavigator(stage, appConfig);
         navigator.start();
     }
