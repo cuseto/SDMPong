@@ -1,6 +1,7 @@
 package com.cuseto.pong.config;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,5 +39,17 @@ class ConfigRepositoryTest {
 
     private Path userConfigPath() {
         return temporaryDirectory.resolve("config.yaml");
+    }
+
+    @Test
+    void savePersistsACompleteConfigurationThatCanBeLoadedAgain() {
+        Path userConfigPath = userConfigPath();
+        ConfigRepository repository = new ConfigRepository(userConfigPath);
+        AppConfig expectedConfig = ConfigLoader.load("/test-config.yaml");
+
+        repository.save(expectedConfig);
+
+        assertTrue(Files.isRegularFile(userConfigPath));
+        assertEquals(expectedConfig, new ConfigRepository(userConfigPath).load());
     }
 }
