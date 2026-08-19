@@ -13,8 +13,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 public final class PongRenderer {
+    private final Canvas canvas;
 
-    public void render(Canvas canvas, GameSession gameSession) {
+    public PongRenderer(double width, double height) {
+        this.canvas = new Canvas(width, height);
+    }
+
+    public void render(GameSession gameSession) {
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         double screenWidth = canvas.getWidth();
         double screenHeight = canvas.getHeight();
@@ -95,6 +100,10 @@ public final class PongRenderer {
                 screenHeight / 2.0 + 25
             );
         }
+    }
+
+    public Canvas canvas() {
+        return canvas;
     }
 
 }

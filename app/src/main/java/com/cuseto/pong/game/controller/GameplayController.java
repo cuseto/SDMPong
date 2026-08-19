@@ -15,7 +15,6 @@ import com.cuseto.pong.view.PongRenderer;
 
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
@@ -25,6 +24,7 @@ public final class GameplayController {
     private final PaddleInputState inputState;
     private final GameLoop gameLoop;
     private final Scene scene;
+    private final StackPane root = new StackPane();
 
     public GameplayController(AppConfig appConfig) {
         Objects.requireNonNull(appConfig, "appConfig cannot be null");
@@ -32,14 +32,13 @@ public final class GameplayController {
         gameSession = new GameSession(appConfig);
         inputState = new PaddleInputState();
 
-        Canvas canvas = new Canvas(
+        PongRenderer pongRenderer = new PongRenderer(
             appConfig.viewport().screenWidth(),
             appConfig.viewport().screenHeight()
         );
-        PongRenderer renderer = new PongRenderer();
-        renderer.render(canvas, gameSession);
-
-        StackPane root = new StackPane(canvas);
+        pongRenderer.render(gameSession);
+        
+        root.getChildren().add(pongRenderer.canvas());
         root.setStyle("-fx-background-color: black;");
         scene = new Scene(
             root,
@@ -53,7 +52,7 @@ public final class GameplayController {
             new PaddleGameUpdater(inputState)
                 .andThen(new BallGameUpdater())
                 .andThen(new ScoreGameUpdater()),
-            currentState -> renderer.render(canvas, currentState)
+            currentState -> pongRenderer.render(currentState)
         );
     }
 
