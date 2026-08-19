@@ -6,7 +6,6 @@ import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
 import com.cuseto.pong.model.view.BallView;
 import com.cuseto.pong.model.view.PaddleView;
-import com.cuseto.pong.navigation.GameplayOverlay;
 
 public final class GameSession {
     private final Arena arena;
@@ -16,7 +15,7 @@ public final class GameSession {
     private final double initialBallVelocityX;
     private final double initialBallVelocityY;
     private final int winningScore;
-    private GameplayOverlay gameStatus;
+    private GameStatus gameStatus;
     private int leftScore;
     private int rightScore;
     private Player winner;
@@ -31,7 +30,7 @@ public final class GameSession {
         this.winningScore = appConfig.gamePage().winningScore();
 
         this.ball = getBall(appConfig, arena);
-        this.gameStatus = GameplayOverlay.NONE;
+        this.gameStatus = GameStatus.RUNNING;
     }
 
     private Arena getArena(AppConfig appConfig) {
@@ -184,27 +183,26 @@ public final class GameSession {
     }
 
     public void pauseGame() {
-        gameStatus = GameplayOverlay.PAUSED;
+        gameStatus = GameStatus.PAUSED;
     }
 
     public void resumeGame() {
-        gameStatus = GameplayOverlay.NONE;
+        gameStatus = GameStatus.RUNNING;
     }
 
     public void setGameOver() {
-        gameStatus = GameplayOverlay.MATCH_FINISHED;
+        gameStatus = GameStatus.FINISHED;
     }
     
     public boolean isGameOn() {
-        return gameStatus == GameplayOverlay.NONE;
+        return gameStatus == GameStatus.RUNNING;
     }
 
     public boolean isGamePaused() {
-        return gameStatus == GameplayOverlay.PAUSED;
+        return gameStatus == GameStatus.PAUSED;
     }
 
     public boolean isGameOver() {
-        return gameStatus == GameplayOverlay.MATCH_FINISHED;
+        return gameStatus == GameStatus.FINISHED;
     }
-
 }
