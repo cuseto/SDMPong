@@ -1,6 +1,7 @@
 package com.cuseto.pong.view;
 
 import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.game.session.Player;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -49,9 +50,9 @@ public final class GamePageRenderer {
         }
     }
 
-    public void showWinnerBanner(int leftScore, int rightScore) {
+    public void showWinnerBanner(Player winner) {
         if (!root.getChildren().contains(gameWinnerBanner.root())) {
-            gameWinnerBanner.render(leftScore, rightScore);
+            gameWinnerBanner.render(winner);
             root.getChildren().add(gameWinnerBanner.root());
         }
     }

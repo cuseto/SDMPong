@@ -1,6 +1,6 @@
 package com.cuseto.pong.game.session;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.model.Arena;
@@ -21,7 +21,7 @@ public final class GameSession {
     private int leftScore;
     private int rightScore;
     private Player winner;
-    private BiConsumer<Integer, Integer> onGameOverAction = null;
+    private Consumer<Player> onGameOverAction = null;
 
     public GameSession(AppConfig appConfig) {
         this.arena = getArena(appConfig);
@@ -120,7 +120,7 @@ public final class GameSession {
         resetRound();
     }
 
-    public void setGameOverAction(BiConsumer<Integer, Integer> action) {
+    public void setGameOverAction(Consumer<Player> action) {
         onGameOverAction = action;
     }
 
@@ -199,7 +199,7 @@ public final class GameSession {
 
     public void setGameOver() {
         gameStatus = GameStatus.FINISHED;
-        if (onGameOverAction != null) onGameOverAction.accept(leftScore(), rightScore());
+        if (onGameOverAction != null) onGameOverAction.accept(winner);
     }
     
     public boolean isGameOn() {

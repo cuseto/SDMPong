@@ -1,5 +1,7 @@
 package com.cuseto.pong.view;
 
+import com.cuseto.pong.game.session.Player;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -34,9 +36,9 @@ public final class GameWinnerBannerRenderer {
         root.setMouseTransparent(true);
     }
 
-    public void render(int leftScore, int rightScore) {
+    public void render(Player winner) {
         winnerLabel.setText(
-            leftScore > rightScore
+            winner == Player.LEFT
                 ? "LEFT PLAYER WINS!"
                 : "RIGHT PLAYER WINS!"
         );

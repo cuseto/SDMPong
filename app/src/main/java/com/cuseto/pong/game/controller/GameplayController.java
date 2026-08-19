@@ -7,6 +7,7 @@ import com.cuseto.pong.game.input.PaddleInputState;
 import com.cuseto.pong.game.input.PaddleKeyMapping;
 import com.cuseto.pong.game.loop.GameLoop;
 import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.game.session.Player;
 import com.cuseto.pong.game.update.BallGameUpdater;
 import com.cuseto.pong.game.update.PaddleGameUpdater;
 import com.cuseto.pong.game.update.ScoreGameUpdater;
@@ -107,8 +108,8 @@ public final class GameplayController {
         gameSession.resumeGame();
     }
 
-    private void openWinnerBanner(int leftScore, int rightScore) {
-        gamePageRenderer.showWinnerBanner(leftScore, rightScore);
+    private void openWinnerBanner(Player winner) {
+        gamePageRenderer.showWinnerBanner(winner);
     }
 
     public void start() {
