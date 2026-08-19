@@ -18,7 +18,6 @@ public final class AppNavigator {
     private final MainMenuView mainMenuView;
 
     private ApplicationScreen currentScreen;
-    private GameplayOverlay gameplayOverlay = GameplayOverlay.NONE;
     private GameplayController gameplayController;
     private OptionsController optionsController;
 
@@ -43,7 +42,6 @@ public final class AppNavigator {
             this::openOptionsMenu
         ));
         currentScreen = ApplicationScreen.MAIN_MENU;
-        gameplayOverlay = GameplayOverlay.NONE;
     }
 
     public void startGameplay() {
@@ -51,7 +49,6 @@ public final class AppNavigator {
         gameplayController = new GameplayController(appConfig, this::showMainMenu);
         stage.setScene(gameplayController.scene());
         currentScreen = ApplicationScreen.GAMEPLAY;
-        gameplayOverlay = GameplayOverlay.NONE;
         gameplayController.start();
     }
 
@@ -67,10 +64,6 @@ public final class AppNavigator {
 
     public ApplicationScreen currentScreen() {
         return currentScreen;
-    }
-
-    public GameplayOverlay gameplayOverlay() {
-        return gameplayOverlay;
     }
 
     public GameplayController gameplayController() {

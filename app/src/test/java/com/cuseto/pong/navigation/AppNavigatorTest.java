@@ -37,7 +37,6 @@ class AppNavigatorTest extends ApplicationTest {
     @Test
     void applicationStartsAtMainMenu() {
         assertEquals(ApplicationScreen.MAIN_MENU, navigator.currentScreen());
-        assertEquals(GameplayOverlay.NONE, navigator.gameplayOverlay());
         assertNotNull(lookup("#startGameButton").query());
     }
 
@@ -46,7 +45,6 @@ class AppNavigatorTest extends ApplicationTest {
         startGameplayFromMenu();
 
         assertEquals(ApplicationScreen.GAMEPLAY, navigator.currentScreen());
-        assertEquals(GameplayOverlay.NONE, navigator.gameplayOverlay());
         assertNotNull(navigator.gameplayController());
     }
 
