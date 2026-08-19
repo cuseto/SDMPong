@@ -69,13 +69,15 @@ public final class GameplayController {
                 } 
             }
 
-            PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
-            if (leftDirection != PaddleDirection.NONE) {
-                inputState.setLeftDirection(leftDirection);
-            }
-            PaddleDirection rightDirection = PaddleKeyMapping.rightDirectionFor(event.getCode());
-            if (rightDirection != PaddleDirection.NONE) {
-                inputState.setRightDirection(rightDirection);
+            if (gameStatus != GameplayOverlay.PAUSED) {
+                PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
+                if (leftDirection != PaddleDirection.NONE) {
+                    inputState.setLeftDirection(leftDirection);
+                }
+                PaddleDirection rightDirection = PaddleKeyMapping.rightDirectionFor(event.getCode());
+                if (rightDirection != PaddleDirection.NONE) {
+                    inputState.setRightDirection(rightDirection);
+                }
             }
         });
 
