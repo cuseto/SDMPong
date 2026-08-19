@@ -9,6 +9,7 @@ public final class GamePageRenderer {
     private final Scene scene;
     private final StackPane root;
     private final PongRenderer pongField;
+    private final GameMenuRenderer gameMenu;
 
     public GamePageRenderer(double windowWidth, double windowHeight) {
         root = new StackPane();
@@ -17,11 +18,18 @@ public final class GamePageRenderer {
         scene = new Scene(root, windowWidth, windowHeight);
 
         pongField = new PongRenderer(windowWidth, windowHeight);
+        gameMenu = new GameMenuRenderer();
         root.getChildren().add(pongField.canvas());
     }
 
     public void render(GameSession gameSession) {
         pongField.render(gameSession);
+    }
+
+    public void showGameMenu() {
+        if (!root.getChildren().contains(gameMenu.root())) {
+            root.getChildren().add(gameMenu.root());
+        }
     }
 
     public Scene scene() {

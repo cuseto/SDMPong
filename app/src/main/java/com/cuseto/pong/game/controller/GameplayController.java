@@ -23,6 +23,7 @@ public final class GameplayController {
     private final PaddleInputState inputState;
     private final GameLoop gameLoop;
     private final GamePageRenderer gamePageRenderer;
+    private final KeyCode OPEN_MENU_KEY = KeyCode.ESCAPE;
 
     public GameplayController(AppConfig appConfig) {
         Objects.requireNonNull(appConfig, "appConfig cannot be null");
@@ -51,6 +52,10 @@ public final class GameplayController {
             if (gameSession.isMatchOver()) {
                 handleFinishedMatchKey(event.getCode());
                 return;
+            }
+
+            if (event.getCode() == OPEN_MENU_KEY) {
+                gamePageRenderer.showGameMenu();
             }
 
             PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
