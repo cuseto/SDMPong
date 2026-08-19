@@ -119,4 +119,69 @@ class GameControllerTest extends ApplicationTest {
         assertTrue(startingX == ball.x());
         assertTrue(startingY == ball.y());
     }
+
+    @Test
+    void leftPaddleCanMoveWhenMenuIsClosed() {
+        pressKeyOnScene(KeyCode.ESCAPE);
+        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        pressKeyOnScene(KeyCode.ESCAPE);
+        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+
+        Paddle leftPaddle = navigator.gameplayController().gameSession().leftPaddle();
+        double startingY = leftPaddle.y();
+
+        pressKeyOnScene(KeyCode.W);
+        sleep(100);
+
+        double endingY = leftPaddle.y();
+        assertTrue(startingY > endingY);
+
+        startingY = leftPaddle.y();
+        pressKeyOnScene(KeyCode.S);
+        sleep(100);
+
+        endingY = leftPaddle.y();
+        assertTrue(startingY < endingY);
+    }
+
+    @Test
+    void rightPaddleCanMoveWhenMenuIsClosed() {
+        pressKeyOnScene(KeyCode.ESCAPE);
+        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        pressKeyOnScene(KeyCode.ESCAPE);
+        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+
+        Paddle rightPaddle = navigator.gameplayController().gameSession().rightPaddle();
+        double startingY = rightPaddle.y();
+
+        pressKeyOnScene(KeyCode.UP);
+        sleep(100);
+
+        double endingY = rightPaddle.y();
+        assertTrue(startingY > endingY);
+
+        startingY = rightPaddle.y();
+        pressKeyOnScene(KeyCode.DOWN);
+        sleep(100);
+
+        endingY = rightPaddle.y();
+        assertTrue(startingY < endingY);
+    }
+
+    @Test
+    void ballCanMoveWhenMenuIsClosed() {
+        pressKeyOnScene(KeyCode.ESCAPE);
+        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        pressKeyOnScene(KeyCode.ESCAPE);
+        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+
+        Ball ball = navigator.gameplayController().gameSession().ball();
+        double startingX = ball.x();
+        double startingY = ball.y();
+
+        sleep(100);
+
+        assertTrue(startingX != ball.x());
+        assertTrue(startingY != ball.y());
+    }
 }

@@ -45,7 +45,7 @@ public final class AppNavigator {
 
     public void startGameplay() {
         stopGameplay();
-        gameplayController = new GameplayController(appConfig);
+        gameplayController = new GameplayController(appConfig, this::showMainMenu);
         stage.setScene(gameplayController.scene());
         currentScreen = ApplicationScreen.GAMEPLAY;
         gameplayOverlay = GameplayOverlay.NONE;
