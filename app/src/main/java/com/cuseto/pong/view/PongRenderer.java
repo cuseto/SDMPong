@@ -82,7 +82,7 @@ public final class PongRenderer {
             32
         );
 
-        if (gameSession.isMatchOver()) {
+        if (gameSession.isGameOver()) {
             Player winner = gameSession.winner();
             graphics.setFill(Color.GRAY);
             graphics.fillRect(0, screenHeight / 2.0 - 48, screenWidth, 96);

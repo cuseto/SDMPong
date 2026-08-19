@@ -6,6 +6,7 @@ import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
 import com.cuseto.pong.model.view.BallView;
 import com.cuseto.pong.model.view.PaddleView;
+import com.cuseto.pong.navigation.GameplayOverlay;
 
 public final class GameSession {
     private final Arena arena;
@@ -15,6 +16,7 @@ public final class GameSession {
     private final double initialBallVelocityX;
     private final double initialBallVelocityY;
     private final int winningScore;
+    private GameplayOverlay gameStatus;
     private int leftScore;
     private int rightScore;
     private Player winner;
@@ -29,6 +31,7 @@ public final class GameSession {
         this.winningScore = appConfig.gamePage().winningScore();
 
         this.ball = getBall(appConfig, arena);
+        this.gameStatus = GameplayOverlay.NONE;
     }
 
     private Arena getArena(AppConfig appConfig) {
@@ -111,6 +114,7 @@ public final class GameSession {
         leftScore = 0;
         rightScore = 0;
         winner = null;
+        resumeGame();
         resetRound();
     }
 
@@ -155,33 +159,52 @@ public final class GameSession {
         return winningScore;
     }
 
-    public boolean isMatchOver() {
-        return winner != null;
-    }
-
     public Player winner() {
         return winner;
     }
 
     public void incrementLeftScore() {
-        if (isMatchOver()) {
-            return;
-        }
-
-        leftScore++;
-        if (leftScore == winningScore) {
-            winner = Player.LEFT;
+        if (!isGameOver()) {
+            leftScore++;
+            if (leftScore == winningScore) {
+                winner = Player.LEFT;
+                setGameOver();
+            }
         }
     }
 
     public void incrementRightScore() {
-        if (isMatchOver()) {
-            return;
-        }
-
-        rightScore++;
-        if (rightScore == winningScore) {
-            winner = Player.RIGHT;
+        if (!isGameOver()) {
+            rightScore++;
+            if (rightScore == winningScore) {
+                winner = Player.RIGHT;
+                setGameOver();
+            }
         }
     }
+
+    public void pauseGame() {
+        gameStatus = GameplayOverlay.PAUSED;
+    }
+
+    public void resumeGame() {
+        gameStatus = GameplayOverlay.NONE;
+    }
+
+    public void setGameOver() {
+        gameStatus = GameplayOverlay.MATCH_FINISHED;
+    }
+    
+    public boolean isGameOn() {
+        return gameStatus == GameplayOverlay.NONE;
+    }
+
+    public boolean isGamePaused() {
+        return gameStatus == GameplayOverlay.PAUSED;
+    }
+
+    public boolean isGameOver() {
+        return gameStatus == GameplayOverlay.MATCH_FINISHED;
+    }
+
 }

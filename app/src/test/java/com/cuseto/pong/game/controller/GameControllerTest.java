@@ -8,6 +8,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.schema.AppConfig;
+import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
 import com.cuseto.pong.navigation.AppNavigator;
 
@@ -104,4 +105,18 @@ class GameControllerTest extends ApplicationTest {
         assertTrue(startingY == endingY);
     }
 
+    @Test
+    void ballCantMoveWhenMenuIsOpen() {
+        pressKeyOnScene(KeyCode.ESCAPE);
+        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+
+        Ball ball = navigator.gameplayController().gameSession().ball();
+        double startingX = ball.x();
+        double startingY = ball.y();
+
+        sleep(100);
+
+        assertTrue(startingX == ball.x());
+        assertTrue(startingY == ball.y());
+    }
 }

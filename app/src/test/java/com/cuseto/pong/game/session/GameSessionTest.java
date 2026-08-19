@@ -78,7 +78,7 @@ class GameSessionTest {
         assertEquals(gameSession.winningScore(), gameSession.leftScore());
         assertEquals(0, gameSession.rightScore());
         assertEquals(Player.LEFT, gameSession.winner());
-        assertTrue(gameSession.isMatchOver());
+        assertTrue(gameSession.isGameOver());
     }
 
     @Test
@@ -92,7 +92,7 @@ class GameSessionTest {
         assertEquals(0, gameSession.leftScore());
         assertEquals(gameSession.winningScore(), gameSession.rightScore());
         assertEquals(Player.RIGHT, gameSession.winner());
-        assertTrue(gameSession.isMatchOver());
+        assertTrue(gameSession.isGameOver());
     }
 
     @Test
@@ -118,7 +118,7 @@ class GameSessionTest {
         assertAll(
             () -> assertEquals(0, gameSession.leftScore()),
             () -> assertEquals(0, gameSession.rightScore()),
-            () -> assertFalse(gameSession.isMatchOver()),
+            () -> assertFalse(gameSession.isGameOver()),
             () -> assertNull(gameSession.winner()),
             () -> assertEquals(initialBallX, gameSession.ball().x()),
             () -> assertEquals(initialBallY, gameSession.ball().y()),

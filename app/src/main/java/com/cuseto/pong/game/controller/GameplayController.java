@@ -11,7 +11,6 @@ import com.cuseto.pong.game.update.BallGameUpdater;
 import com.cuseto.pong.game.update.PaddleGameUpdater;
 import com.cuseto.pong.game.update.ScoreGameUpdater;
 import com.cuseto.pong.model.PaddleDirection;
-import com.cuseto.pong.navigation.GameplayOverlay;
 import com.cuseto.pong.view.GamePageRenderer;
 
 import javafx.application.Platform;
@@ -25,7 +24,6 @@ public final class GameplayController {
     private final GameLoop gameLoop;
     private final GamePageRenderer gamePageRenderer;
     private final KeyCode OPEN_MENU_KEY = KeyCode.ESCAPE;
-    private GameplayOverlay gameStatus;
 
     public GameplayController(AppConfig appConfig) {
         Objects.requireNonNull(appConfig, "appConfig cannot be null");
@@ -47,37 +45,33 @@ public final class GameplayController {
                 .andThen(new ScoreGameUpdater()),
             currentState -> gamePageRenderer.render(currentState)
         );
-
-        gameStatus = GameplayOverlay.NONE;
     }
 
     private void configureInput() {
         gamePageRenderer.scene().setOnKeyPressed(event -> {
-            if (gameSession.isMatchOver()) {
+            if (gameSession.isGameOver()) {
                 handleFinishedMatchKey(event.getCode());
                 return;
             }
 
             if (event.getCode() == OPEN_MENU_KEY) {
-                if (gameStatus == GameplayOverlay.NONE) {
+                if (gameSession.isGameOn()) {
+                    gameSession.pauseGame();
                     gamePageRenderer.showGameMenu();
-                    gameStatus = GameplayOverlay.PAUSED;
                 }
-                else if (gameStatus == GameplayOverlay.PAUSED) {
+                else if (gameSession.isGamePaused()) {
                     gamePageRenderer.hideGameMenu();
-                    gameStatus = GameplayOverlay.NONE;
+                    gameSession.resumeGame();
                 } 
             }
 
-            if (gameStatus != GameplayOverlay.PAUSED) {
-                PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
-                if (leftDirection != PaddleDirection.NONE) {
-                    inputState.setLeftDirection(leftDirection);
-                }
-                PaddleDirection rightDirection = PaddleKeyMapping.rightDirectionFor(event.getCode());
-                if (rightDirection != PaddleDirection.NONE) {
-                    inputState.setRightDirection(rightDirection);
-                }
+            PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
+            if (leftDirection != PaddleDirection.NONE) {
+                inputState.setLeftDirection(leftDirection);
+            }
+            PaddleDirection rightDirection = PaddleKeyMapping.rightDirectionFor(event.getCode());
+            if (rightDirection != PaddleDirection.NONE) {
+                inputState.setRightDirection(rightDirection);
             }
         });
 
