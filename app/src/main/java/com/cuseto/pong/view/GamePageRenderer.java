@@ -32,6 +32,12 @@ public final class GamePageRenderer {
         }
     }
 
+    public void hideGameMenu() {
+        if (root.getChildren().contains(gameMenu.root())) {
+            root.getChildren().remove(gameMenu.root());
+        }
+    }
+
     public Scene scene() {
         return scene;
     }

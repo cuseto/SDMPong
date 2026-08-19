@@ -11,6 +11,7 @@ import com.cuseto.pong.game.update.BallGameUpdater;
 import com.cuseto.pong.game.update.PaddleGameUpdater;
 import com.cuseto.pong.game.update.ScoreGameUpdater;
 import com.cuseto.pong.model.PaddleDirection;
+import com.cuseto.pong.navigation.GameplayOverlay;
 import com.cuseto.pong.view.GamePageRenderer;
 
 import javafx.application.Platform;
@@ -24,6 +25,7 @@ public final class GameplayController {
     private final GameLoop gameLoop;
     private final GamePageRenderer gamePageRenderer;
     private final KeyCode OPEN_MENU_KEY = KeyCode.ESCAPE;
+    private GameplayOverlay gameStatus;
 
     public GameplayController(AppConfig appConfig) {
         Objects.requireNonNull(appConfig, "appConfig cannot be null");
@@ -45,6 +47,8 @@ public final class GameplayController {
                 .andThen(new ScoreGameUpdater()),
             currentState -> gamePageRenderer.render(currentState)
         );
+
+        gameStatus = GameplayOverlay.NONE;
     }
 
     private void configureInput() {
@@ -55,7 +59,14 @@ public final class GameplayController {
             }
 
             if (event.getCode() == OPEN_MENU_KEY) {
-                gamePageRenderer.showGameMenu();
+                if (gameStatus == GameplayOverlay.NONE) {
+                    gamePageRenderer.showGameMenu();
+                    gameStatus = GameplayOverlay.PAUSED;
+                }
+                else if (gameStatus == GameplayOverlay.PAUSED) {
+                    gamePageRenderer.hideGameMenu();
+                    gameStatus = GameplayOverlay.NONE;
+                } 
             }
 
             PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());

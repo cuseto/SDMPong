@@ -53,4 +53,41 @@ class GameControllerTest extends ApplicationTest {
         assertTrue(lookup("#gameMenu").tryQuery().isPresent());
     }
 
+    @Test
+    void menuClosesWhenEscIsPressed() {
+        interact(() -> navigator.gameplayController()
+            .scene()
+            .getRoot()
+            .fireEvent(new KeyEvent(
+                KeyEvent.KEY_PRESSED,
+                "",
+                "",
+                KeyCode.ESCAPE,
+                false,
+                false,
+                false,
+                false
+            ))
+        );
+
+        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+
+        interact(() -> navigator.gameplayController()
+            .scene()
+            .getRoot()
+            .fireEvent(new KeyEvent(
+                KeyEvent.KEY_PRESSED,
+                "",
+                "",
+                KeyCode.ESCAPE,
+                false,
+                false,
+                false,
+                false
+            ))
+        );
+
+        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+    }
+
 }
