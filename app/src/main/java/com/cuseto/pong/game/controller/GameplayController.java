@@ -25,7 +25,7 @@ public final class GameplayController {
     private final GamePageRenderer gamePageRenderer;
     private final KeyCode OPEN_MENU_KEY = KeyCode.ESCAPE;
 
-    public GameplayController(AppConfig appConfig) {
+    public GameplayController(AppConfig appConfig, Runnable backToMainMenuFunction) {
         Objects.requireNonNull(appConfig, "appConfig cannot be null");
 
         gameSession = new GameSession(appConfig);
@@ -33,7 +33,9 @@ public final class GameplayController {
 
         gamePageRenderer = new GamePageRenderer(
             appConfig.viewport().screenWidth(),
-            appConfig.viewport().screenHeight()
+            appConfig.viewport().screenHeight(),
+            this::closeGameMenu,
+            backToMainMenuFunction
         );
         gamePageRenderer.render(gameSession);
         configureInput();
@@ -55,14 +57,8 @@ public final class GameplayController {
             }
 
             if (event.getCode() == OPEN_MENU_KEY) {
-                if (gameSession.isGameOn()) {
-                    gameSession.pauseGame();
-                    gamePageRenderer.showGameMenu();
-                }
-                else if (gameSession.isGamePaused()) {
-                    gamePageRenderer.hideGameMenu();
-                    gameSession.resumeGame();
-                } 
+                if (gameSession.isGameOn()) openGameMenu();
+                else if (gameSession.isGamePaused()) closeGameMenu();
             }
 
             PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
@@ -93,6 +89,16 @@ public final class GameplayController {
         else if (keyCode == KeyCode.ESCAPE) {
             Platform.exit();
         }
+    }
+
+    private void openGameMenu() {
+        gameSession.pauseGame();
+        gamePageRenderer.showGameMenu();
+    }
+
+    private void closeGameMenu() {
+        gamePageRenderer.hideGameMenu();
+        gameSession.resumeGame();
     }
 
     public void start() {

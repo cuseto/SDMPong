@@ -11,7 +11,11 @@ public final class GamePageRenderer {
     private final PongRenderer pongField;
     private final GameMenuRenderer gameMenu;
 
-    public GamePageRenderer(double windowWidth, double windowHeight) {
+    public GamePageRenderer(
+        double windowWidth, 
+        double windowHeight,
+        Runnable closeMenuFunction
+    ) {
         root = new StackPane();
         root.setStyle("-fx-background-color: black;");
 
@@ -19,6 +23,8 @@ public final class GamePageRenderer {
 
         pongField = new PongRenderer(windowWidth, windowHeight);
         gameMenu = new GameMenuRenderer();
+        gameMenu.setOnCloseMenu(closeMenuFunction);
+        // gameMenu.setOnExitGame(exitGameFunction);
         root.getChildren().add(pongField.canvas());
     }
 
