@@ -8,11 +8,12 @@ import javafx.scene.Scene;
 public final class OptionsController {
     private final OptionsPageRenderer optionsPageRenderer;
 
-    public OptionsController(AppConfig appConfig) {
+    public OptionsController(AppConfig appConfig, Runnable backToMainMenuAction) {
         optionsPageRenderer = new OptionsPageRenderer(
             appConfig.viewport().screenWidth(),
             appConfig.viewport().screenHeight()
         );
+        optionsPageRenderer.setClickOnBackButton(backToMainMenuAction);
     }
 
     public Scene scene() {

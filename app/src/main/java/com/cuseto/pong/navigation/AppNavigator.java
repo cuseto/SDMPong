@@ -57,7 +57,7 @@ public final class AppNavigator {
 
     public void openOptionsMenu() {
         currentScreen = ApplicationScreen.OPTIONS;
-        optionsController = new OptionsController(appConfig);
+        optionsController = new OptionsController(appConfig, this::showMainMenu);
         stage.setScene(optionsController.scene());
     }
 

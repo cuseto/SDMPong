@@ -92,4 +92,17 @@ class AppNavigatorTest extends ApplicationTest {
         interact(() -> lookup("#optionsPageButton").queryAs(Button.class).fire());
         assertTrue(lookup("#optionsPage").tryQuery().isPresent());
     }
+
+    @Test
+    void backButtonNavigatesFromOptionsPageToMainMenu() {
+        assertFalse(lookup("#optionsPage").tryQuery().isPresent());
+        interact(() -> lookup("#optionsPageButton").queryAs(Button.class).fire());
+        assertTrue(lookup("#optionsPage").tryQuery().isPresent());
+
+        interact(() -> lookup("#optionsBackButton").queryAs(Button.class).fire());
+
+        assertFalse(lookup("#optionsPage").tryQuery().isPresent());
+        assertEquals(ApplicationScreen.MAIN_MENU, navigator.currentScreen());
+        assertNotNull(lookup("#startGameButton").query());
+    }
 }
