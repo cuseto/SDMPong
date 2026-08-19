@@ -1,24 +1,29 @@
 package com.cuseto.pong.game.controller;
 
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.schema.AppConfig;
+import com.cuseto.pong.game.session.GameSession;
+import com.cuseto.pong.game.session.Player;
 import com.cuseto.pong.model.Ball;
 import com.cuseto.pong.model.Paddle;
+import com.cuseto.pong.navigation.ApplicationScreen;
 import com.cuseto.pong.navigation.AppNavigator;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-class GameControllerTest extends ApplicationTest {
+class GameplayControllerTest extends ApplicationTest {
     private AppConfig appConfig;
-    private AppNavigator navigator; 
+    private AppNavigator navigator;
 
     @Override
     public void start(Stage stage) {
@@ -184,4 +189,89 @@ class GameControllerTest extends ApplicationTest {
         assertTrue(startingX != ball.x());
         assertTrue(startingY != ball.y());
     }
+
+    @Test
+    void winningBannerAppearsIfLeftPlayerWins() {
+        GameSession gameSession =
+            navigator.gameplayController().gameSession();
+
+        interact(() -> {
+            for (int i = 0; i < gameSession.winningScore(); i++) {
+                gameSession.incrementLeftScore();
+            }
+        });
+
+        assertTrue(
+            lookup("#winnerBanner").tryQuery().isPresent()
+        );
+        assertTrue(gameSession.isGameOver());
+        assertEquals(Player.LEFT, gameSession.winner());
+        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+    }
+
+    @Test
+    void gameMenuDoesNotAppearIfLeftPlayerWins() {
+        GameSession gameSession =
+            navigator.gameplayController().gameSession();
+
+        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+
+        interact(() -> {
+            for (int i = 0; i < gameSession.winningScore(); i++) {
+                gameSession.incrementLeftScore();
+            }
+        });
+
+        assertTrue(
+            lookup("#winnerBanner").tryQuery().isPresent()
+        );
+        assertFalse(
+            lookup("#gameMenu").tryQuery().isPresent()
+        );
+    }
+
+    @Test
+    void newMatchStartsFromMatchFinishedMenu() {
+        GameSession gameSession =
+            navigator.gameplayController().gameSession();
+
+        interact(() -> {
+            for (int i = 0; i < gameSession.winningScore(); i++) {
+                gameSession.incrementLeftScore();
+            }
+        });
+
+        assertTrue(gameSession.isGameOver());
+        assertTrue(lookup("#winnerBanner").tryQuery().isPresent());
+
+        pressKeyOnScene(KeyCode.ENTER);
+
+        assertTrue(gameSession.isGameOn());
+        assertEquals(0, gameSession.leftScore());
+        assertEquals(0, gameSession.rightScore());
+        assertNull(gameSession.winner());
+        assertFalse(lookup("#winnerBanner").tryQuery().isPresent());
+    }
+
+    @Test
+    void escapeQuitsFromMatchFinishedMenu() {
+        GameSession gameSession =
+            navigator.gameplayController().gameSession();
+
+        interact(() -> {
+            for (int i = 0; i < gameSession.winningScore(); i++) {
+                gameSession.incrementLeftScore();
+            }
+        });
+
+        assertTrue(lookup("#winnerBanner").tryQuery().isPresent());
+
+        pressKeyOnScene(KeyCode.ESCAPE);
+
+        assertEquals(ApplicationScreen.MAIN_MENU, navigator.currentScreen());
+        assertNull(navigator.gameplayController());
+        assertTrue(lookup("#startGameButton").tryQuery().isPresent());
+        assertFalse(lookup("#winnerBanner").tryQuery().isPresent());
+    }
+
 }

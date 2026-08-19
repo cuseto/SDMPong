@@ -13,7 +13,6 @@ import com.cuseto.pong.game.update.ScoreGameUpdater;
 import com.cuseto.pong.model.PaddleDirection;
 import com.cuseto.pong.view.GamePageRenderer;
 
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 
@@ -23,19 +22,25 @@ public final class GameplayController {
     private final PaddleInputState inputState;
     private final GameLoop gameLoop;
     private final GamePageRenderer gamePageRenderer;
+    private final Runnable backToMainMenuFunction;
     private final KeyCode OPEN_MENU_KEY = KeyCode.ESCAPE;
 
     public GameplayController(AppConfig appConfig, Runnable backToMainMenuFunction) {
         Objects.requireNonNull(appConfig, "appConfig cannot be null");
+        this.backToMainMenuFunction = Objects.requireNonNull(
+            backToMainMenuFunction,
+            "back to main menu function cannot be null"
+        );
 
         gameSession = new GameSession(appConfig);
+        gameSession.setGameOverAction(this::openWinnerBanner);
         inputState = new PaddleInputState();
 
         gamePageRenderer = new GamePageRenderer(
             appConfig.viewport().screenWidth(),
             appConfig.viewport().screenHeight(),
             this::closeGameMenu,
-            backToMainMenuFunction
+            this.backToMainMenuFunction
         );
         gamePageRenderer.render(gameSession);
         configureInput();
@@ -84,10 +89,11 @@ public final class GameplayController {
     private void handleFinishedMatchKey(KeyCode keyCode) {
         if (keyCode == KeyCode.ENTER) {
             gameSession.startNewMatch();
+            gamePageRenderer.hideWinnerBanner();
             clearInput();
         }
         else if (keyCode == KeyCode.ESCAPE) {
-            Platform.exit();
+            backToMainMenuFunction.run();
         }
     }
 
@@ -99,6 +105,10 @@ public final class GameplayController {
     private void closeGameMenu() {
         gamePageRenderer.hideGameMenu();
         gameSession.resumeGame();
+    }
+
+    private void openWinnerBanner(int leftScore, int rightScore) {
+        gamePageRenderer.showWinnerBanner(leftScore, rightScore);
     }
 
     public void start() {

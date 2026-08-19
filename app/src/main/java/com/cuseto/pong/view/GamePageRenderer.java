@@ -10,6 +10,7 @@ public final class GamePageRenderer {
     private final StackPane root;
     private final PongRenderer pongField;
     private final GameMenuRenderer gameMenu;
+    private final GameWinnerBannerRenderer gameWinnerBanner;
 
     public GamePageRenderer(
         double windowWidth, 
@@ -23,10 +24,13 @@ public final class GamePageRenderer {
         scene = new Scene(root, windowWidth, windowHeight);
 
         pongField = new PongRenderer(windowWidth, windowHeight);
+        root.getChildren().add(pongField.canvas());
+
         gameMenu = new GameMenuRenderer();
         gameMenu.setOnCloseMenu(closeMenuFunction);
         gameMenu.setOnExitGame(exitGameFunction);
-        root.getChildren().add(pongField.canvas());
+
+        gameWinnerBanner = new GameWinnerBannerRenderer();
     }
 
     public void render(GameSession gameSession) {
@@ -43,6 +47,17 @@ public final class GamePageRenderer {
         if (root.getChildren().contains(gameMenu.root())) {
             root.getChildren().remove(gameMenu.root());
         }
+    }
+
+    public void showWinnerBanner(int leftScore, int rightScore) {
+        if (!root.getChildren().contains(gameWinnerBanner.root())) {
+            gameWinnerBanner.render(leftScore, rightScore);
+            root.getChildren().add(gameWinnerBanner.root());
+        }
+    }
+
+    public void hideWinnerBanner() {
+        root.getChildren().remove(gameWinnerBanner.root());
     }
 
     public Scene scene() {
