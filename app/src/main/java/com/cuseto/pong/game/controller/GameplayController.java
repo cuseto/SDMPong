@@ -11,20 +11,18 @@ import com.cuseto.pong.game.update.BallGameUpdater;
 import com.cuseto.pong.game.update.PaddleGameUpdater;
 import com.cuseto.pong.game.update.ScoreGameUpdater;
 import com.cuseto.pong.model.PaddleDirection;
-import com.cuseto.pong.view.PongRenderer;
+import com.cuseto.pong.view.GamePageRenderer;
 
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
 
 /** Owns the JavaFX and game-loop objects for one active gameplay session. */
 public final class GameplayController {
     private final GameSession gameSession;
     private final PaddleInputState inputState;
     private final GameLoop gameLoop;
-    private final Scene scene;
-    private final StackPane root = new StackPane();
+    private final GamePageRenderer gamePageRenderer;
 
     public GameplayController(AppConfig appConfig) {
         Objects.requireNonNull(appConfig, "appConfig cannot be null");
@@ -32,19 +30,11 @@ public final class GameplayController {
         gameSession = new GameSession(appConfig);
         inputState = new PaddleInputState();
 
-        PongRenderer pongRenderer = new PongRenderer(
+        gamePageRenderer = new GamePageRenderer(
             appConfig.viewport().screenWidth(),
             appConfig.viewport().screenHeight()
         );
-        pongRenderer.render(gameSession);
-        
-        root.getChildren().add(pongRenderer.canvas());
-        root.setStyle("-fx-background-color: black;");
-        scene = new Scene(
-            root,
-            appConfig.viewport().screenWidth(),
-            appConfig.viewport().screenHeight()
-        );
+        gamePageRenderer.render(gameSession);
         configureInput();
 
         gameLoop = new GameLoop(
@@ -52,12 +42,12 @@ public final class GameplayController {
             new PaddleGameUpdater(inputState)
                 .andThen(new BallGameUpdater())
                 .andThen(new ScoreGameUpdater()),
-            currentState -> pongRenderer.render(currentState)
+            currentState -> gamePageRenderer.render(currentState)
         );
     }
 
     private void configureInput() {
-        scene.setOnKeyPressed(event -> {
+        gamePageRenderer.scene().setOnKeyPressed(event -> {
             if (gameSession.isMatchOver()) {
                 handleFinishedMatchKey(event.getCode());
                 return;
@@ -73,7 +63,7 @@ public final class GameplayController {
             }
         });
 
-        scene.setOnKeyReleased(event -> {
+        gamePageRenderer.scene().setOnKeyReleased(event -> {
             if (PaddleKeyMapping.leftDirectionFor(event.getCode()) != PaddleDirection.NONE) {
                 inputState.setLeftDirection(PaddleDirection.NONE);
             }
@@ -103,7 +93,7 @@ public final class GameplayController {
     }
 
     public Scene scene() {
-        return scene;
+        return gamePageRenderer.scene();
     }
 
     public GameSession gameSession() {
