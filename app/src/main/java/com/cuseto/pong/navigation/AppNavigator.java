@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.game.controller.GameplayController;
+import com.cuseto.pong.options.controller.OptionsController;
 import com.cuseto.pong.view.MainMenuView;
 
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ public final class AppNavigator {
     private ApplicationScreen currentScreen;
     private GameplayOverlay gameplayOverlay = GameplayOverlay.NONE;
     private GameplayController gameplayController;
+    private OptionsController optionsController;
 
     public AppNavigator(Stage stage, AppConfig appConfig) {
         this.stage = Objects.requireNonNull(stage, "stage cannot be null");
@@ -37,7 +39,8 @@ public final class AppNavigator {
         stage.setScene(mainMenuView.createScene(
             appConfig.viewport().screenWidth(),
             appConfig.viewport().screenHeight(),
-            this::startGameplay
+            this::startGameplay,
+            this::openOptionsMenu
         ));
         currentScreen = ApplicationScreen.MAIN_MENU;
         gameplayOverlay = GameplayOverlay.NONE;
@@ -50,6 +53,12 @@ public final class AppNavigator {
         currentScreen = ApplicationScreen.GAMEPLAY;
         gameplayOverlay = GameplayOverlay.NONE;
         gameplayController.start();
+    }
+
+    public void openOptionsMenu() {
+        currentScreen = ApplicationScreen.OPTIONS;
+        optionsController = new OptionsController(appConfig);
+        stage.setScene(optionsController.scene());
     }
 
     public void stop() {

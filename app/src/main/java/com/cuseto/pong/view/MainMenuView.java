@@ -13,8 +13,14 @@ import javafx.scene.text.Font;
 /** Creates the application's main-menu scene. */
 public final class MainMenuView {
     private static final String START_GAME_BUTTON_ID = "startGameButton";
+    private static final String OPTIONS_PAGE_BUTTON_ID = "optionsPageButton";
 
-    public Scene createScene(double width, double height, Runnable startGameAction) {
+    public Scene createScene(
+        double width, 
+        double height, 
+        Runnable startGameAction,
+        Runnable openOptionsPageAction
+    ) {
         Objects.requireNonNull(startGameAction, "startGameAction cannot be null");
 
         Label title = new Label("PONG");
@@ -25,7 +31,11 @@ public final class MainMenuView {
         startGameButton.setId(START_GAME_BUTTON_ID);
         startGameButton.setOnAction(event -> startGameAction.run());
 
-        VBox root = new VBox(24, title, startGameButton);
+        Button optionsButton = new Button("Options");
+        optionsButton.setId(OPTIONS_PAGE_BUTTON_ID);
+        optionsButton.setOnAction(event -> openOptionsPageAction.run());
+
+        VBox root = new VBox(24, title, startGameButton, optionsButton);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: black;");
 

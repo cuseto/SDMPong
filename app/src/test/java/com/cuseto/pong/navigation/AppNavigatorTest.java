@@ -3,8 +3,10 @@ package com.cuseto.pong.navigation;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -79,5 +81,15 @@ class AppNavigatorTest extends ApplicationTest {
 
     private void startGameplayFromMenu() {
         interact(() -> lookup("#startGameButton").queryAs(Button.class).fire());
+    }
+
+    @Test
+    void openOptionsPageFromMainMenu() {
+        startGameplayFromMenu();
+        interact(navigator::showMainMenu);
+
+        assertFalse(lookup("#optionsPage").tryQuery().isPresent());
+        interact(() -> lookup("#optionsPageButton").queryAs(Button.class).fire());
+        assertTrue(lookup("#optionsPage").tryQuery().isPresent());
     }
 }
