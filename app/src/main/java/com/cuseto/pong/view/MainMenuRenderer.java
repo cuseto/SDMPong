@@ -1,7 +1,5 @@
 package com.cuseto.pong.view;
 
-import java.util.Objects;
-
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,30 +13,41 @@ public final class MainMenuRenderer {
     private static final String START_GAME_BUTTON_ID = "startGameButton";
     private static final String OPTIONS_PAGE_BUTTON_ID = "optionsPageButton";
 
-    public Scene createScene(
-        double width, 
-        double height, 
-        Runnable startGameAction,
-        Runnable openOptionsPageAction
-    ) {
-        Objects.requireNonNull(startGameAction, "startGameAction cannot be null");
+    private final Scene scene;
+    private final VBox root;
+    private final Button startGameButton;
+    private final Button optionsButton;
 
+    public MainMenuRenderer(
+        double windowWidth,
+        double windowHeight
+    ) {
         Label title = new Label("PONG");
         title.setTextFill(Color.WHITE);
         title.setFont(Font.font(48));
 
-        Button startGameButton = new Button("Start Game");
+        startGameButton = new Button("Start Game");
         startGameButton.setId(START_GAME_BUTTON_ID);
-        startGameButton.setOnAction(event -> startGameAction.run());
 
-        Button optionsButton = new Button("Options");
+        optionsButton = new Button("Options");
         optionsButton.setId(OPTIONS_PAGE_BUTTON_ID);
-        optionsButton.setOnAction(event -> openOptionsPageAction.run());
 
-        VBox root = new VBox(24, title, startGameButton, optionsButton);
+        root = new VBox(24, title, startGameButton, optionsButton);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: black;");
 
-        return new Scene(root, width, height);
+        scene = new Scene(root, windowWidth, windowHeight);
+    }
+
+    public void setClickOnStartGameButton(Runnable startGameAction) {
+        startGameButton.setOnAction(event -> startGameAction.run());
+    }
+
+    public void setClickOnOptionsButton(Runnable openOptionsAction) {
+        optionsButton.setOnAction(event -> openOptionsAction.run());
+    }
+
+    public Scene scene() {
+        return scene;
     }
 }

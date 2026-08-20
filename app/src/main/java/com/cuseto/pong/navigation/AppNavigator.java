@@ -24,7 +24,12 @@ public final class AppNavigator {
     public AppNavigator(Stage stage, AppConfig appConfig) {
         this.stage = Objects.requireNonNull(stage, "stage cannot be null");
         this.appConfig = Objects.requireNonNull(appConfig, "appConfig cannot be null");
-        mainMenuRenderer = new MainMenuRenderer();
+        mainMenuRenderer = new MainMenuRenderer(
+            appConfig.viewport().screenWidth(),
+            appConfig.viewport().screenHeight()
+        );
+        mainMenuRenderer.setClickOnStartGameButton(this::startGameplay);
+        mainMenuRenderer.setClickOnOptionsButton(this::openOptionsMenu);
     }
 
     public void start() {
@@ -35,12 +40,7 @@ public final class AppNavigator {
 
     public void showMainMenu() {
         stopGameplay();
-        stage.setScene(mainMenuRenderer.createScene(
-            appConfig.viewport().screenWidth(),
-            appConfig.viewport().screenHeight(),
-            this::startGameplay,
-            this::openOptionsMenu
-        ));
+        stage.setScene(mainMenuRenderer.scene());
         currentScreen = ApplicationScreen.MAIN_MENU;
     }
 
