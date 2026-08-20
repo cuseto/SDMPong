@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /** Creates the application's main-menu scene. */
-public final class MainMenuView {
+public final class MainMenuRenderer {
     private static final String START_GAME_BUTTON_ID = "startGameButton";
     private static final String OPTIONS_PAGE_BUTTON_ID = "optionsPageButton";
 
