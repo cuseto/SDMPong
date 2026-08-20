@@ -57,23 +57,23 @@ class GameplayControllerTest extends ApplicationTest {
 
     @Test
     void menuAppearsWhenEscIsPressed() {
-        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+        assertFalse(lookup("#pauseMenu").tryQuery().isPresent());
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
     }
 
     @Test
     void menuClosesWhenEscIsPressed() {
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+        assertFalse(lookup("#pauseMenu").tryQuery().isPresent());
     }
 
     @Test
     void leftPaddleCantMoveWhenMenuIsOpen() {
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
 
         Paddle leftPaddle = navigator.gameplayController().gameSession().leftPaddle();
         double startingY = leftPaddle.y();
@@ -93,7 +93,7 @@ class GameplayControllerTest extends ApplicationTest {
     @Test
     void rightPaddleCantMoveWhenMenuIsOpen() {
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
 
         Paddle rightPaddle = navigator.gameplayController().gameSession().rightPaddle();
         double startingY = rightPaddle.y();
@@ -113,7 +113,7 @@ class GameplayControllerTest extends ApplicationTest {
     @Test
     void ballCantMoveWhenMenuIsOpen() {
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
 
         Ball ball = navigator.gameplayController().gameSession().ball();
         double startingX = ball.x();
@@ -128,9 +128,9 @@ class GameplayControllerTest extends ApplicationTest {
     @Test
     void leftPaddleCanMoveWhenMenuIsClosed() {
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+        assertFalse(lookup("#pauseMenu").tryQuery().isPresent());
 
         Paddle leftPaddle = navigator.gameplayController().gameSession().leftPaddle();
         double startingY = leftPaddle.y();
@@ -152,9 +152,9 @@ class GameplayControllerTest extends ApplicationTest {
     @Test
     void rightPaddleCanMoveWhenMenuIsClosed() {
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+        assertFalse(lookup("#pauseMenu").tryQuery().isPresent());
 
         Paddle rightPaddle = navigator.gameplayController().gameSession().rightPaddle();
         double startingY = rightPaddle.y();
@@ -176,9 +176,9 @@ class GameplayControllerTest extends ApplicationTest {
     @Test
     void ballCanMoveWhenMenuIsClosed() {
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertTrue(lookup("#gameMenu").tryQuery().isPresent());
+        assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
         pressKeyOnScene(KeyCode.ESCAPE);
-        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+        assertFalse(lookup("#pauseMenu").tryQuery().isPresent());
 
         Ball ball = navigator.gameplayController().gameSession().ball();
         double startingX = ball.x();
@@ -206,15 +206,15 @@ class GameplayControllerTest extends ApplicationTest {
         );
         assertTrue(gameSession.isGameOver());
         assertEquals(Player.LEFT, gameSession.winner());
-        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+        assertFalse(lookup("#pauseMenu").tryQuery().isPresent());
     }
 
     @Test
-    void gameMenuDoesNotAppearIfLeftPlayerWins() {
+    void pauseMenuDoesNotAppearIfLeftPlayerWins() {
         GameSession gameSession =
             navigator.gameplayController().gameSession();
 
-        assertFalse(lookup("#gameMenu").tryQuery().isPresent());
+        assertFalse(lookup("#pauseMenu").tryQuery().isPresent());
 
         interact(() -> {
             for (int i = 0; i < gameSession.winningScore(); i++) {
@@ -226,7 +226,7 @@ class GameplayControllerTest extends ApplicationTest {
             lookup("#winnerBanner").tryQuery().isPresent()
         );
         assertFalse(
-            lookup("#gameMenu").tryQuery().isPresent()
+            lookup("#pauseMenu").tryQuery().isPresent()
         );
     }
 
