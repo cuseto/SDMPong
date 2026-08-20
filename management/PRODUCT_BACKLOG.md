@@ -417,3 +417,38 @@ Feature: Configurable paddle controls
     And the player presses a saved movement key
     Then the intended paddle moves in the configured direction
 ```
+
+## PB-20 — Randomize the ball direction at round start
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Randomized ball direction
+
+  Scenario: Begin a round with a randomized direction
+    Given a round is ready to start
+    When the round begins
+    Then the ball uses the configured initial velocity magnitudes
+    And its horizontal and vertical directions are selected from the allowed directions
+    And its horizontal velocity is non-zero
+```
+
+## PB-21 — Increase ball speed after paddle bounces
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Increase ball speed after paddle bounces
+
+  Scenario: Accelerate after a valid paddle bounce
+    Given the ball is moving toward a paddle
+    When the ball validly bounces from that paddle
+    Then the ball reverses its horizontal direction
+    And the ball speed is greater than before the bounce
+
+  Scenario: Do not accelerate after a wall bounce
+    Given the ball is moving toward an arena wall
+    When the ball bounces from the wall
+    Then its direction is reflected
+    And its speed is unchanged
+```
