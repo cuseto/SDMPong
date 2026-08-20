@@ -1,5 +1,10 @@
 package com.cuseto.pong.config;
 
+import com.cuseto.pong.config.schema.AppConfig;
+import com.cuseto.pong.config.schema.game.BallConfig;
+import com.cuseto.pong.config.schema.game.GamePageConfig;
+import com.cuseto.pong.config.schema.game.PaddleConfig;
+
 public final class MatchSettings {
     private final int winningScore;
     private final double ballSpeed;
@@ -33,5 +38,38 @@ public final class MatchSettings {
 
     public double paddleSpeed() {
         return paddleSpeed;
+    }
+
+    public AppConfig applyTo(AppConfig config) {
+        GamePageConfig gamePage = config.gamePage();
+
+        BallConfig ball = gamePage.ball();
+        PaddleConfig paddle = gamePage.paddle();
+
+        BallConfig updatedBall = new BallConfig(
+            ball.radius(),
+            ballSpeed,
+            ballSpeed
+        );
+
+        PaddleConfig updatedPaddle = new PaddleConfig(
+            paddle.width(),
+            paddle.height(),
+            paddle.inset(),
+            paddleSpeed
+        );
+
+        GamePageConfig updatedGamePage = new GamePageConfig(
+            gamePage.arena(),
+            updatedBall,
+            updatedPaddle,
+            winningScore
+        );
+
+        return new AppConfig(
+            config.viewport(),
+            updatedGamePage,
+            config.controls()
+        );
     }
 }
