@@ -139,6 +139,9 @@ class GameplayControllerTest extends ApplicationTest {
 
     @Test
     void leftPaddleCanMoveWhenMenuIsClosed() {
+        KeyCode configuredUpKey = appConfig.controls().leftPaddle().up();
+        KeyCode configuredDownKey = appConfig.controls().leftPaddle().down();
+
         pressKeyOnScene(KeyCode.ESCAPE);
         assertTrue(lookup("#pauseMenu").tryQuery().isPresent());
         pressKeyOnScene(KeyCode.ESCAPE);
@@ -147,14 +150,14 @@ class GameplayControllerTest extends ApplicationTest {
         Paddle leftPaddle = navigator.gameplayController().gameSession().leftPaddle();
         double startingY = leftPaddle.y();
 
-        pressKeyOnScene(KeyCode.W);
+        pressKeyOnScene(configuredUpKey);
         sleep(100);
 
         double endingY = leftPaddle.y();
         assertTrue(startingY > endingY);
 
         startingY = leftPaddle.y();
-        pressKeyOnScene(KeyCode.S);
+        pressKeyOnScene(configuredDownKey);
         sleep(100);
 
         endingY = leftPaddle.y();

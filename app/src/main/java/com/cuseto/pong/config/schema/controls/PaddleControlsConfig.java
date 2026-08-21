@@ -11,8 +11,21 @@ public record PaddleControlsConfig(
     public PaddleControlsConfig {
         ConfigValidation.requireNonNull("up", up);
         ConfigValidation.requireNonNull("down", down);
+
         if (up == down) {
-            throw new IllegalArgumentException("up and down must use different keys");
+            throw new IllegalArgumentException("Paddle up and down bindings must use different keys");
         }
+
+        if (isReservedKey(up)) {
+            throw new IllegalArgumentException("Reserved key cannot be assigned as paddle control: " + up);
+        }
+
+        if (isReservedKey(down)) {
+            throw new IllegalArgumentException("Reserved key cannot be assigned as paddle control: " + down);
+        }
+    }
+
+    private static boolean isReservedKey(KeyCode keyCode) {
+        return keyCode == KeyCode.ESCAPE;
     }
 }

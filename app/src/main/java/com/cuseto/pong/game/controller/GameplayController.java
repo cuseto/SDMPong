@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCode;
 public final class GameplayController {
     private final GameSession gameSession;
     private final PaddleInputState inputState;
+    private final PaddleKeyMapping paddleKeyMapping;
     private final GameLoop gameLoop;
     private final GamePageRenderer gamePageRenderer;
     private final Runnable backToMainMenuFunction;
@@ -36,6 +37,8 @@ public final class GameplayController {
         gameSession = new GameSession(appConfig);
         gameSession.setGameOverAction(this::openWinnerBanner);
         inputState = new PaddleInputState();
+
+        paddleKeyMapping = new PaddleKeyMapping(appConfig.controls());
 
         gamePageRenderer = new GamePageRenderer(
             appConfig.viewport().screenWidth(),
@@ -67,21 +70,21 @@ public final class GameplayController {
                 else if (gameSession.isGamePaused()) closePauseMenu();
             }
 
-            PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
+            PaddleDirection leftDirection = paddleKeyMapping.leftDirectionFor(event.getCode());
             if (leftDirection != PaddleDirection.NONE) {
                 inputState.setLeftDirection(leftDirection);
             }
-            PaddleDirection rightDirection = PaddleKeyMapping.rightDirectionFor(event.getCode());
+            PaddleDirection rightDirection = paddleKeyMapping.rightDirectionFor(event.getCode());
             if (rightDirection != PaddleDirection.NONE) {
                 inputState.setRightDirection(rightDirection);
             }
         });
 
         gamePageRenderer.scene().setOnKeyReleased(event -> {
-            if (PaddleKeyMapping.leftDirectionFor(event.getCode()) != PaddleDirection.NONE) {
+            if (paddleKeyMapping.leftDirectionFor(event.getCode()) != PaddleDirection.NONE) {
                 inputState.setLeftDirection(PaddleDirection.NONE);
             }
-            if (PaddleKeyMapping.rightDirectionFor(event.getCode()) != PaddleDirection.NONE) {
+            if (paddleKeyMapping.rightDirectionFor(event.getCode()) != PaddleDirection.NONE) {
                 inputState.setRightDirection(PaddleDirection.NONE);
             }
         });
