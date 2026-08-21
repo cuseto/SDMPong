@@ -6,7 +6,7 @@ import com.cuseto.pong.config.ConfigRepository;
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.game.controller.GameplayController;
 import com.cuseto.pong.options.controller.OptionsController;
-import com.cuseto.pong.view.MainMenuView;
+import com.cuseto.pong.view.MainMenuRenderer;
 
 import javafx.stage.Stage;
 
@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  */
 public final class AppNavigator {
     private final Stage stage;
-    private final MainMenuView mainMenuView;
+    private final MainMenuRenderer mainMenuRenderer;
     private final ConfigRepository configRepository;
 
     private AppConfig appConfig;
@@ -27,7 +27,12 @@ public final class AppNavigator {
         this.stage = Objects.requireNonNull(stage, "stage cannot be null");
         this.appConfig = Objects.requireNonNull(appConfig, "appConfig cannot be null");
         this.configRepository = Objects.requireNonNull(configRepository, "configRepository cannot be null");
-        mainMenuView = new MainMenuView();
+        mainMenuRenderer = new MainMenuRenderer(
+            appConfig.viewport().screenWidth(),
+            appConfig.viewport().screenHeight()
+        );
+        mainMenuRenderer.setClickOnStartGameButton(this::startGameplay);
+        mainMenuRenderer.setClickOnOptionsButton(this::openOptionsMenu);
     }
 
     public void start() {
@@ -39,12 +44,7 @@ public final class AppNavigator {
     public void showMainMenu() {
         stopGameplay();
         appConfig = configRepository.load();
-        stage.setScene(mainMenuView.createScene(
-            appConfig.viewport().screenWidth(),
-            appConfig.viewport().screenHeight(),
-            this::startGameplay,
-            this::openOptionsMenu
-        ));
+        stage.setScene(mainMenuRenderer.scene());
         currentScreen = ApplicationScreen.MAIN_MENU;
     }
 

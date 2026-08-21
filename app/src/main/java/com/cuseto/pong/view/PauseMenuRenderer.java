@@ -12,16 +12,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public final class GameMenuRenderer {
-    private static final String MENU_ID = "gameMenu";
-    private static final String CLOSE_MENU_BUTTON_ID = "closeGameMenuButton";
+public final class PauseMenuRenderer {
+    private static final String MENU_ID = "pauseMenu";
+    private static final String CLOSE_MENU_BUTTON_ID = "closePauseMenuButton";
     private static final String EXIT_GAME_BUTTON_ID = "exitGameButton";
 
     private final StackPane root;
     private final Button closeMenuButton;
     private final Button exitGameButton;
 
-    public GameMenuRenderer() {
+    public PauseMenuRenderer() {
         Label title = new Label("Menu");
         title.setTextFill(Color.WHITE);
         title.setFont(Font.font("System", FontWeight.BOLD, 32));

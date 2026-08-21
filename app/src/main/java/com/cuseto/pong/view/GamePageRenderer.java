@@ -10,7 +10,7 @@ public final class GamePageRenderer {
     private final Scene scene;
     private final StackPane root;
     private final PongRenderer pongField;
-    private final GameMenuRenderer gameMenu;
+    private final PauseMenuRenderer pauseMenu;
     private final GameWinnerBannerRenderer gameWinnerBanner;
 
     public GamePageRenderer(
@@ -27,9 +27,9 @@ public final class GamePageRenderer {
         pongField = new PongRenderer(windowWidth, windowHeight);
         root.getChildren().add(pongField.canvas());
 
-        gameMenu = new GameMenuRenderer();
-        gameMenu.setOnCloseMenu(closeMenuFunction);
-        gameMenu.setOnExitGame(exitGameFunction);
+        pauseMenu = new PauseMenuRenderer();
+        pauseMenu.setOnCloseMenu(closeMenuFunction);
+        pauseMenu.setOnExitGame(exitGameFunction);
 
         gameWinnerBanner = new GameWinnerBannerRenderer();
     }
@@ -38,15 +38,15 @@ public final class GamePageRenderer {
         pongField.render(gameSession);
     }
 
-    public void showGameMenu() {
-        if (!root.getChildren().contains(gameMenu.root())) {
-            root.getChildren().add(gameMenu.root());
+    public void showPauseMenu() {
+        if (!root.getChildren().contains(pauseMenu.root())) {
+            root.getChildren().add(pauseMenu.root());
         }
     }
 
-    public void hideGameMenu() {
-        if (root.getChildren().contains(gameMenu.root())) {
-            root.getChildren().remove(gameMenu.root());
+    public void hidePauseMenu() {
+        if (root.getChildren().contains(pauseMenu.root())) {
+            root.getChildren().remove(pauseMenu.root());
         }
     }
 
