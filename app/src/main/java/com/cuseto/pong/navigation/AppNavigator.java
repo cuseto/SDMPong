@@ -15,19 +15,19 @@ import javafx.stage.Stage;
  */
 public final class AppNavigator {
     private final Stage stage;
-    private final AppConfig appConfig;
     private final MainMenuView mainMenuView;
     private final ConfigRepository configRepository;
 
+    private AppConfig appConfig;
     private ApplicationScreen currentScreen;
     private GameplayController gameplayController;
     private OptionsController optionsController;
 
-    public AppNavigator(Stage stage, AppConfig appConfig) {
+    public AppNavigator(Stage stage, AppConfig appConfig, ConfigRepository configRepository) {
         this.stage = Objects.requireNonNull(stage, "stage cannot be null");
         this.appConfig = Objects.requireNonNull(appConfig, "appConfig cannot be null");
+        this.configRepository = Objects.requireNonNull(configRepository, "configRepository cannot be null");
         mainMenuView = new MainMenuView();
-        configRepository = new ConfigRepository();
     }
 
     public void start() {
@@ -38,6 +38,7 @@ public final class AppNavigator {
 
     public void showMainMenu() {
         stopGameplay();
+        appConfig = configRepository.load();
         stage.setScene(mainMenuView.createScene(
             appConfig.viewport().screenWidth(),
             appConfig.viewport().screenHeight(),

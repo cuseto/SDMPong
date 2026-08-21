@@ -8,7 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+import java.nio.file.Path;
+import org.junit.jupiter.api.io.TempDir;
+
+
 import com.cuseto.pong.config.ConfigLoader;
+import com.cuseto.pong.config.ConfigRepository;
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.game.session.GameSession;
 import com.cuseto.pong.game.session.Player;
@@ -22,13 +27,20 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 class GameplayControllerTest extends ApplicationTest {
+    @TempDir
+    Path temporaryDirectory;
+
     private AppConfig appConfig;
     private AppNavigator navigator;
 
     @Override
     public void start(Stage stage) {
         appConfig = ConfigLoader.load("/test-config.yaml");
-        navigator = new AppNavigator(stage, appConfig);
+        ConfigRepository configRepository = new ConfigRepository(temporaryDirectory.resolve("config.yaml"));
+
+        configRepository.save(appConfig);
+
+        navigator = new AppNavigator(stage, appConfig, configRepository);
         navigator.start();
         navigator.startGameplay();
     }

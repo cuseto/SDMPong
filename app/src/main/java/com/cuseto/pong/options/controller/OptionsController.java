@@ -20,10 +20,7 @@ public final class OptionsController {
         Runnable backToMainMenuAction
     ) {
         this.appConfig = Objects.requireNonNull(appConfig, "appConfig cannot be null");
-        this.configRepository = Objects.requireNonNull(
-            configRepository,
-            "configRepository cannot be null"
-        );
+        this.configRepository = Objects.requireNonNull(configRepository, "configRepository cannot be null");
 
         optionsPageRenderer = new OptionsPageRenderer(
             appConfig.viewport().screenWidth(),
@@ -32,6 +29,13 @@ public final class OptionsController {
         );
 
         optionsPageRenderer.setClickOnBackButton(backToMainMenuAction);
+        optionsPageRenderer.setClickOnSaveButton(() ->
+            saveMatchSettings(
+                optionsPageRenderer.winningScore(),
+                optionsPageRenderer.ballSpeed(),
+                optionsPageRenderer.paddleSpeed()
+            )
+        );
     }
 
     public void saveMatchSettings(

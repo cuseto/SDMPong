@@ -89,6 +89,18 @@ public final class OptionsPageRenderer {
         validationFeedback.setVisible(false);
     }
 
+    public String winningScore() {
+        return winningScoreField.getText();
+    }
+
+    public String ballSpeed() {
+        return ballSpeedField.getText();
+    }
+
+    public String paddleSpeed() {
+        return paddleSpeedField.getText();
+    }
+
     public Scene scene() {
         return scene;
     }

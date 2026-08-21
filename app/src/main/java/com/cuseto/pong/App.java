@@ -12,8 +12,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        AppConfig appConfig = new ConfigRepository().load();
-        navigator = new AppNavigator(stage, appConfig);
+        ConfigRepository configRepository = new ConfigRepository();
+        AppConfig appConfig = configRepository.load();
+
+        navigator = new AppNavigator(stage, appConfig, configRepository);
         navigator.start();
     }
 
