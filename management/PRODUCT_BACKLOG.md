@@ -452,3 +452,62 @@ Feature: Increase ball speed after paddle bounces
     Then its direction is reflected
     And its speed is unchanged
 ```
+
+## PB-22 — Add commercial product documentation
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Commercial product documentation
+
+  Scenario: User reads the product guide
+    Given a user opens the SDMPong documentation
+    When the user reads the commercial product guide
+    Then the user can understand the product's purpose
+    And the user can learn how to start and play a match
+    And the user can find the available controls and settings
+```
+
+## PB-23 — Document the code with Javadoc
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Source code documentation
+
+  Scenario: Developer consults the generated Javadoc
+    Given the project source code has been documented
+    When a developer generates the Javadoc
+    Then the documentation is generated successfully
+    And the public application APIs have useful descriptions
+    And documented state and validation rules match the implementation
+```
+
+## PB-24 — Improve the user interface
+
+**Acceptance criteria**
+
+```gherkin
+Feature: User interface improvements
+
+  Scenario: Player uses the game menus
+    Given the player opens a game menu
+    When the player views and uses its controls
+    Then the layout is clear and visually consistent
+    And the available actions are easy to identify
+    And existing navigation and gameplay behaviour still work
+```
+
+## PB-25 — Move the model package under the game package
+
+**Acceptance criteria**
+
+```gherkin
+Feature: Model package organization
+
+  Scenario: Application uses the relocated model package
+    Given the model classes have been moved under the game package
+    When the project is compiled and tested
+    Then all production and test references resolve successfully
+    And the application retains its existing gameplay behaviour
+```
