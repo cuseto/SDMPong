@@ -3,11 +3,11 @@ package com.cuseto.pong.game.session;
 import java.util.function.Consumer;
 
 import com.cuseto.pong.config.schema.AppConfig;
-import com.cuseto.pong.model.Arena;
-import com.cuseto.pong.model.Ball;
-import com.cuseto.pong.model.Paddle;
-import com.cuseto.pong.model.view.BallView;
-import com.cuseto.pong.model.view.PaddleView;
+import com.cuseto.pong.game.model.Arena;
+import com.cuseto.pong.game.model.Ball;
+import com.cuseto.pong.game.model.Paddle;
+import com.cuseto.pong.game.model.view.BallView;
+import com.cuseto.pong.game.model.view.PaddleView;
 
 public final class GameSession {
     private final Arena arena;

@@ -1,4 +1,4 @@
-package com.cuseto.pong.model.view;
+package com.cuseto.pong.game.model.view;
 
 public interface PaddleView {
     double x();

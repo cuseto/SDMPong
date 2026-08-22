@@ -1,6 +1,6 @@
 package com.cuseto.pong.game.input;
 
-import com.cuseto.pong.model.PaddleDirection;
+import com.cuseto.pong.game.model.PaddleDirection;
 
 public class PaddleInputState {
     

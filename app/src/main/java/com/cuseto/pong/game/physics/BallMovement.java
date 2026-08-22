@@ -1,7 +1,7 @@
 package com.cuseto.pong.game.physics;
 
-import com.cuseto.pong.model.Ball;
-import com.cuseto.pong.model.Paddle;
+import com.cuseto.pong.game.model.Ball;
+import com.cuseto.pong.game.model.Paddle;
 
 public final class BallMovement {
     public static void move(

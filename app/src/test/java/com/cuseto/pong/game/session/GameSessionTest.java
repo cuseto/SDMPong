@@ -9,12 +9,11 @@ import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.schema.AppConfig;
-import com.cuseto.pong.model.Arena;
-import com.cuseto.pong.model.Ball;
-import com.cuseto.pong.model.Paddle;
+import com.cuseto.pong.game.model.Arena;
+import com.cuseto.pong.game.model.Ball;
+import com.cuseto.pong.game.model.Paddle;
 
 class GameSessionTest {
-
     @Test
     void arenaProperlyLoaded() {
         Arena arena = createSession().arena();

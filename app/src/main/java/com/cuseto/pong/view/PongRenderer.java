@@ -1,9 +1,9 @@
 package com.cuseto.pong.view;
 
+import com.cuseto.pong.game.model.Arena;
+import com.cuseto.pong.game.model.view.BallView;
+import com.cuseto.pong.game.model.view.PaddleView;
 import com.cuseto.pong.game.session.GameSession;
-import com.cuseto.pong.model.Arena;
-import com.cuseto.pong.model.view.BallView;
-import com.cuseto.pong.model.view.PaddleView;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

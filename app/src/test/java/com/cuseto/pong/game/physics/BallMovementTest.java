@@ -3,8 +3,8 @@ package com.cuseto.pong.game.physics;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import com.cuseto.pong.model.Ball;
-import com.cuseto.pong.model.Paddle;
+import com.cuseto.pong.game.model.Ball;
+import com.cuseto.pong.game.model.Paddle;
 
 class BallMovementTest {
 

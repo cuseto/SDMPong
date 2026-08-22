@@ -3,7 +3,7 @@ package com.cuseto.pong.game.input;
 import java.util.Objects;
 
 import com.cuseto.pong.config.schema.controls.ControlsConfig;
-import com.cuseto.pong.model.PaddleDirection;
+import com.cuseto.pong.game.model.PaddleDirection;
 
 import javafx.scene.input.KeyCode;
 

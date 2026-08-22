@@ -1,6 +1,6 @@
-package com.cuseto.pong.model;
+package com.cuseto.pong.game.model;
 
-import com.cuseto.pong.model.view.BallView;
+import com.cuseto.pong.game.model.view.BallView;
 
 /**
  * Encapsulates the ball's mutable position and velocity.

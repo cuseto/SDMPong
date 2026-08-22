@@ -1,4 +1,4 @@
-package com.cuseto.pong.model;
+package com.cuseto.pong.game.model;
 
 import org.junit.jupiter.api.Test;
 

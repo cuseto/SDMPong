@@ -1,7 +1,7 @@
 package com.cuseto.pong.game.physics;
 
-import com.cuseto.pong.model.Paddle;
-import com.cuseto.pong.model.PaddleDirection;
+import com.cuseto.pong.game.model.Paddle;
+import com.cuseto.pong.game.model.PaddleDirection;
 
 public final class PaddleMovement {
     private PaddleMovement() {

@@ -1,4 +1,4 @@
-package com.cuseto.pong.model;
+package com.cuseto.pong.game.model;
 
 public record Arena(
     int width,  // includes boundaryThickness

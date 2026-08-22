@@ -1,6 +1,6 @@
-package com.cuseto.pong.model;
+package com.cuseto.pong.game.model;
 
-import com.cuseto.pong.model.view.PaddleView;
+import com.cuseto.pong.game.model.view.PaddleView;
 
 /**
  * Encapsulates a paddle's mutable vertical position and fixed dimensions.

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.game.input.PaddleInputState;
+import com.cuseto.pong.game.model.PaddleDirection;
 import com.cuseto.pong.game.session.GameSession;
-import com.cuseto.pong.model.PaddleDirection;
 
 public class PaddleGameUpdaterTest {
     
