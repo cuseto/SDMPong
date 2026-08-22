@@ -7,7 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -205,5 +208,52 @@ class OptionsControllerTest {
         assertTrue(validationFeedback.isVisible());
         assertFalse(validationFeedback.getText().isBlank());
         assertFalse(Files.exists(userConfigPath));
+    }
+
+    @Test
+    void savePersistsValidPaddleControlBindings() {
+        Path userConfigPath = temporaryDirectory.resolve("config.yaml");
+        ConfigRepository repository = new ConfigRepository(userConfigPath);
+        AppConfig config = ConfigLoader.load("/test-config.yaml");
+
+        OptionsController controller = new OptionsController(
+            config,
+            repository,
+            () -> {}
+        );
+
+        ((Button) controller.scene().getRoot().lookup("#optionsLeftPaddleUpButton")).fire();
+        controller.scene().getRoot().fireEvent(keyPressed(KeyCode.Q));
+
+        ((Button) controller.scene().getRoot().lookup("#optionsLeftPaddleDownButton")).fire();
+        controller.scene().getRoot().fireEvent(keyPressed(KeyCode.X));
+
+        ((Button) controller.scene().getRoot().lookup("#optionsRightPaddleUpButton")).fire();
+        controller.scene().getRoot().fireEvent(keyPressed(KeyCode.I));
+
+        ((Button) controller.scene().getRoot().lookup("#optionsRightPaddleDownButton")).fire();
+        controller.scene().getRoot().fireEvent(keyPressed(KeyCode.K));
+
+        controller.saveMatchSettings("10", "500.0", "400.0");
+
+        AppConfig savedConfig = repository.load();
+
+        assertEquals(KeyCode.Q, savedConfig.controls().leftPaddle().up());
+        assertEquals(KeyCode.X, savedConfig.controls().leftPaddle().down());
+        assertEquals(KeyCode.I, savedConfig.controls().rightPaddle().up());
+        assertEquals(KeyCode.K, savedConfig.controls().rightPaddle().down());
+    }
+
+    private KeyEvent keyPressed(KeyCode keyCode) {
+        return new KeyEvent(
+            KeyEvent.KEY_PRESSED,
+            "",
+            "",
+            keyCode,
+            false,
+            false,
+            false,
+            false
+        );
     }
 }

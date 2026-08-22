@@ -6,6 +6,8 @@ import com.cuseto.pong.config.ConfigRepository;
 import com.cuseto.pong.config.MatchSettings;
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.view.OptionsPageRenderer;
+import com.cuseto.pong.config.schema.controls.ControlsConfig;
+import com.cuseto.pong.config.schema.controls.PaddleControlsConfig;
 
 import javafx.scene.Scene;
 
@@ -50,7 +52,24 @@ public final class OptionsController {
                 Double.parseDouble(paddleSpeed)
             );
 
+            ControlsConfig controls = new ControlsConfig(
+                new PaddleControlsConfig(
+                    optionsPageRenderer.leftPaddleUpKey(),
+                    optionsPageRenderer.leftPaddleDownKey()
+                ),
+                new PaddleControlsConfig(
+                    optionsPageRenderer.rightPaddleUpKey(),
+                    optionsPageRenderer.rightPaddleDownKey()
+                )
+            );
+
+
             appConfig = settings.applyTo(appConfig);
+            appConfig = new AppConfig(
+                appConfig.viewport(),
+                appConfig.gamePage(),
+                controls
+            );
             configRepository.save(appConfig);
             optionsPageRenderer.clearValidationFeedback();
         }
