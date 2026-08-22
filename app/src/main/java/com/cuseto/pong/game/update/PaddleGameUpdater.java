@@ -13,28 +13,25 @@ public class PaddleGameUpdater implements GameUpdater {
 
     @Override
     public void update(GameSession gameSession, double elapsedSeconds) {
-        if (gameSession.isMatchOver()) {
-            return;
+        if (gameSession.isGameOn()) {
+            double minY = gameSession.arena().innerTopBoundary();
+            double maxY = gameSession.arena().innerBottomBoundary();
+
+            PaddleMovement.move(
+                gameSession.leftPaddle(),
+                inputState.leftDirection(),
+                elapsedSeconds,
+                minY,
+                maxY - gameSession.leftPaddle().height()
+            );
+
+            PaddleMovement.move(
+                gameSession.rightPaddle(),
+                inputState.rightDirection(),
+                elapsedSeconds,
+                minY,
+                maxY - gameSession.rightPaddle().height()
+            );
         }
-
-        double minY = gameSession.arena().innerTopBoundary();
-        double maxY = gameSession.arena().innerBottomBoundary();
-
-        PaddleMovement.move(
-            gameSession.leftPaddle(),
-            inputState.leftDirection(),
-            elapsedSeconds,
-            minY,
-            maxY - gameSession.leftPaddle().height()
-        );
-
-        PaddleMovement.move(
-            gameSession.rightPaddle(),
-            inputState.rightDirection(),
-            elapsedSeconds,
-            minY,
-            maxY - gameSession.rightPaddle().height()
-        );
-
     }
 }

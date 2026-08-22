@@ -1,98 +1,28 @@
 package com.cuseto.pong;
 
-import com.cuseto.pong.config.ConfigLoader;
+import com.cuseto.pong.config.ConfigRepository;
 import com.cuseto.pong.config.schema.AppConfig;
-import com.cuseto.pong.game.input.PaddleInputState;
-import com.cuseto.pong.game.input.PaddleKeyMapping;
-import com.cuseto.pong.game.loop.GameLoop;
-import com.cuseto.pong.game.session.GameSession;
-import com.cuseto.pong.game.update.BallGameUpdater;
-import com.cuseto.pong.game.update.PaddleGameUpdater;
-import com.cuseto.pong.game.update.ScoreGameUpdater;
-import com.cuseto.pong.model.PaddleDirection;
-import com.cuseto.pong.view.PongRenderer;
+import com.cuseto.pong.navigation.AppNavigator;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    private GameLoop gameLoop;
+    private AppNavigator navigator;
 
     @Override
     public void start(Stage stage) {
-        // getting configs
-        AppConfig appConfig = ConfigLoader.load();
-        GameSession gameSession = new GameSession(appConfig);
+        ConfigRepository configRepository = new ConfigRepository();
+        AppConfig appConfig = configRepository.load();
 
-        // rendering the page
-        Canvas canvas = new Canvas(appConfig.viewport().screenWidth(), appConfig.viewport().screenHeight());
-        PongRenderer renderer = new PongRenderer();
-        renderer.render(canvas, gameSession);
-
-        StackPane root = new StackPane(canvas);
-        root.setStyle("-fx-background-color: black;");
-
-        Scene scene = new Scene(
-            root,
-            appConfig.viewport().screenWidth(),
-            appConfig.viewport().screenHeight()
-        );
-        stage.setTitle("Pong");
-        stage.setScene(scene);
-
-        // enabling key controls for the paddles
-        PaddleInputState inputState = new PaddleInputState();
-        scene.setOnKeyPressed(event -> {
-            if (gameSession.isMatchOver()) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    gameSession.startNewMatch();
-                    inputState.setLeftDirection(PaddleDirection.NONE);
-                    inputState.setRightDirection(PaddleDirection.NONE);
-                }
-                else if (event.getCode() == KeyCode.ESCAPE) {
-                    Platform.exit();
-                }
-                return;
-            }
-
-            PaddleDirection leftDirection = PaddleKeyMapping.leftDirectionFor(event.getCode());
-            if (leftDirection != PaddleDirection.NONE) {
-                inputState.setLeftDirection(leftDirection);
-            }
-            PaddleDirection rightDirection = PaddleKeyMapping.rightDirectionFor(event.getCode());
-            if (rightDirection != PaddleDirection.NONE) {
-                inputState.setRightDirection(rightDirection);
-            }
-        });
-
-        scene.setOnKeyReleased(event -> {
-            if (PaddleKeyMapping.leftDirectionFor(event.getCode()) != PaddleDirection.NONE) {
-                inputState.setLeftDirection(PaddleDirection.NONE);
-            }
-            if (PaddleKeyMapping.rightDirectionFor(event.getCode()) != PaddleDirection.NONE) {
-                inputState.setRightDirection(PaddleDirection.NONE);
-            }
-        });
-
-        stage.show();
-
-        gameLoop = new GameLoop(
-            gameSession,
-            new PaddleGameUpdater(inputState).andThen(new BallGameUpdater()).andThen(new ScoreGameUpdater()),
-            currentState -> renderer.render(canvas, gameSession)
-        );
-        gameLoop.start();
+        navigator = new AppNavigator(stage, appConfig, configRepository);
+        navigator.start();
     }
 
     @Override
     public void stop() {
-        if (gameLoop != null) {
-            gameLoop.stop();
+        if (navigator != null) {
+            navigator.stop();
         }
     }
 }

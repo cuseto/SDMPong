@@ -1,5 +1,7 @@
 package com.cuseto.pong.game.session;
 
+import java.util.function.Consumer;
+
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.model.Arena;
 import com.cuseto.pong.model.Ball;
@@ -15,9 +17,11 @@ public final class GameSession {
     private final double initialBallVelocityX;
     private final double initialBallVelocityY;
     private final int winningScore;
+    private GameStatus gameStatus;
     private int leftScore;
     private int rightScore;
     private Player winner;
+    private Consumer<Player> onGameOverAction = null;
 
     public GameSession(AppConfig appConfig) {
         this.arena = getArena(appConfig);
@@ -29,6 +33,7 @@ public final class GameSession {
         this.winningScore = appConfig.gamePage().winningScore();
 
         this.ball = getBall(appConfig, arena);
+        this.gameStatus = GameStatus.RUNNING;
     }
 
     private Arena getArena(AppConfig appConfig) {
@@ -111,7 +116,12 @@ public final class GameSession {
         leftScore = 0;
         rightScore = 0;
         winner = null;
+        resumeGame();
         resetRound();
+    }
+
+    public void setGameOverAction(Consumer<Player> action) {
+        onGameOverAction = action;
     }
 
     // getter
@@ -155,33 +165,52 @@ public final class GameSession {
         return winningScore;
     }
 
-    public boolean isMatchOver() {
-        return winner != null;
-    }
-
     public Player winner() {
         return winner;
     }
 
     public void incrementLeftScore() {
-        if (isMatchOver()) {
-            return;
-        }
-
-        leftScore++;
-        if (leftScore == winningScore) {
-            winner = Player.LEFT;
+        if (!isGameOver()) {
+            leftScore++;
+            if (leftScore == winningScore) {
+                winner = Player.LEFT;
+                setGameOver();
+            }
         }
     }
 
     public void incrementRightScore() {
-        if (isMatchOver()) {
-            return;
+        if (!isGameOver()) {
+            rightScore++;
+            if (rightScore == winningScore) {
+                winner = Player.RIGHT;
+                setGameOver();
+            }
         }
+    }
 
-        rightScore++;
-        if (rightScore == winningScore) {
-            winner = Player.RIGHT;
-        }
+    public void pauseGame() {
+        gameStatus = GameStatus.PAUSED;
+    }
+
+    public void resumeGame() {
+        gameStatus = GameStatus.RUNNING;
+    }
+
+    public void setGameOver() {
+        gameStatus = GameStatus.FINISHED;
+        if (onGameOverAction != null) onGameOverAction.accept(winner);
+    }
+    
+    public boolean isGameOn() {
+        return gameStatus == GameStatus.RUNNING;
+    }
+
+    public boolean isGamePaused() {
+        return gameStatus == GameStatus.PAUSED;
+    }
+
+    public boolean isGameOver() {
+        return gameStatus == GameStatus.FINISHED;
     }
 }

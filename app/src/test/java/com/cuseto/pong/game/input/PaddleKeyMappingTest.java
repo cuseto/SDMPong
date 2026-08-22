@@ -1,40 +1,69 @@
 package com.cuseto.pong.game.input;
 
-import com.cuseto.pong.model.PaddleDirection;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.Test;
+
+import com.cuseto.pong.config.schema.controls.ControlsConfig;
+import com.cuseto.pong.config.schema.controls.PaddleControlsConfig;
+import com.cuseto.pong.model.PaddleDirection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PaddleKeyMappingTest {
-
     @Test
-    void wKeyMapsToUpForLeftPaddle() {
-        assertEquals(PaddleDirection.UP, PaddleKeyMapping.leftDirectionFor(KeyCode.W));
+    void configuredKeysMapToConfiguredLeftPaddleDirections() {
+        ControlsConfig controls = new ControlsConfig(
+            new PaddleControlsConfig(KeyCode.A, KeyCode.Z),
+            new PaddleControlsConfig(KeyCode.UP, KeyCode.DOWN)
+        );
+
+        PaddleKeyMapping mapping = new PaddleKeyMapping(controls);
+
+        assertEquals(
+            PaddleDirection.UP,
+            mapping.leftDirectionFor(KeyCode.A)
+        );
+        assertEquals(
+            PaddleDirection.DOWN,
+            mapping.leftDirectionFor(KeyCode.Z)
+        );
     }
 
     @Test
-    void sKeyMapsToDownForLeftPaddle() {
-        assertEquals(PaddleDirection.DOWN, PaddleKeyMapping.leftDirectionFor(KeyCode.S));
+    void configuredKeysMapToConfiguredRightPaddleDirections() {
+        ControlsConfig controls = new ControlsConfig(
+            new PaddleControlsConfig(KeyCode.W, KeyCode.S),
+            new PaddleControlsConfig(KeyCode.I, KeyCode.K)
+        );
+
+        PaddleKeyMapping mapping = new PaddleKeyMapping(controls);
+
+        assertEquals(
+            PaddleDirection.UP,
+            mapping.rightDirectionFor(KeyCode.I)
+        );
+        assertEquals(
+            PaddleDirection.DOWN,
+            mapping.rightDirectionFor(KeyCode.K)
+        );
     }
 
     @Test
-    void upKeyMapsToUpForRightPaddle() {
-        assertEquals(PaddleDirection.UP, PaddleKeyMapping.rightDirectionFor(KeyCode.UP));
-    }
+    void unrelatedKeyMapsToNone() {
+        ControlsConfig controls = new ControlsConfig(
+            new PaddleControlsConfig(KeyCode.A, KeyCode.Z),
+            new PaddleControlsConfig(KeyCode.I, KeyCode.K)
+        );
 
-    @Test
-    void downKeyMapsToDownForRightPaddle() {
-        assertEquals(PaddleDirection.DOWN, PaddleKeyMapping.rightDirectionFor(KeyCode.DOWN));
-    }
+        PaddleKeyMapping mapping = new PaddleKeyMapping(controls);
 
-    @Test
-    void unrelatedKeyMapsToNoneForLeftPaddle() {
-        assertEquals(PaddleDirection.NONE, PaddleKeyMapping.leftDirectionFor(KeyCode.A));
-    }
-
-    @Test
-    void unrelatedKeyMapsToNoneForRightPaddle() {
-        assertEquals(PaddleDirection.NONE, PaddleKeyMapping.rightDirectionFor(KeyCode.A));
+        assertEquals(
+            PaddleDirection.NONE,
+            mapping.leftDirectionFor(KeyCode.X)
+        );
+        assertEquals(
+            PaddleDirection.NONE,
+            mapping.rightDirectionFor(KeyCode.X)
+        );
     }
 }

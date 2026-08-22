@@ -11,7 +11,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 public final class ConfigLoader {
     private static final String DEFAULT_CONFIG_RESOURCE = "/config.yaml";
-    private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory())
+    static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory())
         .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
         .enable(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES)
         .enable(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES);

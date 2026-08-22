@@ -1,30 +1,40 @@
 package com.cuseto.pong.game.input;
 
+import java.util.Objects;
+
+import com.cuseto.pong.config.schema.controls.ControlsConfig;
 import com.cuseto.pong.model.PaddleDirection;
+
 import javafx.scene.input.KeyCode;
 
 public final class PaddleKeyMapping {
+    private final ControlsConfig controls;
 
-    private PaddleKeyMapping() {
+    public PaddleKeyMapping(ControlsConfig controls) {
+        this.controls = Objects.requireNonNull(controls, "controls cannot be null");
     }
 
-    public static PaddleDirection leftDirectionFor(KeyCode key) {
-        if (key == KeyCode.W) {
+    public PaddleDirection leftDirectionFor(KeyCode keyCode) {
+        if (keyCode == controls.leftPaddle().up()) {
             return PaddleDirection.UP;
         }
-        else if (key == KeyCode.S) {
+
+        if (keyCode == controls.leftPaddle().down()) {
             return PaddleDirection.DOWN;
         }
+
         return PaddleDirection.NONE;
     }
 
-    public static PaddleDirection rightDirectionFor(KeyCode key) {
-        if (key == KeyCode.UP) {
+    public PaddleDirection rightDirectionFor(KeyCode keyCode) {
+        if (keyCode == controls.rightPaddle().up()) {
             return PaddleDirection.UP;
         }
-        else if (key == KeyCode.DOWN) {
+
+        if (keyCode == controls.rightPaddle().down()) {
             return PaddleDirection.DOWN;
         }
+
         return PaddleDirection.NONE;
     }
 }

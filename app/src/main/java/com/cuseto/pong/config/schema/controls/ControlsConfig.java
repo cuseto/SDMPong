@@ -9,5 +9,21 @@ public record ControlsConfig(
     public ControlsConfig {
         ConfigValidation.requireNonNull("leftPaddle", leftPaddle);
         ConfigValidation.requireNonNull("rightPaddle", rightPaddle);
+
+        if (hasDuplicateBinding(leftPaddle, rightPaddle)) {
+            throw new IllegalArgumentException(
+                "Paddle control bindings must be unique"
+            );
+        }
+    }
+
+    private static boolean hasDuplicateBinding(
+        PaddleControlsConfig left,
+        PaddleControlsConfig right
+    ) {
+        return left.up() == right.up()
+            || left.up() == right.down()
+            || left.down() == right.up()
+            || left.down() == right.down();
     }
 }
