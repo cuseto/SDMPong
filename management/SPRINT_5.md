@@ -37,16 +37,16 @@
 
 ### PB-20 — Randomize the ball direction at round start
 
-* [ ] Define the allowed horizontal directions as positive and negative.
-* [ ] Define the allowed vertical directions as positive and negative.
-* [ ] Randomly select the horizontal direction when a round begins.
-* [ ] Randomly select the vertical direction when a round begins.
-* [ ] Preserve the configured horizontal and vertical velocity magnitudes.
-* [ ] Ensure the horizontal velocity is never zero.
-* [ ] Add a unit test verifying that the configured velocity magnitudes are preserved.
-* [ ] Add a test verifying that generated horizontal and vertical directions belong to the allowed set.
-* [ ] Add a test verifying that the horizontal velocity is non-zero.
-* [ ] Run the complete test suite and verify that existing round-reset behaviour is preserved.
+* [ ] Define which velocity components may change direction when a round starts.
+* [ ] Preserve the configured initial velocity magnitudes.
+* [ ] Randomize the horizontal and vertical velocity signs when a round begins.
+* [ ] Apply randomized directions after a point and when a new match starts.
+* [ ] Ensure the ball always has a non-zero horizontal velocity.
+* [ ] Use an injectable or controllable source of randomness so tests remain deterministic.
+* [ ] Add automated tests covering the allowed initial direction combinations.
+* [ ] Add automated tests proving that configured velocity magnitudes are preserved.
+* [ ] Add automated tests covering round resets after scoring.
+* [ ] Verify that a sequence of rounds can produce different valid directions.
 
 #### Acceptance criteria
 
@@ -63,15 +63,20 @@ Feature: Randomized ball direction
 
 ### PB-21 — Increase ball speed after paddle bounces
 
-* [ ] Identify the point at which a valid paddle bounce is detected.
-* [ ] Define the speed increase to apply after a valid paddle bounce.
-* [ ] Preserve the ball's current movement direction components except for the required horizontal reversal.
-* [ ] Increase the ball speed after a valid paddle bounce.
-* [ ] Ensure wall bounces reflect the ball's direction without changing its speed.
-* [ ] Add a test verifying that a valid paddle bounce reverses the horizontal direction.
-* [ ] Add a test verifying that the ball speed is greater after a valid paddle bounce.
-* [ ] Add a test verifying that a wall bounce changes direction but preserves speed.
-* [ ] Run the complete test suite and verify that existing collision behaviour remains correct.
+* [ ] Define the speed increase rule for a valid paddle bounce.
+* [ ] Add the speed increase setting to the ball configuration.
+* [ ] Validate that the speed increase produces a faster ball.
+* [ ] Increase the ball’s velocity when it validly bounces from either paddle.
+* [ ] Reverse the horizontal direction as part of the paddle bounce.
+* [ ] Increase the velocity only once for each valid paddle collision.
+* [ ] Do not increase speed when the ball bounces from an arena wall.
+* [ ] Do not increase speed when the ball contacts a paddle from the invalid side.
+* [ ] Preserve the configured direction-randomization behaviour when a new round starts.
+* [ ] Add automated tests for speed increase on the left paddle.
+* [ ] Add automated tests for speed increase on the right paddle.
+* [ ] Add an automated test proving that wall bounces do not increase speed.
+* [ ] Add an automated test proving that repeated contact does not apply acceleration more than once.
+* [ ] Verify that the speed increase remains compatible with round resets and new matches.
 
 #### Acceptance criteria
 
