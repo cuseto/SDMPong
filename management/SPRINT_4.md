@@ -8,7 +8,7 @@
 -   **Duration:** `5 days`
 -   **Scrum Master:** `Andrea Tonello`
 -   **Developers:** `Lorenzo Cusin, Giacomo Serafini`
--   **Status:** `Planned`
+-   **Status:** `Closed`
 
 ## 2. Sprint Goal
 
@@ -248,5 +248,4 @@ Feature: Configurable paddle controls
 
 ### What did not go well
 
-- `<problem>`
-- `<problem>`
+--
