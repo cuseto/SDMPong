@@ -3,7 +3,36 @@ package com.cuseto.pong.game.physics;
 import com.cuseto.pong.game.model.Ball;
 import com.cuseto.pong.game.model.Paddle;
 
+/**
+ * Pure physics for advancing a ball's position by one frame and resolving
+ * wall and paddle collisions.
+ *
+ * <p>Operates directly on the mutable {@link Ball} and {@link Paddle}
+ * instances passed in; boundaries and paddles are supplied explicitly by
+ * the caller rather than looked up from a session, so this can be exercised
+ * independently of {@code GameSession}.
+ */
 public final class BallMovement {
+    /**
+     * Advances the ball's position for one frame, then resolves any
+     * resulting collision with the top/bottom walls or either paddle.
+     *
+     * <p>A wall collision reflects the ball back inside the boundary and
+     * reverses its vertical velocity. A paddle collision is detected by
+     * checking whether the ball's straight-line path between its previous
+     * and new position crosses the paddle's vertical span at the paddle's
+     * x-position, which avoids missed collisions when the ball moves more
+     * than its own size in a single frame; on collision the ball is
+     * reflected back outside the paddle and its horizontal velocity is
+     * reversed.
+     *
+     * @param ball the ball to move; its position and velocity are mutated in place
+     * @param elapsedSeconds the amount of simulated time to advance, in seconds
+     * @param minY the y-coordinate of the boundary the ball bounces off at the top (typically the arena's inner top boundary)
+     * @param maxY the y-coordinate of the boundary the ball bounces off at the bottom (typically the arena's inner bottom boundary)
+     * @param leftPaddle the left paddle, checked for a bounce as the ball crosses its x-position
+     * @param rightPaddle the right paddle, checked for a bounce as the ball crosses its x-position
+     */
     public static void move(
         Ball ball,
         double elapsedSeconds,

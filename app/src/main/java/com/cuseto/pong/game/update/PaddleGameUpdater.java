@@ -4,9 +4,19 @@ import com.cuseto.pong.game.input.PaddleInputState;
 import com.cuseto.pong.game.physics.PaddleMovement;
 import com.cuseto.pong.game.session.GameSession;
 
+/**
+ * A {@link GameUpdater} that advances both paddles for one frame, based on
+ * the current player input, delegating movement physics to
+ * {@link PaddleMovement}.
+ *
+ * <p>Each paddle is clamped so it stays fully within the arena's inner
+ * vertical boundaries. Does nothing while the game is not
+ * {@linkplain GameSession#isGameOn() running}.
+ */
 public class PaddleGameUpdater implements GameUpdater {
     private final PaddleInputState inputState;
 
+    /** @param inputState the source of the current left/right paddle directions, consulted on every update */
     public PaddleGameUpdater(PaddleInputState inputState) {
         this.inputState = inputState;
     }
