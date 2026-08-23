@@ -8,15 +8,12 @@ import javafx.scene.text.Font;
  */
 public class DefaultButton extends Button {
 
-    private static final String backgroundColor = "#16213e";
-    private static final String textColor = "#e94560";
-
     public DefaultButton(String text) {
         super(text);
-        styleButton(this);
+        applyStyle(this);
     }
 
-    private void styleButton(DefaultButton btn) {
+    private void applyStyle(DefaultButton btn) {
         btn.setPrefSize(200, 50);
         btn.setFont(Font.font("Monospaced", 18));
         btn.setStyle("""

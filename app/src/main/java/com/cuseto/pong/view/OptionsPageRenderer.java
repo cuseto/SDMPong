@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.view.components.DefaultButton;
+import com.cuseto.pong.view.components.DefaultTextField;
 
 public final class OptionsPageRenderer {
     private static final String OPTIONS_PAGE_ID = "optionsPage";
@@ -48,13 +49,13 @@ public final class OptionsPageRenderer {
         double windowHeight,
         AppConfig appConfig
     ) {
-        winningScoreField = new TextField(String.valueOf(appConfig.gamePage().winningScore()));
+        winningScoreField = new DefaultTextField(String.valueOf(appConfig.gamePage().winningScore()));
         winningScoreField.setId(WINNING_SCORE_FIELD_ID);
 
-        ballSpeedField = new TextField(String.valueOf(appConfig.gamePage().ball().initialVelocityX()));
+        ballSpeedField = new DefaultTextField(String.valueOf(appConfig.gamePage().ball().initialVelocityX()));
         ballSpeedField.setId(BALL_SPEED_FIELD_ID);
 
-        paddleSpeedField = new TextField(String.valueOf(appConfig.gamePage().paddle().speed()));
+        paddleSpeedField = new DefaultTextField(String.valueOf(appConfig.gamePage().paddle().speed()));
         paddleSpeedField.setId(PADDLE_SPEED_FIELD_ID);
 
         leftPaddleUpButton = new DefaultButton(appConfig.controls().leftPaddle().up().toString());
