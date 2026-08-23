@@ -97,6 +97,13 @@ class GameSessionTest {
     }
 
     @Test
+    void ballSpeedIncreaseSettingIsLoadedFromConfiguration() {
+        GameSession gameSession = createSession();
+
+        assertTrue(gameSession.isBallSpeedIncreaseEnabled());
+    }
+
+    @Test
     void leftPlayerIsDeclaredWinnerUponReachingFivePoints() {
         GameSession gameSession = createSession();
 

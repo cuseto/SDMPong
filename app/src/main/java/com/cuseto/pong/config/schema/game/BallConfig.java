@@ -5,7 +5,8 @@ import com.cuseto.pong.config.validation.ConfigValidation;
 public record BallConfig(
     int radius,
     double initialVelocityX,
-    double initialVelocityY
+    double initialVelocityY,
+    boolean speedIncreaseEnabled
 ) {
     public BallConfig {
         ConfigValidation.requirePositive("radius", radius);

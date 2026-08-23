@@ -20,6 +20,7 @@ public final class GameSession {
     private final double initialBallVelocityX;
     private final double initialBallVelocityY;
     private final BooleanSupplier directionSupplier;
+    private final boolean ballSpeedIncreaseEnabled;
     private final int winningScore;
     private GameStatus gameStatus;
     private int leftScore;
@@ -43,6 +44,7 @@ public final class GameSession {
         this.leftPaddle = getLeftPaddle(appConfig, arena);
         this.rightPaddle = getRightPaddle(appConfig, arena);
 
+        this.ballSpeedIncreaseEnabled = appConfig.gamePage().ball().speedIncreaseEnabled();
         this.winningScore = appConfig.gamePage().winningScore();
 
         this.ball = getBall(appConfig, arena);
@@ -182,6 +184,10 @@ public final class GameSession {
 
     public int winningScore() {
         return winningScore;
+    }
+
+    public boolean isBallSpeedIncreaseEnabled() {
+        return ballSpeedIncreaseEnabled;
     }
 
     public Player winner() {

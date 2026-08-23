@@ -13,6 +13,8 @@ import com.cuseto.pong.game.model.Paddle;
  * independently of {@code GameSession}.
  */
 public final class BallMovement {
+    private static final double X_SPEED_INCREASE_FACTOR = 1.10;
+
     /**
      * Advances the ball's position for one frame, then resolves any
      * resulting collision with the top/bottom walls or either paddle.
@@ -32,6 +34,7 @@ public final class BallMovement {
      * @param maxY the y-coordinate of the boundary the ball bounces off at the bottom (typically the arena's inner bottom boundary)
      * @param leftPaddle the left paddle, checked for a bounce as the ball crosses its x-position
      * @param rightPaddle the right paddle, checked for a bounce as the ball crosses its x-position
+     * @param speedIncreaseEnabled whether paddle collisions increase horizontal speed
      */
     public static void move(
         Ball ball,
@@ -39,14 +42,22 @@ public final class BallMovement {
         int minY,
         int maxY,
         Paddle leftPaddle,
-        Paddle rightPaddle
+        Paddle rightPaddle,
+        boolean speedIncreaseEnabled
     ) {
         double previousX = ball.x();
         double previousY = ball.y();
 
         moveBall(ball, elapsedSeconds);
         bounceOffHorizontalWalls(ball, minY, maxY);
-        bounceOffPaddles(ball, leftPaddle, rightPaddle, previousX, previousY);
+        bounceOffPaddles(
+            ball,
+            leftPaddle,
+            rightPaddle,
+            previousX,
+            previousY,
+            speedIncreaseEnabled
+        );
     }
 
     private static void moveBall(Ball ball, double elapsedSeconds) {
@@ -72,7 +83,8 @@ public final class BallMovement {
         Paddle leftPaddle,
         Paddle rightPaddle,
         double previousX,
-        double previousY
+        double previousY,
+        boolean speedIncreaseEnabled
     ) {
         double ballX = ball.x();
         double minX = leftPaddle.x() + leftPaddle.width();
@@ -82,15 +94,29 @@ public final class BallMovement {
         if (ballX <= minX && previousX > minX &&
             ballCrossedPaddle(ball, leftPaddle, previousX, previousY)) {
             ball.setX(minX + (minX - ballX));
-            ball.setVelocity(-1 * ball.velocityX(), ball.velocityY());
+            updateHorizontalVelocityAfterPaddleCollision(ball, speedIncreaseEnabled);
         }
 
         // right paddle
         if (previousX < maxX && ballX >= maxX &&
             ballCrossedPaddle(ball, rightPaddle, previousX, previousY)) {
             ball.setX(maxX - (ballX - maxX));
-            ball.setVelocity(-1 * ball.velocityX(), ball.velocityY());
+            updateHorizontalVelocityAfterPaddleCollision(ball, speedIncreaseEnabled);
         }
+    }
+
+    private static void updateHorizontalVelocityAfterPaddleCollision(
+        Ball ball,
+        boolean speedIncreaseEnabled
+    ) {
+        double speedIncreaseFactor = speedIncreaseEnabled
+            ? X_SPEED_INCREASE_FACTOR
+            : 1.0;
+
+        ball.setVelocity(
+            -ball.velocityX() * speedIncreaseFactor,
+            ball.velocityY()
+        );
     }
 
     private static boolean ballCrossedPaddle(

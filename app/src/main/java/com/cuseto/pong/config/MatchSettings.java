@@ -49,7 +49,8 @@ public final class MatchSettings {
         BallConfig updatedBall = new BallConfig(
             ball.radius(),
             ballSpeed,
-            ballSpeed
+            ballSpeed,
+            ball.speedIncreaseEnabled()
         );
 
         PaddleConfig updatedPaddle = new PaddleConfig(
