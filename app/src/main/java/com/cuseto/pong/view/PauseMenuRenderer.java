@@ -24,12 +24,12 @@ public final class PauseMenuRenderer {
     private final Button exitGameButton;
 
     public PauseMenuRenderer() {
-        Label title = new Label("Menu");
+        Label title = new Label("Match Paused");
         title.setTextFill(Color.WHITE);
         title.setFont(Font.font("System", FontWeight.BOLD, 32));
 
-        closeMenuButton = createButton("Chiudi menu", CLOSE_MENU_BUTTON_ID);
-        exitGameButton = createButton("Esci dalla partita", EXIT_GAME_BUTTON_ID);
+        closeMenuButton = createButton("Resume", CLOSE_MENU_BUTTON_ID);
+        exitGameButton = createButton("Quit Match", EXIT_GAME_BUTTON_ID);
 
         VBox menuPanel = new VBox(24, title, closeMenuButton, exitGameButton);
         menuPanel.setAlignment(Pos.CENTER);
