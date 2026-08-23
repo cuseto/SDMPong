@@ -17,9 +17,9 @@ public final class DefaultTextField extends TextField {
         txtfld.setPrefSize(200, 50);
         txtfld.setFont(Font.font("Monospaced", 18));
         txtfld.setStyle("""
-            -fx-background-color: #16213e;
+            -fx-background-color: #33353a;
             -fx-text-fill: white;
-            -fx-border-color: #e94560;
+            -fx-border-color: #f8f6f6;
             -fx-border-width: 2;
             -fx-border-radius: 9;
             -fx-background-radius: 9;
