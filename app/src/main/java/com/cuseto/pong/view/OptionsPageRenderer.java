@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 
 import com.cuseto.pong.config.schema.AppConfig;
+import com.cuseto.pong.view.components.DefaultButton;
 
 public final class OptionsPageRenderer {
     private static final String OPTIONS_PAGE_ID = "optionsPage";
@@ -56,16 +57,16 @@ public final class OptionsPageRenderer {
         paddleSpeedField = new TextField(String.valueOf(appConfig.gamePage().paddle().speed()));
         paddleSpeedField.setId(PADDLE_SPEED_FIELD_ID);
 
-        leftPaddleUpButton = new Button(appConfig.controls().leftPaddle().up().toString());
+        leftPaddleUpButton = new DefaultButton(appConfig.controls().leftPaddle().up().toString());
         leftPaddleUpButton.setId(LEFT_PADDLE_UP_BUTTON_ID);
 
-        leftPaddleDownButton = new Button(appConfig.controls().leftPaddle().down().toString());
+        leftPaddleDownButton = new DefaultButton(appConfig.controls().leftPaddle().down().toString());
         leftPaddleDownButton.setId(LEFT_PADDLE_DOWN_BUTTON_ID);
 
-        rightPaddleUpButton = new Button(appConfig.controls().rightPaddle().up().toString());
+        rightPaddleUpButton = new DefaultButton(appConfig.controls().rightPaddle().up().toString());
         rightPaddleUpButton.setId(RIGHT_PADDLE_UP_BUTTON_ID);
 
-        rightPaddleDownButton = new Button(appConfig.controls().rightPaddle().down().toString());
+        rightPaddleDownButton = new DefaultButton(appConfig.controls().rightPaddle().down().toString());
         rightPaddleDownButton.setId(RIGHT_PADDLE_DOWN_BUTTON_ID);
 
         leftPaddleUpButton.setOnAction(event -> selectControlButton(leftPaddleUpButton));
@@ -82,10 +83,10 @@ public final class OptionsPageRenderer {
         validationFeedback.setId(VALIDATION_FEEDBACK_ID);
         validationFeedback.setVisible(false);
 
-        saveButton = new Button("Save");
+        saveButton = new DefaultButton("Save");
         saveButton.setId(SAVE_BUTTON_ID);
 
-        backButton = new Button("Back");
+        backButton = new DefaultButton("Back");
         backButton.setId(BACK_BUTTON_ID);
 
         root = new VBox(10);

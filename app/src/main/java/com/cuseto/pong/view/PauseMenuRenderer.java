@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import com.cuseto.pong.view.components.DefaultButton;
+
 public final class PauseMenuRenderer {
     private static final String MENU_ID = "pauseMenu";
     private static final String CLOSE_MENU_BUTTON_ID = "closePauseMenuButton";
@@ -59,7 +61,7 @@ public final class PauseMenuRenderer {
     }
 
     private Button createButton(String text, String id) {
-        Button button = new Button(text);
+        Button button = new DefaultButton(text);
         button.setId(id);
         button.setMaxWidth(Double.MAX_VALUE);
         button.setPrefHeight(44);

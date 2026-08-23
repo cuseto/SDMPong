@@ -1,5 +1,7 @@
 package com.cuseto.pong.view;
 
+import com.cuseto.pong.view.components.DefaultButton;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,10 +28,10 @@ public final class MainMenuRenderer {
         title.setTextFill(Color.WHITE);
         title.setFont(Font.font(48));
 
-        startGameButton = new Button("Start Game");
+        startGameButton = new DefaultButton("Start Game");
         startGameButton.setId(START_GAME_BUTTON_ID);
 
-        optionsButton = new Button("Options");
+        optionsButton = new DefaultButton("Options");
         optionsButton.setId(OPTIONS_PAGE_BUTTON_ID);
 
         root = new VBox(24, title, startGameButton, optionsButton);
