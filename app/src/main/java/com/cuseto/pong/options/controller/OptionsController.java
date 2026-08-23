@@ -35,7 +35,8 @@ public final class OptionsController {
             saveMatchSettings(
                 optionsPageRenderer.winningScore(),
                 optionsPageRenderer.ballSpeed(),
-                optionsPageRenderer.paddleSpeed()
+                optionsPageRenderer.paddleSpeed(),
+                optionsPageRenderer.ballSpeedIncreaseEnabled()
             )
         );
     }
@@ -43,13 +44,15 @@ public final class OptionsController {
     public void saveMatchSettings(
         String winningScore,
         String ballSpeed,
-        String paddleSpeed
+        String paddleSpeed,
+        boolean ballSpeedIncreaseEnabled
     ) {
         try {
             MatchSettings settings = new MatchSettings(
                 Integer.parseInt(winningScore),
                 Double.parseDouble(ballSpeed),
-                Double.parseDouble(paddleSpeed)
+                Double.parseDouble(paddleSpeed),
+                ballSpeedIncreaseEnabled
             );
 
             ControlsConfig controls = new ControlsConfig(

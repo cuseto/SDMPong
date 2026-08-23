@@ -35,7 +35,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "500.0", "400.0");
+        controller.saveMatchSettings("10", "500.0", "400.0", false);
 
         AppConfig savedConfig = repository.load();
 
@@ -55,6 +55,7 @@ class OptionsControllerTest {
             400.0,
             savedConfig.gamePage().paddle().speed()
         );
+        assertFalse(savedConfig.gamePage().ball().speedIncreaseEnabled());
     }
 
     @Test
@@ -69,7 +70,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("invalid", "500.0", "400.0");
+        controller.saveMatchSettings("invalid", "500.0", "400.0", true);
 
         Label validationFeedback = (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
 
@@ -90,7 +91,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("0", "500.0", "400.0");
+        controller.saveMatchSettings("0", "500.0", "400.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -112,7 +113,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("-1", "500.0", "400.0");
+        controller.saveMatchSettings("-1", "500.0", "400.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -134,7 +135,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "0.0", "400.0");
+        controller.saveMatchSettings("10", "0.0", "400.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -156,7 +157,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "NaN", "400.0");
+        controller.saveMatchSettings("10", "NaN", "400.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -178,7 +179,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "500.0", "-1.0");
+        controller.saveMatchSettings("10", "500.0", "-1.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -200,7 +201,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "500.0", "Infinity");
+        controller.saveMatchSettings("10", "500.0", "Infinity", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -234,7 +235,7 @@ class OptionsControllerTest {
         ((Button) controller.scene().getRoot().lookup("#optionsRightPaddleDownButton")).fire();
         controller.scene().getRoot().fireEvent(keyPressed(KeyCode.K));
 
-        controller.saveMatchSettings("10", "500.0", "400.0");
+        controller.saveMatchSettings("10", "500.0", "400.0", true);
 
         AppConfig savedConfig = repository.load();
 
