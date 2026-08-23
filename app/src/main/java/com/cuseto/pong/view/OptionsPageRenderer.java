@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.view.components.DefaultButton;
+import com.cuseto.pong.view.components.DefaultCheckBox;
 import com.cuseto.pong.view.components.DefaultTextField;
 
 public final class OptionsPageRenderer {
@@ -58,7 +59,9 @@ public final class OptionsPageRenderer {
         ballSpeedField = new DefaultTextField(String.valueOf(appConfig.gamePage().ball().initialVelocityX()));
         ballSpeedField.setId(BALL_SPEED_FIELD_ID);
 
-        ballSpeedIncreaseCheckBox = new CheckBox();
+        ballSpeedIncreaseCheckBox = new DefaultCheckBox(
+            "Increase ball speed after paddle bounce"
+        );
         ballSpeedIncreaseCheckBox.setId(BALL_SPEED_INCREASE_CHECKBOX_ID);
         ballSpeedIncreaseCheckBox.setSelected(
             appConfig.gamePage().ball().speedIncreaseEnabled()
