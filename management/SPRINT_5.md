@@ -4,11 +4,11 @@
 
 * **Sprint name/number:** Sprint 5 — Gameplay Refinement, Documentation and Code Quality
 * **Start date:** `<2026-08-22>`
-* **End date:** `<2026-08-25>`
-* **Duration:** `4 days`
+* **End date:** `<2026-08-24>`
+* **Duration:** `3 days`
 * **Scrum Master:** `Giacomo Serafini`
 * **Developers:** `Lorenzo Cusin, Andrea Tonello`
-* **Status:** `In progress`
+* **Status:** `Closed`
 
 ## 2. Sprint Goal
 
@@ -201,4 +201,4 @@ Feature: Model package organization
 
 ### What did not go well
 
---
+- We should have payed more attention to the Release's OS compatibility
