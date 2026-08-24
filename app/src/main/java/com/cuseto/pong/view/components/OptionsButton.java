@@ -4,7 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 
 /**
- * A consistently styled button for the application's user interface.
+ * A consistently styled button for the application's Options menu.
  */
 public class OptionsButton extends Button {
 

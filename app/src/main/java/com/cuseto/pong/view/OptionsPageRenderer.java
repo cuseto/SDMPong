@@ -1,5 +1,6 @@
 package com.cuseto.pong.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -104,6 +105,7 @@ public final class OptionsPageRenderer {
         backButton.setId(BACK_BUTTON_ID);
 
         root = new VBox(10);
+        root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: black;");
         root.setId(OPTIONS_PAGE_ID);
         root.getChildren().addAll(
