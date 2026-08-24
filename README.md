@@ -37,13 +37,15 @@ Go to the Release tab and download the application for your operating system.
 
 Clone the repository and launch it with the wrapper:
 
+On Linux and MacOS:
+
 ```bash
 git clone https://github.com/cuseto/SDMPong.git
 cd SDMPong
 ./gradlew run
 ```
 
-On Windows, use:
+On Windows:
 
 ```powershell
 \.gradlew.bat run

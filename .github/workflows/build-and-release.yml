@@ -42,6 +42,10 @@ jobs:
           platform: linux
         - os: windows-latest
           platform: windows
+        - os: macos-15-intel
+          platform: macos-intel
+        - os: macos-14
+          platform: macos-arm64
     runs-on: ${{ matrix.os }}
     permissions:
       contents: read
@@ -58,16 +62,16 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
 
-    - name: Package Linux distribution
-      if: runner.os == 'Linux'
+    - name: Package Unix distribution
+      if: runner.os != 'Windows'
       run: ./gradlew distZip
 
     - name: Package Windows distribution
       if: runner.os == 'Windows'
       run: .\gradlew.bat distZip
 
-    - name: Name Linux archive
-      if: runner.os == 'Linux'
+    - name: Name Unix archive
+      if: runner.os != 'Windows'
       run: |
         for archive in app/build/distributions/*.zip; do
           mv "$archive" "${archive%.zip}-${{ matrix.platform }}.zip"

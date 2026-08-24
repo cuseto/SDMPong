@@ -43,8 +43,18 @@ javafx {
 
 
 application {
-    // Define the main class for the application.
+    applicationName = 'pong'
     mainClass = 'com.cuseto.pong.Main'
+}
+
+distributions {
+    main {
+        distributionBaseName = 'pong'
+    }
+}
+
+tasks.named('jar') {
+    archiveBaseName = 'pong'
 }
 
 tasks.named('test') {
