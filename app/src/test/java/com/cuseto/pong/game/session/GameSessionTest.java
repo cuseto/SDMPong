@@ -166,7 +166,7 @@ class GameSessionTest {
     }
 
     private static GameSession createSession() {
-        return new GameSession(loadConfig(), supplierReturning(true, true));
+        return new GameSession(loadConfig(), () -> true);
     }
 
     private static BooleanSupplier supplierReturning(Boolean... values) {

@@ -2,6 +2,10 @@ package com.cuseto.pong.game.session;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.BooleanSupplier;
+
 import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.ConfigLoader;
@@ -58,7 +62,7 @@ public class GameSessionTestRoundReset {
     }
 
     @Test
-    void ballVelocityReturnsToInitialVelocityAfterPoint() {
+    void ballSpeedReturnsToInitialMagnitudeAfterPoint() {
         AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
         GameSession gameSession = new GameSession(appConfig);
 
@@ -73,8 +77,34 @@ public class GameSessionTestRoundReset {
 
         gameSession.resetRound();
 
-        assertEquals(initialVelocityX, gameSession.ball().velocityX());
-        assertEquals(initialVelocityY, gameSession.ball().velocityY());
+        assertEquals(Math.abs(initialVelocityX), Math.abs(gameSession.ball().velocityX()));
+        assertEquals(Math.abs(initialVelocityY), Math.abs(gameSession.ball().velocityY()));
+    }
+
+    @Test
+    void newRoundSamplesNewBallXDirection() {
+        GameSession gameSession = new GameSession(
+            loadConfig(),
+            supplierReturning(true, true, false, true)
+        );
+        assertEquals(120.0, gameSession.ball().velocityX());
+
+        gameSession.resetRound();
+
+        assertEquals(-120.0, gameSession.ball().velocityX());
+    }
+
+    @Test
+    void newRoundSamplesNewBallYDirection() {
+        GameSession gameSession = new GameSession(
+            loadConfig(),
+            supplierReturning(true, true, true, false)
+        );
+        assertEquals(80.0, gameSession.ball().velocityY());
+
+        gameSession.resetRound();
+
+        assertEquals(-80.0, gameSession.ball().velocityY());
     }
 
     @Test
@@ -122,5 +152,14 @@ public class GameSessionTestRoundReset {
         // Scoring should automatically prepare the next round.
         assertEquals(initialBallX, gameSession.ball().x());
         assertEquals(initialBallY, gameSession.ball().y());
+    }
+
+    private static BooleanSupplier supplierReturning(Boolean... values) {
+        Iterator<Boolean> iterator = List.of(values).iterator();
+        return iterator::next;
+    }
+
+    private static AppConfig loadConfig() {
+        return ConfigLoader.load("/test-config.yaml");
     }
 }
