@@ -16,6 +16,12 @@ public class App extends Application {
     private AppNavigator navigator;
 
     /**
+     * Creates a new application instance.
+     */
+    public App() {
+    }
+
+    /**
      * Loads configuration, creates the {@link AppNavigator} for the given
      * stage, and shows the main menu.
      *

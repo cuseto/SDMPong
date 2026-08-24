@@ -5,6 +5,12 @@ package com.cuseto.pong;
  */
 public class Main {
     /**
+     * Creates a new launcher instance.
+     */
+    public Main() {
+    }
+    
+    /**
      * Launches the JavaFX application.
      *
      * @param args command-line arguments, passed through to {@link App}
