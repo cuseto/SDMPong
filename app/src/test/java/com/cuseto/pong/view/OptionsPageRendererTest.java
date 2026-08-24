@@ -250,4 +250,19 @@ class OptionsPageRendererTest extends ApplicationTest {
         assertEquals(KeyCode.Q, renderer.leftPaddleUpKey());
         assertEquals("Q", leftUpButton.getText());
     }
+
+    @Test
+    void arrowKeyAssignsItToSelectedPaddleControl() {
+        Button leftUpButton = (Button) renderer.scene().getRoot().lookup("#optionsLeftPaddleUpButton");
+
+        interact(() -> {
+            leftUpButton.requestFocus();
+            leftUpButton.fire();
+        });
+        press(KeyCode.UP);
+        release(KeyCode.UP);
+
+        assertEquals(KeyCode.UP, renderer.leftPaddleUpKey());
+        assertEquals("UP", leftUpButton.getText());
+    }
 }

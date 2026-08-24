@@ -106,7 +106,6 @@ public final class OptionsPageRenderer {
         root = new VBox(10);
         root.setStyle("-fx-background-color: black;");
         root.setId(OPTIONS_PAGE_ID);
-        root.setOnKeyPressed(this::handleKeyPressed);
         root.getChildren().addAll(
             winningScoreField,
             ballSpeedField,
@@ -122,6 +121,7 @@ public final class OptionsPageRenderer {
         );
 
         scene = new Scene(root, windowWidth, windowHeight);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
     }
 
     public void setClickOnBackButton(Runnable backAction) {
@@ -184,6 +184,7 @@ public final class OptionsPageRenderer {
 
         selectedControlButton.setText(key.toString());
         selectedControlButton = null;
+        event.consume();
     }
 
     public KeyCode leftPaddleUpKey() {
