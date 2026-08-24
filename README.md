@@ -29,6 +29,12 @@ Gradle does not need to be installed globally; the repository includes the Gradl
 
 ## Run the game
 
+#### Download
+
+Go to the Release tab and download the application for your operating system.
+
+#### Cloning
+
 Clone the repository and launch it with the wrapper:
 
 ```bash
@@ -40,7 +46,7 @@ cd SDMPong
 On Windows, use:
 
 ```powershell
-gradlew.bat run
+\.gradlew.bat run
 ```
 
 ## Controls
