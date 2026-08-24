@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 
@@ -104,6 +105,21 @@ public final class OptionsPageRenderer {
         backButton = new DefaultButton("Back");
         backButton.setId(BACK_BUTTON_ID);
 
+        HBox paddleControls = new HBox(
+            128,
+            createPaddleControlsColumn(
+                "P1",
+                leftPaddleUpButton,
+                leftPaddleDownButton
+            ),
+            createPaddleControlsColumn(
+                "P2",
+                rightPaddleUpButton,
+                rightPaddleDownButton
+            )
+        );
+        paddleControls.setAlignment(Pos.CENTER);
+
         root = new VBox(10);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: black;");
@@ -113,10 +129,7 @@ public final class OptionsPageRenderer {
             ballSpeedField,
             ballSpeedIncreaseCheckBox,
             paddleSpeedField,
-            leftPaddleUpButton,
-            leftPaddleDownButton,
-            rightPaddleUpButton,
-            rightPaddleDownButton,
+            paddleControls,
             validationFeedback,
             saveButton,
             backButton
@@ -162,6 +175,19 @@ public final class OptionsPageRenderer {
 
     private void selectControlButton(Button button) {
         selectedControlButton = button;
+    }
+
+    private VBox createPaddleControlsColumn(
+        String playerName,
+        Button upButton,
+        Button downButton
+    ) {
+        Label playerLabel = new Label(playerName);
+        playerLabel.setStyle("-fx-text-fill: white; -fx-font-size: 22px;");
+
+        VBox controlsColumn = new VBox(10, playerLabel, upButton, downButton);
+        controlsColumn.setAlignment(Pos.CENTER);
+        return controlsColumn;
     }
 
     public void handleKeyPressed(KeyEvent event) {
