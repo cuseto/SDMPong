@@ -14,6 +14,7 @@ gamePage:
     radius: 6
     initialVelocityX: 120.0
     initialVelocityY: 80.0
+    speedIncreaseEnabled: true
 
   paddle:
     width: 12

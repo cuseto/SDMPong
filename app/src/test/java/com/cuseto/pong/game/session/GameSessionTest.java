@@ -1,5 +1,9 @@
 package com.cuseto.pong.game.session;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.BooleanSupplier;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,12 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.schema.AppConfig;
-import com.cuseto.pong.model.Arena;
-import com.cuseto.pong.model.Ball;
-import com.cuseto.pong.model.Paddle;
+import com.cuseto.pong.game.model.Arena;
+import com.cuseto.pong.game.model.Ball;
+import com.cuseto.pong.game.model.Paddle;
 
 class GameSessionTest {
-
     @Test
     void arenaProperlyLoaded() {
         Arena arena = createSession().arena();
@@ -65,6 +68,39 @@ class GameSessionTest {
             () -> assertEquals(120.0, ball.velocityX()),
             () -> assertEquals(80.0, ball.velocityY())
         );
+    }
+
+    @Test
+    void ballStartingXDirectionIsRandom() {
+        GameSession negativeDirectionSession =
+            new GameSession(loadConfig(), supplierReturning(false, true));
+        GameSession positiveDirectionSession =
+            new GameSession(loadConfig(), supplierReturning(true, true));
+
+        assertAll(
+            () -> assertEquals(-120.0, negativeDirectionSession.ball().velocityX()),
+            () -> assertEquals(120.0, positiveDirectionSession.ball().velocityX())
+        );
+    }
+
+    @Test
+    void ballStartingYDirectionIsRandom() {
+        GameSession negativeDirectionSession =
+            new GameSession(loadConfig(), supplierReturning(true, false));
+        GameSession positiveDirectionSession =
+            new GameSession(loadConfig(), supplierReturning(true, true));
+
+        assertAll(
+            () -> assertEquals(-80.0, negativeDirectionSession.ball().velocityY()),
+            () -> assertEquals(80.0, positiveDirectionSession.ball().velocityY())
+        );
+    }
+
+    @Test
+    void ballSpeedIncreaseSettingIsLoadedFromConfiguration() {
+        GameSession gameSession = createSession();
+
+        assertTrue(gameSession.isBallSpeedIncreaseEnabled());
     }
 
     @Test
@@ -130,7 +166,15 @@ class GameSessionTest {
     }
 
     private static GameSession createSession() {
-        AppConfig appConfig = ConfigLoader.load("/test-config.yaml");
-        return new GameSession(appConfig);
+        return new GameSession(loadConfig(), () -> true);
+    }
+
+    private static BooleanSupplier supplierReturning(Boolean... values) {
+        Iterator<Boolean> iterator = List.of(values).iterator();
+        return iterator::next;
+    }
+
+    private static AppConfig loadConfig() {
+        return ConfigLoader.load("/test-config.yaml");
     }
 }

@@ -1,23 +1,45 @@
 package com.cuseto.pong.view;
 
+import com.cuseto.pong.game.model.Arena;
+import com.cuseto.pong.game.model.view.BallView;
+import com.cuseto.pong.game.model.view.PaddleView;
 import com.cuseto.pong.game.session.GameSession;
-import com.cuseto.pong.model.Arena;
-import com.cuseto.pong.model.view.BallView;
-import com.cuseto.pong.model.view.PaddleView;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * Draws a {@link GameSession}'s arena, ball, paddles, and score onto a
+ * JavaFX {@link Canvas}.
+ *
+ * <p>Each call to {@link #render(GameSession)} redraws the entire canvas
+ * from scratch: it clears the canvas to black, then draws the arena
+ * boundaries, ball, both paddles, and the score line, all based on the
+ * session's current state. It holds no game state itself.
+ */
 public final class PongRenderer {
     private final Canvas canvas;
 
+    /**
+     * Creates a renderer with a canvas of the given size.
+     *
+     * @param width the canvas width, in pixels
+     * @param height the canvas height, in pixels
+     */
     public PongRenderer(double width, double height) {
         this.canvas = new Canvas(width, height);
     }
 
+    /**
+     * Redraws the canvas to reflect the given session's current arena,
+     * ball, paddle, and score state.
+     *
+     * @param gameSession the session to render; must not be {@code null}
+     */
     public void render(GameSession gameSession) {
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         double screenWidth = canvas.getWidth();
@@ -30,7 +52,7 @@ public final class PongRenderer {
         drawBall(graphics, gameSession.ballInfo());
         drawPaddle(graphics, gameSession.leftPaddleInfo());
         drawPaddle(graphics, gameSession.rightPaddleInfo());
-        drawMatchStatus(graphics, gameSession, screenWidth);
+        drawMatchStatus(graphics, gameSession);
     }
 
     private void drawArenaBoundaries(GraphicsContext graphics, Arena arena) {
@@ -68,19 +90,33 @@ public final class PongRenderer {
 
     private void drawMatchStatus(
         GraphicsContext graphics,
-        GameSession gameSession,
-        double screenWidth
+        GameSession gameSession
     ) {
+        Arena arena = gameSession.arena();
+
         graphics.setFill(Color.WHITE);
-        graphics.setTextAlign(TextAlignment.CENTER);
-        graphics.setFont(Font.font(20));
+        graphics.setFont(Font.font("Monospaced", FontWeight.BOLD, 28));
+
+        graphics.setTextAlign(TextAlignment.LEFT);
         graphics.fillText(
-            "LEFT: " + gameSession.leftScore() + "    RIGHT: " + gameSession.rightScore(),
-            screenWidth / 2.0,
+            "P1 SCORE: " + gameSession.leftScore(),
+            arena.anchorX(),
+            32
+        );
+
+        graphics.setTextAlign(TextAlignment.RIGHT);
+        graphics.fillText(
+            "P2 SCORE: " + gameSession.rightScore(),
+            arena.anchorX() + arena.width(),
             32
         );
     }
 
+    /**
+     * Returns the JavaFX canvas this renderer draws onto.
+     *
+     * @return the canvas
+     */
     public Canvas canvas() {
         return canvas;
     }

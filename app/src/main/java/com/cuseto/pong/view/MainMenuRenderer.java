@@ -1,5 +1,7 @@
 package com.cuseto.pong.view;
 
+import com.cuseto.pong.view.components.DefaultButton;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,8 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
-/** Creates the application's main-menu scene. */
+/**
+ * Creates the application's main-menu scene.
+ */
 public final class MainMenuRenderer {
     private static final String START_GAME_BUTTON_ID = "startGameButton";
     private static final String OPTIONS_PAGE_BUTTON_ID = "optionsPageButton";
@@ -18,35 +23,60 @@ public final class MainMenuRenderer {
     private final Button startGameButton;
     private final Button optionsButton;
 
+    /**
+     * Builds the main-menu scene at the given size, with the start-game
+     * and options buttons present but not yet wired to any action.
+     *
+     * @param windowWidth the scene width, in pixels
+     * @param windowHeight the scene height, in pixels
+     */
     public MainMenuRenderer(
         double windowWidth,
         double windowHeight
     ) {
-        Label title = new Label("PONG");
+        Label title = new Label("|° Pong  |");
         title.setTextFill(Color.WHITE);
-        title.setFont(Font.font(48));
+        title.setFont(Font.font("Monospaced", FontWeight.BOLD, 96));
 
-        startGameButton = new Button("Start Game");
+        startGameButton = new DefaultButton("Start Game");
         startGameButton.setId(START_GAME_BUTTON_ID);
 
-        optionsButton = new Button("Options");
+        optionsButton = new DefaultButton("Options");
         optionsButton.setId(OPTIONS_PAGE_BUTTON_ID);
 
-        root = new VBox(24, title, startGameButton, optionsButton);
+        VBox menuButtons = new VBox(24, startGameButton, optionsButton);
+        menuButtons.setAlignment(Pos.CENTER);
+
+        root = new VBox(96, title, menuButtons);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: black;");
 
         scene = new Scene(root, windowWidth, windowHeight);
     }
 
+    /**
+     * Sets the action run when the start-game button is clicked.
+     *
+     * @param startGameAction the callback to run
+     */
     public void setClickOnStartGameButton(Runnable startGameAction) {
         startGameButton.setOnAction(event -> startGameAction.run());
     }
 
+    /**
+     * Sets the action run when the options button is clicked.
+     *
+     * @param openOptionsAction the callback to run
+     */
     public void setClickOnOptionsButton(Runnable openOptionsAction) {
         optionsButton.setOnAction(event -> openOptionsAction.run());
     }
 
+    /**
+     * Returns the main-menu scene, for attaching to the application window.
+     *
+     * @return the main-menu scene
+     */
     public Scene scene() {
         return scene;
     }

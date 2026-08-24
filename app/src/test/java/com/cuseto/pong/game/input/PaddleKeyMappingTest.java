@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.schema.controls.ControlsConfig;
 import com.cuseto.pong.config.schema.controls.PaddleControlsConfig;
-import com.cuseto.pong.model.PaddleDirection;
+import com.cuseto.pong.game.model.PaddleDirection;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

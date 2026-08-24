@@ -11,17 +11,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.ConfigRepository;
 import com.cuseto.pong.config.schema.AppConfig;
 
-class OptionsControllerTest {
+class OptionsControllerTest extends ApplicationTest {
     @TempDir
     Path temporaryDirectory;
+
+    @Override
+    public void start(Stage stage) {
+        stage.hide();
+    }
 
     @Test
     void savePersistsValidMatchSettings() {
@@ -35,7 +42,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "500.0", "400.0");
+        controller.saveMatchSettings("10", "500.0", "400.0", false);
 
         AppConfig savedConfig = repository.load();
 
@@ -55,6 +62,7 @@ class OptionsControllerTest {
             400.0,
             savedConfig.gamePage().paddle().speed()
         );
+        assertFalse(savedConfig.gamePage().ball().speedIncreaseEnabled());
     }
 
     @Test
@@ -69,12 +77,15 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("invalid", "500.0", "400.0");
+        controller.saveMatchSettings("invalid", "500.0", "400.0", true);
 
         Label validationFeedback = (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
 
         assertTrue(validationFeedback.isVisible());
-        assertFalse(validationFeedback.getText().isBlank());
+        assertEquals(
+            "Winning score must be a whole number",
+            validationFeedback.getText()
+        );
         assertFalse(Files.exists(userConfigPath));
     }
 
@@ -90,7 +101,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("0", "500.0", "400.0");
+        controller.saveMatchSettings("0", "500.0", "400.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -112,7 +123,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("-1", "500.0", "400.0");
+        controller.saveMatchSettings("-1", "500.0", "400.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -134,7 +145,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "0.0", "400.0");
+        controller.saveMatchSettings("10", "0.0", "400.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -156,7 +167,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "NaN", "400.0");
+        controller.saveMatchSettings("10", "NaN", "400.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -178,7 +189,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "500.0", "-1.0");
+        controller.saveMatchSettings("10", "500.0", "-1.0", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -200,7 +211,7 @@ class OptionsControllerTest {
             () -> {}
         );
 
-        controller.saveMatchSettings("10", "500.0", "Infinity");
+        controller.saveMatchSettings("10", "500.0", "Infinity", true);
 
         Label validationFeedback =
             (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
@@ -234,7 +245,7 @@ class OptionsControllerTest {
         ((Button) controller.scene().getRoot().lookup("#optionsRightPaddleDownButton")).fire();
         controller.scene().getRoot().fireEvent(keyPressed(KeyCode.K));
 
-        controller.saveMatchSettings("10", "500.0", "400.0");
+        controller.saveMatchSettings("10", "500.0", "400.0", true);
 
         AppConfig savedConfig = repository.load();
 

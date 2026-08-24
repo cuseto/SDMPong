@@ -15,10 +15,10 @@ import org.junit.jupiter.api.io.TempDir;
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.ConfigRepository;
 import com.cuseto.pong.config.schema.AppConfig;
+import com.cuseto.pong.game.model.Ball;
+import com.cuseto.pong.game.model.Paddle;
 import com.cuseto.pong.game.session.GameSession;
 import com.cuseto.pong.game.session.Player;
-import com.cuseto.pong.model.Ball;
-import com.cuseto.pong.model.Paddle;
 import com.cuseto.pong.navigation.ApplicationScreen;
 import com.cuseto.pong.navigation.AppNavigator;
 

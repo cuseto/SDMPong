@@ -147,8 +147,8 @@ class AppNavigatorTest extends ApplicationTest {
 
         assertAll(
             () -> assertEquals(10, gameSession.winningScore()),
-            () -> assertEquals(600.0, gameSession.ball().velocityX()),
-            () -> assertEquals(600.0, gameSession.ball().velocityY()),
+            () -> assertEquals(600.0, Math.abs(gameSession.ball().velocityX())),
+            () -> assertEquals(600.0, Math.abs(gameSession.ball().velocityY())),
             () -> assertEquals(500.0, gameSession.leftPaddle().speed()),
             () -> assertEquals(500.0, gameSession.rightPaddle().speed())
         );

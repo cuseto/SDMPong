@@ -3,7 +3,7 @@ package com.cuseto.pong.game.input;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import com.cuseto.pong.model.PaddleDirection;
+import com.cuseto.pong.game.model.PaddleDirection;
 
 class PaddleInputStateTest {
 
