@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.view.components.DefaultButton;
+import com.cuseto.pong.view.components.OptionsButton;
 import com.cuseto.pong.view.components.DefaultCheckBox;
 import com.cuseto.pong.view.components.DefaultTextField;
 
@@ -70,16 +71,16 @@ public final class OptionsPageRenderer {
         paddleSpeedField = new DefaultTextField(String.valueOf(appConfig.gamePage().paddle().speed()));
         paddleSpeedField.setId(PADDLE_SPEED_FIELD_ID);
 
-        leftPaddleUpButton = new DefaultButton(appConfig.controls().leftPaddle().up().toString());
+        leftPaddleUpButton = new OptionsButton(appConfig.controls().leftPaddle().up().toString());
         leftPaddleUpButton.setId(LEFT_PADDLE_UP_BUTTON_ID);
 
-        leftPaddleDownButton = new DefaultButton(appConfig.controls().leftPaddle().down().toString());
+        leftPaddleDownButton = new OptionsButton(appConfig.controls().leftPaddle().down().toString());
         leftPaddleDownButton.setId(LEFT_PADDLE_DOWN_BUTTON_ID);
 
-        rightPaddleUpButton = new DefaultButton(appConfig.controls().rightPaddle().up().toString());
+        rightPaddleUpButton = new OptionsButton(appConfig.controls().rightPaddle().up().toString());
         rightPaddleUpButton.setId(RIGHT_PADDLE_UP_BUTTON_ID);
 
-        rightPaddleDownButton = new DefaultButton(appConfig.controls().rightPaddle().down().toString());
+        rightPaddleDownButton = new OptionsButton(appConfig.controls().rightPaddle().down().toString());
         rightPaddleDownButton.setId(RIGHT_PADDLE_DOWN_BUTTON_ID);
 
         leftPaddleUpButton.setOnAction(event -> selectControlButton(leftPaddleUpButton));
@@ -105,7 +106,6 @@ public final class OptionsPageRenderer {
         root = new VBox(10);
         root.setStyle("-fx-background-color: black;");
         root.setId(OPTIONS_PAGE_ID);
-        root.setOnKeyPressed(this::handleKeyPressed);
         root.getChildren().addAll(
             winningScoreField,
             ballSpeedField,
@@ -121,6 +121,7 @@ public final class OptionsPageRenderer {
         );
 
         scene = new Scene(root, windowWidth, windowHeight);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
     }
 
     public void setClickOnBackButton(Runnable backAction) {
@@ -183,6 +184,7 @@ public final class OptionsPageRenderer {
 
         selectedControlButton.setText(key.toString());
         selectedControlButton = null;
+        event.consume();
     }
 
     public KeyCode leftPaddleUpKey() {
