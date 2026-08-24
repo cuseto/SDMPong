@@ -1,5 +1,6 @@
 package com.cuseto.pong.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,9 +8,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.view.components.DefaultButton;
@@ -19,11 +25,16 @@ import com.cuseto.pong.view.components.DefaultTextField;
 
 public final class OptionsPageRenderer {
     private static final String OPTIONS_PAGE_ID = "optionsPage";
+    private static final String OPTIONS_TITLE_ID = "optionsTitle";
     private static final String BACK_BUTTON_ID = "optionsBackButton";
     private static final String WINNING_SCORE_FIELD_ID = "optionsWinningScoreField";
+    private static final String WINNING_SCORE_LABEL_ID = "optionsWinningScoreLabel";
     private static final String BALL_SPEED_FIELD_ID = "optionsBallSpeedField";
+    private static final String BALL_SPEED_LABEL_ID = "optionsBallSpeedLabel";
     private static final String BALL_SPEED_INCREASE_CHECKBOX_ID = "optionsBallSpeedIncreaseCheckBox";
     private static final String PADDLE_SPEED_FIELD_ID = "optionsPaddleSpeedField";
+    private static final String PADDLE_SPEED_LABEL_ID = "optionsPaddleSpeedLabel";
+    private static final String KEY_BINDINGS_TITLE_ID = "optionsKeyBindingsTitle";
     private static final String SAVE_BUTTON_ID = "optionsSaveButton";
     private static final String VALIDATION_FEEDBACK_ID = "optionsValidationFeedback";
     private static final String LEFT_PADDLE_UP_BUTTON_ID = "optionsLeftPaddleUpButton";
@@ -97,6 +108,7 @@ public final class OptionsPageRenderer {
 
         validationFeedback = new Label();
         validationFeedback.setId(VALIDATION_FEEDBACK_ID);
+        validationFeedback.setTextFill(Color.RED);
         validationFeedback.setVisible(false);
 
         saveButton = new DefaultButton("Save");
@@ -104,6 +116,11 @@ public final class OptionsPageRenderer {
 
         backButton = new DefaultButton("Back");
         backButton.setId(BACK_BUTTON_ID);
+
+        Label title = new Label("Options");
+        title.setId(OPTIONS_TITLE_ID);
+        title.setTextFill(Color.WHITE);
+        title.setFont(Font.font("Monospaced", FontWeight.BOLD, 64));
 
         HBox paddleControls = new HBox(
             128,
@@ -120,20 +137,61 @@ public final class OptionsPageRenderer {
         );
         paddleControls.setAlignment(Pos.CENTER);
 
+        Label keyBindingsTitle = new Label("Key Bindings");
+        keyBindingsTitle.setId(KEY_BINDINGS_TITLE_ID);
+        keyBindingsTitle.setTextFill(Color.WHITE);
+        keyBindingsTitle.setFont(Font.font("Monospaced", 16));
+
+        VBox keyBindings = new VBox(0, keyBindingsTitle, paddleControls);
+        keyBindings.setAlignment(Pos.CENTER);
+
+        VBox winningScoreSetting = createSettingField(
+            "Winning score",
+            WINNING_SCORE_LABEL_ID,
+            winningScoreField
+        );
+        VBox ballSpeedSetting = createSettingField(
+            "Ball speed",
+            BALL_SPEED_LABEL_ID,
+            ballSpeedField
+        );
+        VBox paddleSpeedSetting = createSettingField(
+            "Paddle speed",
+            PADDLE_SPEED_LABEL_ID,
+            paddleSpeedField
+        );
+
+        VBox menuContent = new VBox(
+            15,
+            title,
+            winningScoreSetting,
+            ballSpeedSetting,
+            ballSpeedIncreaseCheckBox,
+            paddleSpeedSetting,
+            keyBindings,
+            validationFeedback
+        );
+        menuContent.setAlignment(Pos.CENTER);
+
+        HBox actionButtons = new HBox(24, saveButton, backButton);
+        actionButtons.setAlignment(Pos.CENTER);
+        actionButtons.setPadding(new Insets(0, 0, 24, 0));
+
         root = new VBox(10);
+        root.setFocusTraversable(true);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: black;");
         root.setId(OPTIONS_PAGE_ID);
         root.getChildren().addAll(
-            winningScoreField,
-            ballSpeedField,
-            ballSpeedIncreaseCheckBox,
-            paddleSpeedField,
-            paddleControls,
-            validationFeedback,
-            saveButton,
-            backButton
+            menuContent,
+            actionButtons
         );
+        VBox.setVgrow(menuContent, Priority.ALWAYS);
+        root.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            if (event.getTarget() == root) {
+                root.requestFocus();
+            }
+        });
 
         scene = new Scene(root, windowWidth, windowHeight);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
@@ -188,6 +246,21 @@ public final class OptionsPageRenderer {
         VBox controlsColumn = new VBox(10, playerLabel, upButton, downButton);
         controlsColumn.setAlignment(Pos.CENTER);
         return controlsColumn;
+    }
+
+    private VBox createSettingField(
+        String settingName,
+        String labelId,
+        TextField field
+    ) {
+        Label settingLabel = new Label(settingName);
+        settingLabel.setId(labelId);
+        settingLabel.setTextFill(Color.WHITE);
+        settingLabel.setFont(Font.font("Monospaced", 16));
+
+        VBox setting = new VBox(4, settingLabel, field);
+        setting.setAlignment(Pos.CENTER);
+        return setting;
     }
 
     public void handleKeyPressed(KeyEvent event) {

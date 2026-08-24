@@ -37,15 +37,19 @@ public final class MatchSettings {
         boolean ballSpeedIncreaseEnabled
     ) {
         if (winningScore <= 0) {
-            throw new IllegalArgumentException("winningScore must be positive");
+            throw new IllegalArgumentException("Winning score must be greater than zero");
         }
 
         if (ballSpeed <= 0 || !Double.isFinite(ballSpeed)) {
-            throw new IllegalArgumentException("ballSpeed must be positive and finite");
+            throw new IllegalArgumentException(
+                "Ball speed must be greater than zero and finite"
+            );
         }
 
         if (paddleSpeed <= 0 || !Double.isFinite(paddleSpeed)) {
-            throw new IllegalArgumentException("paddleSpeed must be positive and finite");
+            throw new IllegalArgumentException(
+                "Paddle speed must be greater than zero and finite"
+            );
         }
 
         this.winningScore = winningScore;

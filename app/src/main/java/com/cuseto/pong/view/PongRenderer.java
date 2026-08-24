@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 public final class PongRenderer {
@@ -30,7 +31,7 @@ public final class PongRenderer {
         drawBall(graphics, gameSession.ballInfo());
         drawPaddle(graphics, gameSession.leftPaddleInfo());
         drawPaddle(graphics, gameSession.rightPaddleInfo());
-        drawMatchStatus(graphics, gameSession, screenWidth);
+        drawMatchStatus(graphics, gameSession);
     }
 
     private void drawArenaBoundaries(GraphicsContext graphics, Arena arena) {
@@ -68,15 +69,24 @@ public final class PongRenderer {
 
     private void drawMatchStatus(
         GraphicsContext graphics,
-        GameSession gameSession,
-        double screenWidth
+        GameSession gameSession
     ) {
+        Arena arena = gameSession.arena();
+
         graphics.setFill(Color.WHITE);
-        graphics.setTextAlign(TextAlignment.CENTER);
-        graphics.setFont(Font.font(20));
+        graphics.setFont(Font.font("Monospaced", FontWeight.BOLD, 28));
+
+        graphics.setTextAlign(TextAlignment.LEFT);
         graphics.fillText(
-            "LEFT: " + gameSession.leftScore() + "    RIGHT: " + gameSession.rightScore(),
-            screenWidth / 2.0,
+            "P1 SCORE: " + gameSession.leftScore(),
+            arena.anchorX(),
+            32
+        );
+
+        graphics.setTextAlign(TextAlignment.RIGHT);
+        graphics.fillText(
+            "P2 SCORE: " + gameSession.rightScore(),
+            arena.anchorX() + arena.width(),
             32
         );
     }

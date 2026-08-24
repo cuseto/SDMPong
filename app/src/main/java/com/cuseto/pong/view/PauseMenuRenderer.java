@@ -26,7 +26,7 @@ public final class PauseMenuRenderer {
     public PauseMenuRenderer() {
         Label title = new Label("Match Paused");
         title.setTextFill(Color.WHITE);
-        title.setFont(Font.font("System", FontWeight.BOLD, 32));
+        title.setFont(Font.font("Monospaced", FontWeight.BOLD, 32));
 
         closeMenuButton = createButton("Resume", CLOSE_MENU_BUTTON_ID);
         exitGameButton = createButton("Quit Match", EXIT_GAME_BUTTON_ID);

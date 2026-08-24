@@ -11,17 +11,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.ConfigRepository;
 import com.cuseto.pong.config.schema.AppConfig;
 
-class OptionsControllerTest {
+class OptionsControllerTest extends ApplicationTest {
     @TempDir
     Path temporaryDirectory;
+
+    @Override
+    public void start(Stage stage) {
+        stage.hide();
+    }
 
     @Test
     void savePersistsValidMatchSettings() {
@@ -75,7 +82,10 @@ class OptionsControllerTest {
         Label validationFeedback = (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
 
         assertTrue(validationFeedback.isVisible());
-        assertFalse(validationFeedback.getText().isBlank());
+        assertEquals(
+            "Winning score must be a whole number",
+            validationFeedback.getText()
+        );
         assertFalse(Files.exists(userConfigPath));
     }
 

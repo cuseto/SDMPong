@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public final class GameWinnerBannerRenderer {
     private static final String WINNER_BANNER_ID = "winnerBanner";
@@ -18,11 +19,11 @@ public final class GameWinnerBannerRenderer {
     public GameWinnerBannerRenderer() {
         winnerLabel = new Label();
         winnerLabel.setTextFill(Color.WHITE);
-        winnerLabel.setFont(Font.font(30));
+        winnerLabel.setFont(Font.font("Monospaced", 30));
 
         Label instructionsLabel = new Label("ENTER: NEW MATCH    ESC: QUIT");
         instructionsLabel.setTextFill(Color.WHITE);
-        instructionsLabel.setFont(Font.font(18));
+        instructionsLabel.setFont(Font.font("Monospaced", 18));
 
         VBox banner = new VBox(8, winnerLabel, instructionsLabel);
         banner.setAlignment(Pos.CENTER);
@@ -37,10 +38,11 @@ public final class GameWinnerBannerRenderer {
     }
 
     public void render(Player winner) {
+        winnerLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 30));
         winnerLabel.setText(
             winner == Player.LEFT
-                ? "LEFT PLAYER WINS!"
-                : "RIGHT PLAYER WINS!"
+                ? "PLAYER 1 WINS!"
+                : "PLAYER 2 WINS!"
         );
     }
 
