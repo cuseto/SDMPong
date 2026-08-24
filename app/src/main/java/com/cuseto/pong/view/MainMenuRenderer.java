@@ -35,7 +35,10 @@ public final class MainMenuRenderer {
         optionsButton = new DefaultButton("Options");
         optionsButton.setId(OPTIONS_PAGE_BUTTON_ID);
 
-        root = new VBox(24, title, startGameButton, optionsButton);
+        VBox menuButtons = new VBox(24, startGameButton, optionsButton);
+        menuButtons.setAlignment(Pos.CENTER);
+
+        root = new VBox(96, title, menuButtons);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: black;");
 
