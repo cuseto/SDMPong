@@ -63,7 +63,7 @@ public final class OptionsPageRenderer {
         ballSpeedField.setId(BALL_SPEED_FIELD_ID);
 
         ballSpeedIncreaseCheckBox = new DefaultCheckBox(
-            "Increase ball speed after paddle bounce"
+            "Speed increase on paddle bounce"
         );
         ballSpeedIncreaseCheckBox.setId(BALL_SPEED_INCREASE_CHECKBOX_ID);
         ballSpeedIncreaseCheckBox.setSelected(

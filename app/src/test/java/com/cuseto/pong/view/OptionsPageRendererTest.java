@@ -256,11 +256,9 @@ class OptionsPageRendererTest extends ApplicationTest {
         Button leftUpButton = (Button) renderer.scene().getRoot().lookup("#optionsLeftPaddleUpButton");
 
         interact(() -> {
-            leftUpButton.requestFocus();
             leftUpButton.fire();
+            leftUpButton.fireEvent(keyPressed(KeyCode.UP));
         });
-        press(KeyCode.UP);
-        release(KeyCode.UP);
 
         assertEquals(KeyCode.UP, renderer.leftPaddleUpKey());
         assertEquals("UP", leftUpButton.getText());

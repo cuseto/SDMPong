@@ -7,6 +7,8 @@ import javafx.scene.text.Font;
  * A consistently styled text field for the application's user interface.
  */
 public final class DefaultTextField extends TextField {
+    private static final double FIELD_WIDTH = 400;
+    private static final double FIELD_HEIGHT = 24;
 
     public DefaultTextField(String text) {
         super(text);
@@ -14,7 +16,8 @@ public final class DefaultTextField extends TextField {
     }
         
     private void applyStyle(DefaultTextField txtfld) {
-        txtfld.setPrefSize(200, 50);
+        txtfld.setPrefSize(FIELD_WIDTH, FIELD_HEIGHT);
+        txtfld.setMaxWidth(FIELD_WIDTH);
         txtfld.setFont(Font.font("Monospaced", 18));
         txtfld.setStyle("""
             -fx-background-color: #33353a;
