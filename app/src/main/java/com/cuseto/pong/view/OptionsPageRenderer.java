@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -130,6 +131,7 @@ public final class OptionsPageRenderer {
         paddleControls.setAlignment(Pos.CENTER);
 
         root = new VBox(10);
+        root.setFocusTraversable(true);
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-background-color: black;");
         root.setId(OPTIONS_PAGE_ID);
@@ -144,6 +146,11 @@ public final class OptionsPageRenderer {
             saveButton,
             backButton
         );
+        root.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            if (event.getTarget() == root) {
+                root.requestFocus();
+            }
+        });
 
         scene = new Scene(root, windowWidth, windowHeight);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
