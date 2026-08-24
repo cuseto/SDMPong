@@ -1,5 +1,6 @@
 package com.cuseto.pong.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -130,22 +132,32 @@ public final class OptionsPageRenderer {
         );
         paddleControls.setAlignment(Pos.CENTER);
 
-        root = new VBox(10);
-        root.setFocusTraversable(true);
-        root.setAlignment(Pos.CENTER);
-        root.setStyle("-fx-background-color: black;");
-        root.setId(OPTIONS_PAGE_ID);
-        root.getChildren().addAll(
+        VBox menuContent = new VBox(
+            10,
             title,
             winningScoreField,
             ballSpeedField,
             ballSpeedIncreaseCheckBox,
             paddleSpeedField,
             paddleControls,
-            validationFeedback,
-            saveButton,
-            backButton
+            validationFeedback
         );
+        menuContent.setAlignment(Pos.CENTER);
+
+        VBox actionButtons = new VBox(10, saveButton, backButton);
+        actionButtons.setAlignment(Pos.CENTER);
+        actionButtons.setPadding(new Insets(0, 0, 24, 0));
+
+        root = new VBox(10);
+        root.setFocusTraversable(true);
+        root.setAlignment(Pos.CENTER);
+        root.setStyle("-fx-background-color: black;");
+        root.setId(OPTIONS_PAGE_ID);
+        root.getChildren().addAll(
+            menuContent,
+            actionButtons
+        );
+        VBox.setVgrow(menuContent, Priority.ALWAYS);
         root.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             if (event.getTarget() == root) {
                 root.requestFocus();
