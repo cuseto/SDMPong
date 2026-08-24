@@ -26,8 +26,8 @@ public final class GameSession {
     private final Paddle leftPaddle;
     private final Paddle rightPaddle;
     private final Ball ball;
-    private final double initialBallVelocityX;
-    private final double initialBallVelocityY;
+    private final double initialBallSpeedX;
+    private final double initialBallSpeedY;
     private final BooleanSupplier directionSupplier;
     private final boolean ballSpeedIncreaseEnabled;
     private final int winningScore;
@@ -61,12 +61,12 @@ public final class GameSession {
         this.leftPaddle = getLeftPaddle(appConfig, arena);
         this.rightPaddle = getRightPaddle(appConfig, arena);
 
+        this.initialBallSpeedX = Math.abs(appConfig.gamePage().ball().initialVelocityX());
+        this.initialBallSpeedY = Math.abs(appConfig.gamePage().ball().initialVelocityY());
         this.ballSpeedIncreaseEnabled = appConfig.gamePage().ball().speedIncreaseEnabled();
         this.winningScore = appConfig.gamePage().winningScore();
 
         this.ball = getBall(appConfig, arena);
-        this.initialBallVelocityX = ball.velocityX();
-        this.initialBallVelocityY = ball.velocityY();
         this.gameStatus = GameStatus.RUNNING;
     }
 
@@ -124,8 +124,8 @@ public final class GameSession {
             x,
             y,
             appConfig.gamePage().ball().radius(),
-            appConfig.gamePage().ball().initialVelocityX() * randomDirectionMultiplier(),
-            appConfig.gamePage().ball().initialVelocityY() * randomDirectionMultiplier()
+            initialBallSpeedX * randomDirectionMultiplier(),
+            initialBallSpeedY * randomDirectionMultiplier()
         );
     }
 
@@ -152,7 +152,10 @@ public final class GameSession {
     public void resetRound() {
         ball.setX(initialBallX(arena));
         ball.setY(initialBallY(arena));
-        ball.setVelocity(initialBallVelocityX, initialBallVelocityY);
+        ball.setVelocity(
+            initialBallSpeedX * randomDirectionMultiplier(),
+            initialBallSpeedY * randomDirectionMultiplier()
+        );
 
         leftPaddle.moveToY(initialPaddleY(leftPaddle));
         rightPaddle.moveToY(initialPaddleY(rightPaddle));
