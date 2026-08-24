@@ -141,7 +141,7 @@ public final class OptionsPageRenderer {
         keyBindingsTitle.setTextFill(Color.WHITE);
         keyBindingsTitle.setFont(Font.font("Monospaced", 16));
 
-        VBox keyBindings = new VBox(8, keyBindingsTitle, paddleControls);
+        VBox keyBindings = new VBox(0, keyBindingsTitle, paddleControls);
         keyBindings.setAlignment(Pos.CENTER);
 
         VBox winningScoreSetting = createSettingField(
@@ -172,7 +172,7 @@ public final class OptionsPageRenderer {
         );
         menuContent.setAlignment(Pos.CENTER);
 
-        VBox actionButtons = new VBox(10, saveButton, backButton);
+        HBox actionButtons = new HBox(24, saveButton, backButton);
         actionButtons.setAlignment(Pos.CENTER);
         actionButtons.setPadding(new Insets(0, 0, 24, 0));
 
