@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /** Creates the application's main-menu scene. */
 public final class MainMenuRenderer {
@@ -24,9 +25,9 @@ public final class MainMenuRenderer {
         double windowWidth,
         double windowHeight
     ) {
-        Label title = new Label("PONG");
+        Label title = new Label("|° Pong  |");
         title.setTextFill(Color.WHITE);
-        title.setFont(Font.font(48));
+        title.setFont(Font.font("Monospaced", FontWeight.BOLD, 96));
 
         startGameButton = new DefaultButton("Start Game");
         startGameButton.setId(START_GAME_BUTTON_ID);

@@ -10,6 +10,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.view.components.DefaultButton;
@@ -19,6 +22,7 @@ import com.cuseto.pong.view.components.DefaultTextField;
 
 public final class OptionsPageRenderer {
     private static final String OPTIONS_PAGE_ID = "optionsPage";
+    private static final String OPTIONS_TITLE_ID = "optionsTitle";
     private static final String BACK_BUTTON_ID = "optionsBackButton";
     private static final String WINNING_SCORE_FIELD_ID = "optionsWinningScoreField";
     private static final String BALL_SPEED_FIELD_ID = "optionsBallSpeedField";
@@ -105,6 +109,11 @@ public final class OptionsPageRenderer {
         backButton = new DefaultButton("Back");
         backButton.setId(BACK_BUTTON_ID);
 
+        Label title = new Label("Options");
+        title.setId(OPTIONS_TITLE_ID);
+        title.setTextFill(Color.WHITE);
+        title.setFont(Font.font("Monospaced", FontWeight.BOLD, 64));
+
         HBox paddleControls = new HBox(
             128,
             createPaddleControlsColumn(
@@ -125,6 +134,7 @@ public final class OptionsPageRenderer {
         root.setStyle("-fx-background-color: black;");
         root.setId(OPTIONS_PAGE_ID);
         root.getChildren().addAll(
+            title,
             winningScoreField,
             ballSpeedField,
             ballSpeedIncreaseCheckBox,
