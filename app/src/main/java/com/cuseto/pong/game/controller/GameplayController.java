@@ -17,7 +17,16 @@ import com.cuseto.pong.view.GamePageRenderer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 
-/** Owns the JavaFX and game-loop objects for one active gameplay session. */
+/**
+ * Owns the JavaFX and game-loop objects for one active gameplay session.
+ *
+ * <p>On construction, this wires together a fresh {@link GameSession}, its
+ * input state, key mapping, renderer, and {@link GameLoop} into a single
+ * running match, and installs the key handlers that drive paddle input,
+ * pause/resume, and returning to the main menu. Callers start and stop the
+ * underlying loop via {@link #start()} and {@link #stop()}, and obtain the
+ * gameplay {@link Scene} via {@link #scene()} to attach it to the window.
+ */
 public final class GameplayController {
     private final GameSession gameSession;
     private final PaddleInputState inputState;
@@ -27,6 +36,15 @@ public final class GameplayController {
     private final Runnable backToMainMenuFunction;
     private final KeyCode OPEN_MENU_KEY = KeyCode.ESCAPE;
 
+    /**
+     * Creates and wires up a new gameplay session for the given configuration,
+     * rendering the initial frame and installing input handling, but does not
+     * start the game loop; call {@link #start()} to begin play.
+     *
+     * @param appConfig the application configuration used to size the viewport, set up controls, and initialise the {@link GameSession}; must not be {@code null}
+     * @param backToMainMenuFunction the callback invoked to leave gameplay and return to the main menu, e.g. when the player presses Escape from a finished match; must not be {@code null}
+     * @throws NullPointerException if {@code appConfig} or {@code backToMainMenuFunction} is {@code null}
+     */
     public GameplayController(AppConfig appConfig, Runnable backToMainMenuFunction) {
         Objects.requireNonNull(appConfig, "appConfig cannot be null");
         this.backToMainMenuFunction = Objects.requireNonNull(
@@ -115,19 +133,37 @@ public final class GameplayController {
         gamePageRenderer.showWinnerBanner(winner);
     }
 
+    /**
+     * Starts the game loop, beginning per-frame updates and rendering.
+     */
     public void start() {
         gameLoop.start();
     }
 
+    /**
+     * Stops the game loop and clears any in-progress paddle input, so no
+     * paddle is left mid-move if a key release is missed while stopped.
+     */
     public void stop() {
         gameLoop.stop();
         clearInput();
     }
 
+    /**
+     * Returns the JavaFX scene for this gameplay session, for attaching to
+     * the application window.
+     *
+     * @return the gameplay scene
+     */
     public Scene scene() {
         return gamePageRenderer.scene();
     }
 
+    /**
+     * Returns the game session backing this controller.
+     *
+     * @return the current game session
+     */
     public GameSession gameSession() {
         return gameSession;
     }
