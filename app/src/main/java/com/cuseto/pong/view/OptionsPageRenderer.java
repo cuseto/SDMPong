@@ -108,6 +108,7 @@ public final class OptionsPageRenderer {
 
         validationFeedback = new Label();
         validationFeedback.setId(VALIDATION_FEEDBACK_ID);
+        validationFeedback.setTextFill(Color.RED);
         validationFeedback.setVisible(false);
 
         saveButton = new DefaultButton("Save");

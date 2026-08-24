@@ -75,7 +75,10 @@ class OptionsControllerTest {
         Label validationFeedback = (Label) controller.scene().getRoot().lookup("#optionsValidationFeedback");
 
         assertTrue(validationFeedback.isVisible());
-        assertFalse(validationFeedback.getText().isBlank());
+        assertEquals(
+            "Winning score must be a whole number.",
+            validationFeedback.getText()
+        );
         assertFalse(Files.exists(userConfigPath));
     }
 

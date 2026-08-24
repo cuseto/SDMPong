@@ -49,9 +49,9 @@ public final class OptionsController {
     ) {
         try {
             MatchSettings settings = new MatchSettings(
-                Integer.parseInt(winningScore),
-                Double.parseDouble(ballSpeed),
-                Double.parseDouble(paddleSpeed),
+                parseInteger(winningScore, "Winning score"),
+                parseDouble(ballSpeed, "Ball speed"),
+                parseDouble(paddleSpeed, "Paddle speed"),
                 ballSpeedIncreaseEnabled
             );
 
@@ -78,6 +78,32 @@ public final class OptionsController {
         }
         catch (IllegalArgumentException exception) {
             optionsPageRenderer.showValidationFeedback(exception.getMessage());
+        }
+    }
+
+    private int parseInteger(String value, String fieldName) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(fieldName + " is required");
+        }
+
+        try {
+            return Integer.parseInt(value.trim());
+        }
+        catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(fieldName + " must be a whole number");
+        }
+    }
+
+    private double parseDouble(String value, String fieldName) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(fieldName + " is required");
+        }
+
+        try {
+            return Double.parseDouble(value.trim());
+        }
+        catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(fieldName + " must be a valid number");
         }
     }
 
