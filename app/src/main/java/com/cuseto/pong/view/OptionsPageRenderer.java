@@ -2,6 +2,7 @@ package com.cuseto.pong.view;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 
 import com.cuseto.pong.config.schema.AppConfig;
 import com.cuseto.pong.view.components.DefaultButton;
+import com.cuseto.pong.view.components.DefaultCheckBox;
 import com.cuseto.pong.view.components.DefaultTextField;
 
 public final class OptionsPageRenderer {
@@ -17,6 +19,7 @@ public final class OptionsPageRenderer {
     private static final String BACK_BUTTON_ID = "optionsBackButton";
     private static final String WINNING_SCORE_FIELD_ID = "optionsWinningScoreField";
     private static final String BALL_SPEED_FIELD_ID = "optionsBallSpeedField";
+    private static final String BALL_SPEED_INCREASE_CHECKBOX_ID = "optionsBallSpeedIncreaseCheckBox";
     private static final String PADDLE_SPEED_FIELD_ID = "optionsPaddleSpeedField";
     private static final String SAVE_BUTTON_ID = "optionsSaveButton";
     private static final String VALIDATION_FEEDBACK_ID = "optionsValidationFeedback";
@@ -30,6 +33,7 @@ public final class OptionsPageRenderer {
     private final Button backButton;
     private final TextField winningScoreField;
     private final TextField ballSpeedField;
+    private final CheckBox ballSpeedIncreaseCheckBox;
     private final TextField paddleSpeedField;
     private final Button leftPaddleUpButton;
     private final Button leftPaddleDownButton;
@@ -54,6 +58,14 @@ public final class OptionsPageRenderer {
 
         ballSpeedField = new DefaultTextField(String.valueOf(appConfig.gamePage().ball().initialVelocityX()));
         ballSpeedField.setId(BALL_SPEED_FIELD_ID);
+
+        ballSpeedIncreaseCheckBox = new DefaultCheckBox(
+            "Increase ball speed after paddle bounce"
+        );
+        ballSpeedIncreaseCheckBox.setId(BALL_SPEED_INCREASE_CHECKBOX_ID);
+        ballSpeedIncreaseCheckBox.setSelected(
+            appConfig.gamePage().ball().speedIncreaseEnabled()
+        );
 
         paddleSpeedField = new DefaultTextField(String.valueOf(appConfig.gamePage().paddle().speed()));
         paddleSpeedField.setId(PADDLE_SPEED_FIELD_ID);
@@ -97,6 +109,7 @@ public final class OptionsPageRenderer {
         root.getChildren().addAll(
             winningScoreField,
             ballSpeedField,
+            ballSpeedIncreaseCheckBox,
             paddleSpeedField,
             leftPaddleUpButton,
             leftPaddleDownButton,
@@ -134,6 +147,10 @@ public final class OptionsPageRenderer {
 
     public String ballSpeed() {
         return ballSpeedField.getText();
+    }
+
+    public boolean ballSpeedIncreaseEnabled() {
+        return ballSpeedIncreaseCheckBox.isSelected();
     }
 
     public String paddleSpeed() {

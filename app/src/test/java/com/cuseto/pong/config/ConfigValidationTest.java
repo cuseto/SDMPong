@@ -36,11 +36,11 @@ class ConfigValidationTest {
     @Test
     void ballRadiusMustBePositiveAndVelocitiesMustBeFinite() {
         assertInvalid(IllegalArgumentException.class, "radius",
-            () -> new BallConfig(0, 100.0, 100.0));
+            () -> new BallConfig(0, 100.0, 100.0, false));
         assertInvalid(IllegalArgumentException.class, "initialVelocityX",
-            () -> new BallConfig(8, Double.NaN, 100.0));
+            () -> new BallConfig(8, Double.NaN, 100.0, false));
         assertInvalid(IllegalArgumentException.class, "initialVelocityY",
-            () -> new BallConfig(8, 100.0, Double.POSITIVE_INFINITY));
+            () -> new BallConfig(8, 100.0, Double.POSITIVE_INFINITY, false));
     }
 
     @Test
@@ -60,7 +60,7 @@ class ConfigValidationTest {
     @Test
     void winningScoreMustBePositive() {
         ArenaConfig arena = new ArenaConfig(80, 20, 4);
-        BallConfig ball = new BallConfig(8, 100.0, 100.0);
+        BallConfig ball = new BallConfig(8, 100.0, 100.0, false);
         PaddleConfig paddle = new PaddleConfig(10, 80, 100, 300.0);
 
         assertInvalid(IllegalArgumentException.class, "winningScore",

@@ -2,6 +2,7 @@ package com.cuseto.pong.config;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.schema.AppConfig;
@@ -24,6 +25,7 @@ class ConfigLoaderTest {
         assertEquals(6, appConfig.gamePage().ball().radius());
         assertEquals(120.0, appConfig.gamePage().ball().initialVelocityX());
         assertEquals(80.0, appConfig.gamePage().ball().initialVelocityY());
+        assertTrue(appConfig.gamePage().ball().speedIncreaseEnabled());
 
         assertEquals(12, appConfig.gamePage().paddle().width());
         assertEquals(90, appConfig.gamePage().paddle().height());

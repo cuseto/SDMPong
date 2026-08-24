@@ -1,5 +1,8 @@
 package com.cuseto.pong.game.session;
 
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
 import com.cuseto.pong.config.schema.AppConfig;
@@ -25,6 +28,8 @@ public final class GameSession {
     private final Ball ball;
     private final double initialBallVelocityX;
     private final double initialBallVelocityY;
+    private final BooleanSupplier directionSupplier;
+    private final boolean ballSpeedIncreaseEnabled;
     private final int winningScore;
     private GameStatus gameStatus;
     private int leftScore;
@@ -41,15 +46,27 @@ public final class GameSession {
      * @param appConfig the application configuration to derive the arena, paddle, and ball setup from
      */
     public GameSession(AppConfig appConfig) {
+        this(appConfig, () -> ThreadLocalRandom.current().nextBoolean());
+    }
+
+    GameSession(AppConfig appConfig, BooleanSupplier directionSupplier) {
+        /**
+         * NOTE:
+         * This constructor is needed for test purposes:
+         * in this way we can check the randomization of the initial ball direction
+         * call GameSession(AppConfig appConfig) for non-test code
+         */
+        this.directionSupplier = Objects.requireNonNull(directionSupplier);
         this.arena = getArena(appConfig);
         this.leftPaddle = getLeftPaddle(appConfig, arena);
         this.rightPaddle = getRightPaddle(appConfig, arena);
 
-        this.initialBallVelocityX = appConfig.gamePage().ball().initialVelocityX();
-        this.initialBallVelocityY = appConfig.gamePage().ball().initialVelocityY();
+        this.ballSpeedIncreaseEnabled = appConfig.gamePage().ball().speedIncreaseEnabled();
         this.winningScore = appConfig.gamePage().winningScore();
 
         this.ball = getBall(appConfig, arena);
+        this.initialBallVelocityX = ball.velocityX();
+        this.initialBallVelocityY = ball.velocityY();
         this.gameStatus = GameStatus.RUNNING;
     }
 
@@ -107,9 +124,13 @@ public final class GameSession {
             x,
             y,
             appConfig.gamePage().ball().radius(),
-            initialBallVelocityX,
-            initialBallVelocityY
+            appConfig.gamePage().ball().initialVelocityX() * randomDirectionMultiplier(),
+            appConfig.gamePage().ball().initialVelocityY() * randomDirectionMultiplier()
         );
+    }
+
+    private int randomDirectionMultiplier() {
+        return directionSupplier.getAsBoolean() ? 1 : -1;
     }
 
     private double initialBallX(Arena arena) {
@@ -249,6 +270,10 @@ public final class GameSession {
      */
     public int winningScore() {
         return winningScore;
+    }
+
+    public boolean isBallSpeedIncreaseEnabled() {
+        return ballSpeedIncreaseEnabled;
     }
 
     /**

@@ -1,29 +1,32 @@
 package com.cuseto.pong.view;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import org.junit.jupiter.api.Test;
 
 import com.cuseto.pong.config.ConfigLoader;
 import com.cuseto.pong.config.schema.AppConfig;
 
-class OptionsPageRendererTest {
+class OptionsPageRendererTest extends ApplicationTest {
     private AppConfig config;
     private OptionsPageRenderer renderer;
 
-    @BeforeEach
-    void setUp() {
+    @Override
+    public void start(Stage stage) {
         config = ConfigLoader.load("/test-config.yaml");
 
         renderer = new OptionsPageRenderer(
@@ -31,6 +34,9 @@ class OptionsPageRendererTest {
             config.viewport().screenHeight(),
             config
         );
+
+        stage.setScene(renderer.scene());
+        stage.show();
     }
     
     @Test
@@ -68,6 +74,37 @@ class OptionsPageRendererTest {
         assertEquals(String.valueOf(config.gamePage().winningScore()), winningScoreField.getText());
         assertEquals(String.valueOf(config.gamePage().ball().initialVelocityX()), ballSpeedField.getText());
         assertEquals(String.valueOf(config.gamePage().paddle().speed()), paddleSpeedField.getText());
+    }
+
+    @Test
+    void optionsPageContainsBallSpeedIncreaseCheckbox() {
+        CheckBox speedIncreaseCheckBox = (CheckBox) renderer.scene()
+            .getRoot()
+            .lookup("#optionsBallSpeedIncreaseCheckBox");
+
+        assertNotNull(speedIncreaseCheckBox);
+    }
+
+    @Test
+    void ballSpeedIncreaseCheckboxDisplaysCurrentSetting() {
+        CheckBox speedIncreaseCheckBox = (CheckBox) renderer.scene()
+            .getRoot()
+            .lookup("#optionsBallSpeedIncreaseCheckBox");
+
+        assertEquals(
+            config.gamePage().ball().speedIncreaseEnabled(),
+            speedIncreaseCheckBox.isSelected()
+        );
+    }
+
+    @Test
+    void ballSpeedIncreaseSettingReflectsCheckboxSelection() {
+        CheckBox speedIncreaseCheckBox = (CheckBox) renderer.scene()
+            .getRoot()
+            .lookup("#optionsBallSpeedIncreaseCheckBox");
+        speedIncreaseCheckBox.setSelected(false);
+
+        assertFalse(renderer.ballSpeedIncreaseEnabled());
     }
 
     @Test
@@ -133,9 +170,9 @@ class OptionsPageRendererTest {
     void pressingKeyAssignsItToSelectedPaddleControl() {
         Button button = (Button) renderer.scene().getRoot().lookup("#optionsLeftPaddleUpButton");
 
-        button.fire();
+        interact(button::fire);
 
-        renderer.handleKeyPressed(
+        interact(() -> renderer.handleKeyPressed(
             new KeyEvent(
                 KeyEvent.KEY_PRESSED,
                 "",
@@ -146,7 +183,7 @@ class OptionsPageRendererTest {
                 false,
                 false
             )
-        );
+        ));
 
         assertEquals("Q", button.getText());
     }
@@ -155,9 +192,9 @@ class OptionsPageRendererTest {
     void pressingKeyAssignsItToSelectedRightPaddleControl() {
         Button button = (Button) renderer.scene().getRoot().lookup("#optionsRightPaddleDownButton");
 
-        button.fire();
+        interact(button::fire);
 
-        renderer.handleKeyPressed(
+        interact(() -> renderer.handleKeyPressed(
             new KeyEvent(
                 KeyEvent.KEY_PRESSED,
                 "",
@@ -168,7 +205,7 @@ class OptionsPageRendererTest {
                 false,
                 false
             )
-        );
+        ));
 
         assertEquals("X", button.getText());
     }
@@ -179,11 +216,11 @@ class OptionsPageRendererTest {
 
         Button leftDownButton = (Button) renderer.scene().getRoot().lookup("#optionsLeftPaddleDownButton");
 
-        leftUpButton.fire();
-        renderer.handleKeyPressed(keyPressed(KeyCode.Q));
+        interact(leftUpButton::fire);
+        interact(() -> renderer.handleKeyPressed(keyPressed(KeyCode.Q)));
 
-        leftDownButton.fire();
-        renderer.handleKeyPressed(keyPressed(KeyCode.X));
+        interact(leftDownButton::fire);
+        interact(() -> renderer.handleKeyPressed(keyPressed(KeyCode.X)));
 
         assertEquals(KeyCode.Q, renderer.leftPaddleUpKey());
         assertEquals(KeyCode.X, renderer.leftPaddleDownKey());
@@ -206,9 +243,9 @@ class OptionsPageRendererTest {
     void keyPressedOnSceneAssignsSelectedPaddleControl() {
         Button leftUpButton = (Button) renderer.scene().getRoot().lookup("#optionsLeftPaddleUpButton");
 
-        leftUpButton.fire();
+        interact(leftUpButton::fire);
 
-        renderer.scene().getRoot().fireEvent(keyPressed(KeyCode.Q));
+        interact(() -> renderer.scene().getRoot().fireEvent(keyPressed(KeyCode.Q)));
 
         assertEquals(KeyCode.Q, renderer.leftPaddleUpKey());
         assertEquals("Q", leftUpButton.getText());

@@ -9,8 +9,14 @@ public final class MatchSettings {
     private final int winningScore;
     private final double ballSpeed;
     private final double paddleSpeed;
+    private final boolean ballSpeedIncreaseEnabled;
 
-    public MatchSettings(int winningScore, double ballSpeed, double paddleSpeed) {
+    public MatchSettings(
+        int winningScore,
+        double ballSpeed,
+        double paddleSpeed,
+        boolean ballSpeedIncreaseEnabled
+    ) {
         if (winningScore <= 0) {
             throw new IllegalArgumentException("winningScore must be positive");
         }
@@ -26,6 +32,7 @@ public final class MatchSettings {
         this.winningScore = winningScore;
         this.ballSpeed = ballSpeed;
         this.paddleSpeed = paddleSpeed;
+        this.ballSpeedIncreaseEnabled = ballSpeedIncreaseEnabled;
     }
 
     public int winningScore() {
@@ -40,6 +47,10 @@ public final class MatchSettings {
         return paddleSpeed;
     }
 
+    public boolean ballSpeedIncreaseEnabled() {
+        return ballSpeedIncreaseEnabled;
+    }
+
     public AppConfig applyTo(AppConfig config) {
         GamePageConfig gamePage = config.gamePage();
 
@@ -49,7 +60,8 @@ public final class MatchSettings {
         BallConfig updatedBall = new BallConfig(
             ball.radius(),
             ballSpeed,
-            ballSpeed
+            ballSpeed,
+            ballSpeedIncreaseEnabled
         );
 
         PaddleConfig updatedPaddle = new PaddleConfig(

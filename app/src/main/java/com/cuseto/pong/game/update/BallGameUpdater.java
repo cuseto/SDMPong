@@ -20,7 +20,8 @@ public class BallGameUpdater implements GameUpdater {
                 gameSession.arena().innerTopBoundary(),
                 gameSession.arena().innerBottomBoundary(),
                 gameSession.leftPaddle(),
-                gameSession.rightPaddle()
+                gameSession.rightPaddle(),
+                gameSession.isBallSpeedIncreaseEnabled()
             );
         }
     }
