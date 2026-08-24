@@ -8,6 +8,11 @@ import javafx.scene.text.Font;
  * A consistently styled checkbox for the application's user interface.
  */
 public final class DefaultCheckBox extends CheckBox {
+    /**
+     * Creates a default-styled checkbox with the given label.
+     *
+     * @param text the checkbox's label text
+     */
     public DefaultCheckBox(String text) {
         super(text);
         setTextFill(Color.WHITE);

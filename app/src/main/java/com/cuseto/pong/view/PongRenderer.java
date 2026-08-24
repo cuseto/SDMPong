@@ -12,13 +12,34 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * Draws a {@link GameSession}'s arena, ball, paddles, and score onto a
+ * JavaFX {@link Canvas}.
+ *
+ * <p>Each call to {@link #render(GameSession)} redraws the entire canvas
+ * from scratch: it clears the canvas to black, then draws the arena
+ * boundaries, ball, both paddles, and the score line, all based on the
+ * session's current state. It holds no game state itself.
+ */
 public final class PongRenderer {
     private final Canvas canvas;
 
+    /**
+     * Creates a renderer with a canvas of the given size.
+     *
+     * @param width the canvas width, in pixels
+     * @param height the canvas height, in pixels
+     */
     public PongRenderer(double width, double height) {
         this.canvas = new Canvas(width, height);
     }
 
+    /**
+     * Redraws the canvas to reflect the given session's current arena,
+     * ball, paddle, and score state.
+     *
+     * @param gameSession the session to render; must not be {@code null}
+     */
     public void render(GameSession gameSession) {
         GraphicsContext graphics = canvas.getGraphicsContext2D();
         double screenWidth = canvas.getWidth();
@@ -91,6 +112,11 @@ public final class PongRenderer {
         );
     }
 
+    /**
+     * Returns the JavaFX canvas this renderer draws onto.
+     *
+     * @return the canvas
+     */
     public Canvas canvas() {
         return canvas;
     }

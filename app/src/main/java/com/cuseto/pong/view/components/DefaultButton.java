@@ -40,6 +40,11 @@ public class DefaultButton extends Button {
 
     private boolean actionCompleted;
 
+    /**
+     * Creates a default-styled button with the given label.
+     *
+     * @param text the button's label text
+     */
     public DefaultButton(String text) {
         super(text);
         applyStyle(this);

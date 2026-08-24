@@ -42,6 +42,11 @@ public final class DefaultTextField extends TextField {
 
     private boolean clicked;
 
+    /**
+     * Creates a default-styled text field with the given initial text.
+     *
+     * @param text the text field's initial content
+     */
     public DefaultTextField(String text) {
         super(text);
         applyStyle(this);

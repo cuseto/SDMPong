@@ -40,6 +40,11 @@ public class OptionsButton extends Button {
 
     private boolean actionCompleted;
 
+    /**
+     * Creates an options-styled button with the given label.
+     *
+     * @param text the button's label text
+     */
     public OptionsButton(String text) {
         super(text);
         applyStyle(this);

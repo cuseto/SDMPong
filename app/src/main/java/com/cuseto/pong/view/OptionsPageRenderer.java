@@ -23,6 +23,28 @@ import com.cuseto.pong.view.components.OptionsButton;
 import com.cuseto.pong.view.components.DefaultCheckBox;
 import com.cuseto.pong.view.components.DefaultTextField;
 
+/**
+ * Builds and drives the options screen: editable fields for match
+ * settings, rebindable paddle control buttons, and save/back actions.
+ *
+ * <p>Fields and control buttons are pre-filled from the {@link AppConfig}
+ * passed to the constructor. Text field and checkbox values are read
+ * as-entered via {@link #winningScore()}, {@link #ballSpeed()}, {@link
+ * #paddleSpeed()}, and {@link #ballSpeedIncreaseEnabled()}; this class
+ * performs no parsing or validation itself, leaving that to the
+ * controller that reads these values on save.
+ *
+ * <p><b>Control rebinding:</b> clicking one of the four paddle control
+ * buttons selects it for rebinding; the next key press anywhere in the
+ * scene is captured as that control's new key, updates the button's
+ * label, and clears the selection, consuming the event so it is not also
+ * processed as game input. Only one control button can be selected for
+ * rebinding at a time. The rebound keys are exposed via {@link
+ * #leftPaddleUpKey()}, {@link #leftPaddleDownKey()}, {@link
+ * #rightPaddleUpKey()}, and {@link #rightPaddleDownKey()}; these reflect
+ * pending, unsaved edits, not necessarily the keys in the original
+ * {@code AppConfig}.
+ */
 public final class OptionsPageRenderer {
     private static final String OPTIONS_PAGE_ID = "optionsPage";
     private static final String OPTIONS_TITLE_ID = "optionsTitle";
@@ -62,6 +84,15 @@ public final class OptionsPageRenderer {
     private KeyCode rightPaddleUpKey;
     private KeyCode rightPaddleDownKey;
 
+    /**
+     * Builds the options screen, pre-filled with the given configuration's
+     * match settings and control bindings, with an event filter installed
+     * to capture key presses for control rebinding.
+     *
+     * @param windowWidth the scene width, in pixels
+     * @param windowHeight the scene height, in pixels
+     * @param appConfig the configuration used to pre-fill the screen's fields and control buttons; must not be {@code null}
+     */
     public OptionsPageRenderer(
         double windowWidth,
         double windowHeight,
@@ -197,36 +228,79 @@ public final class OptionsPageRenderer {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
     }
 
+    /**
+     * Sets the action run when the back button is clicked.
+     *
+     * @param backAction the callback to run
+     */
     public void setClickOnBackButton(Runnable backAction) {
         backButton.setOnAction(event -> backAction.run());
     }
 
+    /**
+     * Sets the action run when the save button is clicked.
+     *
+     * @param saveAction the callback to run
+     */
     public void setClickOnSaveButton(Runnable saveAction) {
         saveButton.setOnAction(event -> saveAction.run());
     }
 
+    /**
+     * Shows the given message as validation feedback, e.g. after a save
+     * attempt fails.
+     *
+     * @param message the feedback message to display
+     */
     public void showValidationFeedback(String message) {
         validationFeedback.setText(message);
         validationFeedback.setVisible(true);
     }
 
+    /**
+     * Clears and hides any validation feedback currently shown, e.g. after
+     * a successful save.
+     */
     public void clearValidationFeedback() {
         validationFeedback.setText("");
         validationFeedback.setVisible(false);
     }
 
+    /**
+     * Returns the winning-score field's current text, as entered by the
+     * player and not yet parsed or validated.
+     *
+     * @return the winning-score field's raw text
+     */
     public String winningScore() {
         return winningScoreField.getText();
     }
 
+    /**
+     * Returns the ball-speed field's current text, as entered by the
+     * player and not yet parsed or validated.
+     *
+     * @return the ball-speed field's raw text
+     */
     public String ballSpeed() {
         return ballSpeedField.getText();
     }
 
+    /**
+     * Returns whether the ball-speed-increase checkbox is currently checked.
+     *
+     * @return {@code true} if the checkbox is checked, {@code false} otherwise
+     */
     public boolean ballSpeedIncreaseEnabled() {
         return ballSpeedIncreaseCheckBox.isSelected();
     }
 
+    /**
+     * Returns the paddle-speed field's current text, as entered by the
+     * player and not yet parsed or validated.
+     *
+     * @return the paddle-speed field's raw text
+     */
     public String paddleSpeed() {
         return paddleSpeedField.getText();
     }
@@ -263,6 +337,18 @@ public final class OptionsPageRenderer {
         return setting;
     }
 
+    /**
+     * Captures a key press for control rebinding, if a control button is
+     * currently selected.
+     *
+     * <p>If no control button is selected, this does nothing. Otherwise,
+     * it records the pressed key as the selected control's new binding,
+     * updates the button's label to match, clears the selection, and
+     * consumes the event so it is not processed further (e.g. as game
+     * input).
+     *
+     * @param event the key-press event to handle
+     */
     public void handleKeyPressed(KeyEvent event) {
         if (selectedControlButton == null) {
             return;
@@ -288,22 +374,52 @@ public final class OptionsPageRenderer {
         event.consume();
     }
 
+    /**
+     * Returns the left paddle's current up-key binding, including any
+     * pending, unsaved rebind.
+     *
+     * @return the left paddle's up-key binding
+     */
     public KeyCode leftPaddleUpKey() {
         return leftPaddleUpKey;
     }
 
+    /**
+     * Returns the left paddle's current down-key binding, including any
+     * pending, unsaved rebind.
+     *
+     * @return the left paddle's down-key binding
+     */
     public KeyCode leftPaddleDownKey() {
         return leftPaddleDownKey;
     }
 
+    /**
+     * Returns the right paddle's current up-key binding, including any
+     * pending, unsaved rebind.
+     *
+     * @return the right paddle's up-key binding
+     */
     public KeyCode rightPaddleUpKey() {
         return rightPaddleUpKey;
     }
 
+    /**
+     * Returns the right paddle's current down-key binding, including any
+     * pending, unsaved rebind.
+     *
+     * @return the right paddle's down-key binding
+     */
     public KeyCode rightPaddleDownKey() {
         return rightPaddleDownKey;
     }
 
+    /**
+     * Returns the options screen scene, for attaching to the application
+     * window.
+     *
+     * @return the options screen scene
+     */
     public Scene scene() {
         return scene;
     }
