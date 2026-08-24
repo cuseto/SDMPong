@@ -10,6 +10,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -74,6 +75,29 @@ class OptionsPageRendererTest extends ApplicationTest {
         assertEquals(String.valueOf(config.gamePage().winningScore()), winningScoreField.getText());
         assertEquals(String.valueOf(config.gamePage().ball().initialVelocityX()), ballSpeedField.getText());
         assertEquals(String.valueOf(config.gamePage().paddle().speed()), paddleSpeedField.getText());
+    }
+
+    @Test
+    void optionsPageLabelsMatchSettingsFields() {
+        Label winningScoreLabel = (Label) renderer.scene().getRoot()
+            .lookup("#optionsWinningScoreLabel");
+        Label ballSpeedLabel = (Label) renderer.scene().getRoot()
+            .lookup("#optionsBallSpeedLabel");
+        Label paddleSpeedLabel = (Label) renderer.scene().getRoot()
+            .lookup("#optionsPaddleSpeedLabel");
+
+        assertEquals("Winning score", winningScoreLabel.getText());
+        assertEquals("Ball speed", ballSpeedLabel.getText());
+        assertEquals("Paddle speed", paddleSpeedLabel.getText());
+    }
+
+    @Test
+    void optionsPageContainsKeyBindingsTitle() {
+        Label title = (Label) renderer.scene().getRoot()
+            .lookup("#optionsKeyBindingsTitle");
+
+        assertNotNull(title);
+        assertEquals("Key Bindings", title.getText());
     }
 
     @Test

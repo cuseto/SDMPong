@@ -28,9 +28,13 @@ public final class OptionsPageRenderer {
     private static final String OPTIONS_TITLE_ID = "optionsTitle";
     private static final String BACK_BUTTON_ID = "optionsBackButton";
     private static final String WINNING_SCORE_FIELD_ID = "optionsWinningScoreField";
+    private static final String WINNING_SCORE_LABEL_ID = "optionsWinningScoreLabel";
     private static final String BALL_SPEED_FIELD_ID = "optionsBallSpeedField";
+    private static final String BALL_SPEED_LABEL_ID = "optionsBallSpeedLabel";
     private static final String BALL_SPEED_INCREASE_CHECKBOX_ID = "optionsBallSpeedIncreaseCheckBox";
     private static final String PADDLE_SPEED_FIELD_ID = "optionsPaddleSpeedField";
+    private static final String PADDLE_SPEED_LABEL_ID = "optionsPaddleSpeedLabel";
+    private static final String KEY_BINDINGS_TITLE_ID = "optionsKeyBindingsTitle";
     private static final String SAVE_BUTTON_ID = "optionsSaveButton";
     private static final String VALIDATION_FEEDBACK_ID = "optionsValidationFeedback";
     private static final String LEFT_PADDLE_UP_BUTTON_ID = "optionsLeftPaddleUpButton";
@@ -132,14 +136,38 @@ public final class OptionsPageRenderer {
         );
         paddleControls.setAlignment(Pos.CENTER);
 
+        Label keyBindingsTitle = new Label("Key Bindings");
+        keyBindingsTitle.setId(KEY_BINDINGS_TITLE_ID);
+        keyBindingsTitle.setTextFill(Color.WHITE);
+        keyBindingsTitle.setFont(Font.font("Monospaced", 16));
+
+        VBox keyBindings = new VBox(8, keyBindingsTitle, paddleControls);
+        keyBindings.setAlignment(Pos.CENTER);
+
+        VBox winningScoreSetting = createSettingField(
+            "Winning score",
+            WINNING_SCORE_LABEL_ID,
+            winningScoreField
+        );
+        VBox ballSpeedSetting = createSettingField(
+            "Ball speed",
+            BALL_SPEED_LABEL_ID,
+            ballSpeedField
+        );
+        VBox paddleSpeedSetting = createSettingField(
+            "Paddle speed",
+            PADDLE_SPEED_LABEL_ID,
+            paddleSpeedField
+        );
+
         VBox menuContent = new VBox(
-            10,
+            15,
             title,
-            winningScoreField,
-            ballSpeedField,
+            winningScoreSetting,
+            ballSpeedSetting,
             ballSpeedIncreaseCheckBox,
-            paddleSpeedField,
-            paddleControls,
+            paddleSpeedSetting,
+            keyBindings,
             validationFeedback
         );
         menuContent.setAlignment(Pos.CENTER);
@@ -217,6 +245,21 @@ public final class OptionsPageRenderer {
         VBox controlsColumn = new VBox(10, playerLabel, upButton, downButton);
         controlsColumn.setAlignment(Pos.CENTER);
         return controlsColumn;
+    }
+
+    private VBox createSettingField(
+        String settingName,
+        String labelId,
+        TextField field
+    ) {
+        Label settingLabel = new Label(settingName);
+        settingLabel.setId(labelId);
+        settingLabel.setTextFill(Color.WHITE);
+        settingLabel.setFont(Font.font("Monospaced", 16));
+
+        VBox setting = new VBox(4, settingLabel, field);
+        setting.setAlignment(Pos.CENTER);
+        return setting;
     }
 
     public void handleKeyPressed(KeyEvent event) {
