@@ -22,6 +22,14 @@ import com.cuseto.pong.game.session.GameSession;
 public final class ScoreGameUpdater implements GameUpdater {
     private Double previousX;
 
+    /**
+     * Creates a new score updater with no recorded previous ball position;
+     * the first {@link #update(GameSession, double)} call only establishes
+     * the baseline and does not score.
+     */
+    public ScoreGameUpdater() {
+    }
+
     @Override
     public void update(GameSession gameSession, double elapsedSeconds) {
         if (gameSession.isGameOn()) {

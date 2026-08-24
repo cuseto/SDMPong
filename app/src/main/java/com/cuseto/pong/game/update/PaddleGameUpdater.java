@@ -16,7 +16,11 @@ import com.cuseto.pong.game.session.GameSession;
 public class PaddleGameUpdater implements GameUpdater {
     private final PaddleInputState inputState;
 
-    /** @param inputState the source of the current left/right paddle directions, consulted on every update */
+    /**
+     * Creates a paddle updater backed by the given input state.
+     *
+     * @param inputState the source of the current left/right paddle directions, consulted on every update
+     */
     public PaddleGameUpdater(PaddleInputState inputState) {
         this.inputState = inputState;
     }

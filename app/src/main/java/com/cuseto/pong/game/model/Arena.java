@@ -52,32 +52,56 @@ public record Arena(
         }
     }
 
-    /** @return the height of the playable area, i.e. {@code height} minus both boundary walls */
+    /**
+     * Returns the height of the playable area.
+     *
+     * @return the height of the playable area, i.e. {@code height} minus both boundary walls
+     */
     public int innerHeight() {
         return this.height() - 2 * this.boundaryThickness;
     }
 
-    /** @return the width of the playable area, i.e. {@code width} minus both boundary walls */
+    /**
+     * Returns the width of the playable area.
+     *
+     * @return the width of the playable area, i.e. {@code width} minus both boundary walls
+     */
     public int innerWidth() {
         return this.width() - 2 * this.boundaryThickness;
     }
 
-    /** @return the y-coordinate of the top edge of the playable area, i.e. just inside the top wall */
+    /**
+     * Returns the y-coordinate of the top edge of the playable area.
+     *
+     * @return the y-coordinate of the top edge of the playable area, i.e. just inside the top wall
+     */
     public int innerTopBoundary() {
         return this.anchorY + this.boundaryThickness;
     }
 
-    /** @return the x-coordinate of the left edge of the playable area, i.e. just inside the left wall */
+    /**
+     * Returns the x-coordinate of the left edge of the playable area.
+     *
+     * @return the x-coordinate of the left edge of the playable area, i.e. just inside the left wall
+     */
     public int innerLeftBoundary() {
         return this.anchorX + this.boundaryThickness;
     }
 
-    /** @return the y-coordinate of the bottom edge of the playable area, i.e. just inside the bottom wall */
+    /**
+     * Returns the y-coordinate of the bottom edge of the playable area.
+     *
+     * @return the y-coordinate of the bottom edge of the playable area, i.e. just inside the bottom wall
+     */
     public int innerBottomBoundary() {
         return this.innerTopBoundary() + this.innerHeight(); 
     }
 
-    /** @return the x-coordinate of the right edge of the playable area, i.e. just inside the right wall */
+    /**
+     * Returns the x-coordinate of the right edge of the playable area.
+     *
+     * @return the x-coordinate of the right edge of the playable area, i.e. just inside the right wall
+     */
     public int innerRightBoundary() {
         return this.innerLeftBoundary() + this.innerWidth();
     }

@@ -7,14 +7,38 @@ package com.cuseto.pong.game.model.view;
  * access to the mutating methods declared on the concrete {@code Paddle} type.
  */
 public interface PaddleView {
-    /** @return the x-coordinate of the paddle's top-left corner; fixed for the paddle's lifetime */
+    /**
+     * Returns the x-coordinate of the paddle's top-left corner.
+     *
+     * @return the x-coordinate of the paddle's top-left corner; fixed for the paddle's lifetime
+     */
     double x();
-    /** @return the y-coordinate of the paddle's top-left corner; changes as the paddle moves */
+    
+    /**
+     * Returns the y-coordinate of the paddle's top-left corner.
+     *
+     * @return the y-coordinate of the paddle's top-left corner; changes as the paddle moves
+     */
     double y();
-    /** @return the paddle's width; fixed for the paddle's lifetime */
+    
+    /**
+     * Returns the paddle's width.
+     *
+     * @return the paddle's width; fixed for the paddle's lifetime
+     */
     double width();
-    /** @return the paddle's height; fixed for the paddle's lifetime */
+    
+    /**
+     * Returns the paddle's height.
+     *
+     * @return the paddle's height; fixed for the paddle's lifetime
+     */
     double height();
-    /** @return the paddle's movement speed, in units per second */
+    
+    /**
+     * Returns the paddle's movement speed.
+     *
+     * @return the paddle's movement speed, in units per second
+     */
     double speed(); 
 }

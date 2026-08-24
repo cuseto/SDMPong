@@ -11,6 +11,12 @@ import com.cuseto.pong.game.session.GameSession;
  * (e.g. paused or already finished).
  */
 public class BallGameUpdater implements GameUpdater {
+    /**
+     * Creates a new ball updater.
+     */
+    public BallGameUpdater() {
+    }
+    
     @Override
     public void update(GameSession gameSession, double elapsedSeconds) {
         if (gameSession.isGameOn()) {

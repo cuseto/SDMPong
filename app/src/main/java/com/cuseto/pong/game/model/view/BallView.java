@@ -7,14 +7,38 @@ package com.cuseto.pong.game.model.view;
  * access to the mutating methods declared on the concrete {@code Ball} type.
  */
 public interface BallView {
-    /** @return the x-coordinate of the ball's center */
+    /**
+     * Returns the x-coordinate of the ball's center.
+     *
+     * @return the x-coordinate of the ball's center
+     */
     double x();
-    /** @return the y-coordinate of the ball's center */
+    
+    /**
+     * Returns the y-coordinate of the ball's center.
+     *
+     * @return the y-coordinate of the ball's center
+     */
     double y();
-    /** @return the ball's radius; always positive */
+    
+    /**
+     * Returns the ball's radius.
+     *
+     * @return the ball's radius; always positive
+     */
     double radius();
-    /** @return the ball's current horizontal velocity, in units per second */
+    
+    /**
+     * Returns the ball's current horizontal velocity.
+     *
+     * @return the ball's current horizontal velocity, in units per second
+     */
     double velocityX();
-    /** @return the ball's current vertical velocity, in units per second */
+    
+    /**
+     * Returns the ball's current vertical velocity.
+     *
+     * @return the ball's current vertical velocity, in units per second
+     */
     double velocityY();
 }

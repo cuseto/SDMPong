@@ -17,6 +17,13 @@ public class PaddleInputState {
     private PaddleDirection rightDirection = PaddleDirection.NONE;
 
     /**
+     * Creates a new input state with both paddles set to
+     * {@link PaddleDirection#NONE}.
+     */
+    public PaddleInputState() {
+    }
+
+    /**
      * Returns the left paddle's current movement direction.
      *
      * @return the left paddle's current movement direction; {@link PaddleDirection#NONE} if not moving

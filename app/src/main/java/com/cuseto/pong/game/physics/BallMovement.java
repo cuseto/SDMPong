@@ -16,6 +16,12 @@ public final class BallMovement {
     private static final double X_SPEED_INCREASE_FACTOR = 1.10;
 
     /**
+     * Not instantiable; all functionality is exposed through static methods.
+     */
+    private BallMovement() {
+    }
+
+    /**
      * Advances the ball's position for one frame, then resolves any
      * resulting collision with the top/bottom walls or either paddle.
      *

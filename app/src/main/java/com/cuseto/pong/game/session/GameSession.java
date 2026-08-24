@@ -272,6 +272,11 @@ public final class GameSession {
         return winningScore;
     }
 
+    /**
+     * Returns whether paddle collisions increase the ball's horizontal speed.
+     *
+     * @return {@code true} if the ball speeds up on each paddle bounce, {@code false} otherwise
+     */
     public boolean isBallSpeedIncreaseEnabled() {
         return ballSpeedIncreaseEnabled;
     }
