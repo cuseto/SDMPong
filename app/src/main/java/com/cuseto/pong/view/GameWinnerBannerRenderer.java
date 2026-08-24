@@ -18,11 +18,11 @@ public final class GameWinnerBannerRenderer {
     public GameWinnerBannerRenderer() {
         winnerLabel = new Label();
         winnerLabel.setTextFill(Color.WHITE);
-        winnerLabel.setFont(Font.font(30));
+        winnerLabel.setFont(Font.font("Monospaced", 30));
 
         Label instructionsLabel = new Label("ENTER: NEW MATCH    ESC: QUIT");
         instructionsLabel.setTextFill(Color.WHITE);
-        instructionsLabel.setFont(Font.font(18));
+        instructionsLabel.setFont(Font.font("Monospaced", 18));
 
         VBox banner = new VBox(8, winnerLabel, instructionsLabel);
         banner.setAlignment(Pos.CENTER);
